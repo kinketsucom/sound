@@ -23,9 +23,9 @@ public class Source : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
-		//AudioSourceコンポーネントを取得し、変数に格納
-		audio_source = GetComponent<AudioSource>();
-		audio_source.Play ();
+//		//AudioSourceコンポーネントを取得し、変数に格納
+//		audio_source = GetComponent<AudioSource>();
+//		audio_source.Play ();
 	}
 
 	void Start () {
@@ -33,16 +33,16 @@ public class Source : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () { 
-		sound_time = audio_source.time;
+//		sound_time = audio_source.time;
 		//フレーム表示
 		step_int += 1;
 		step_num.GetComponent<Text> ().text = step_int.ToString();
 		//距離の表示
-		player_position = player.transform.position;
-		distance = Vector3.Distance (player_position, this.transform.position);
-		//距離に応じた音量の変化
-		audio_source.volume = (float)(1 / distance);
-		volume.GetComponent<Text> ().text = audio_source.volume.ToString();
+//		player_position = player.transform.position;
+//		distance = Vector3.Distance (player_position, this.transform.position);
+//		//距離に応じた音量の変化
+//		audio_source.volume = (float)(1 / distance);
+//		volume.GetComponent<Text> ().text = audio_source.volume.ToString();
 	}
 
 }

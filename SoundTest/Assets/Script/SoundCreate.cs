@@ -4,38 +4,38 @@ using UnityEngine.UI;
 
 public class SoundCreate : MonoBehaviour
 {
-	private double frequency = 440;
-	private double gain = 0.30;
-	private double increment;
-	private double phase;
-	private double sampling_frequency = 48000;
-
-	//カメラの位置情報
-	private string player_position;
-	public GameObject PlayerPositionText;
-	public GameObject Camera;
-
-
-	//ソースとの距離
-	public GameObject Source;
-
-	private float distance = 0;
-
-
-
-	public GameObject step_num;
+//	private double frequency = 440;
+//	private double gain = 0.30;
+//	private double increment;
+//	private double phase;
+//	private double sampling_frequency = 48000;
+//
+//	//カメラの位置情報
+//	private string player_position;
+//	public GameObject PlayerPositionText;
+//	public GameObject Camera;
+//
+//
+//	//ソースとの距離
+//	public GameObject Source;
+//
+//	private float distance = 0;
+//
+//
+//
+//	public GameObject step_num;
 
 
 
 
 	void Update(){
-		//playerの位置情報を表示するためのアレ
-		player_position = Camera.transform.position.ToString ();
-		PlayerPositionText.GetComponent<Text>().text = player_position;
-		//ソースの位置情報を表示するためのアレ
-		distance = Vector3.Distance( Camera.transform.position,  Source.transform.position);
-
-		print (distance);
+//		//playerの位置情報を表示するためのアレ
+//		player_position = Camera.transform.position.ToString ();
+//		PlayerPositionText.GetComponent<Text>().text = player_position;
+//		//ソースの位置情報を表示するためのアレ
+//		distance = Vector3.Distance( Camera.transform.position,  Source.transform.position);
+//
+//		print (distance);
 	}
 
 
