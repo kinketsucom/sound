@@ -14,6 +14,12 @@ public class Player : MonoBehaviour {
 	//Object
 	public GameObject Camera;
 	public GameObject Source;
+	public GameObject SoundSphere; //**音源の可視化用
+
+	//move sound sphere
+	private bool move_start = false; 
+	private float move_step;
+	private Vector3 move_direction;
 
 	//sound source
 	private AudioSource audio_source;
@@ -22,6 +28,7 @@ public class Player : MonoBehaviour {
 	void Awake(){
 		//AudioSourceコンポーネントを取得し、変数に格納
 		audio_source = Source.GetComponent<AudioSource>();
+
 	}
 
 
@@ -37,7 +44,12 @@ public class Player : MonoBehaviour {
 		distance = Vector3.Distance(Camera.transform.position,Source.transform.position);
 		VolumeText.GetComponent<Text> ().text = (1 / (4 * Mathf.PI*distance)).ToString();
 
-
+		if (move_start) {//soundspereの移動感を出すため
+			move_step = Time.deltaTime;
+			move_direction = Camera.transform.position - Source.transform.position;
+			move_direction = move_direction * move_step;
+			SoundSphere.transform.position += move_direction;
+		}
 
 
 		if ( Input.GetKeyDown(KeyCode.UpArrow) == true ) {
@@ -63,6 +75,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void PlaySound () {
+		move_start = true;//*
 		// コルーチンを実行
 		StartCoroutine ("PlaySoundCoroutine");  
 	}
