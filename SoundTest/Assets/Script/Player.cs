@@ -16,6 +16,7 @@ public class Player : MonoBehaviour {
 	public GameObject SourceObj;
 	public GameObject SoundSphere; //**音源の可視化用
 
+
 	//camera settings
 	private float camera_move_step = 20.0f;
 
@@ -24,26 +25,32 @@ public class Player : MonoBehaviour {
 	private float move_step;
 	private Vector3 move_direction;
 
+	public GameObject BaseObj; //球体
+//	private GameObject[] SoundSphereObject; //球体オブジェクト用
+
+
+
 	//sound sources
 	private AudioSource[] audio_sources; //Sourceからオーディオをパクってくる
-//	private AudioSource audio_source;
 	private float wave_speed = 331.45f;
 	private int sound_num = 0;
 
+
 	void Awake(){
 		//AudioSourceコンポーネントを取得し、変数に格納
-//		audio_source = Source.GetComponent<AudioSource>();
 		sound_num = Source.getNumberOfSound();
 		audio_sources = SourceObj.GetComponents<AudioSource>();
+		for(int i=0;i<sound_num;i++){
+//			SoundSphereObject[i] = Instantiate(BaseObj);
+		}
 	}
 
-
 	void Start () {
-//		audio_sources [0].Play ();
+		
 	}
 
 	void Update () {
-//		//playerの位置情報を表示するためのアレ
+//		//playerとの位置情報を表示するためのアレ
 		player_position = Camera.transform.position.ToString ();
 		PlayerPositionText.GetComponent<Text>().text = player_position;
 
@@ -75,6 +82,9 @@ public class Player : MonoBehaviour {
 			// Torigger
 			this.transform.position += new Vector3 (-camera_move_step, 0, 0);
 		}
+
+
+
 	}
 
 	public void PlaySound () {
@@ -83,24 +93,19 @@ public class Player : MonoBehaviour {
 		// コルーチンを実行
 		StartCoroutine ("PlaySoundCoroutine");  
 	}
-	private IEnumerator PlaySoundCoroutine() { 
+
+	private IEnumerator PlaySoundCoroutine() {
 		float max_time = Mathf.Min (audio_sources [0].clip.length, distance / wave_speed);
 		yield return new WaitForSeconds (max_time);
-
 		// コルーチンの処理  
 		audio_sources[0].Play();
-
 		for (int i = 1; i < sound_num; i++) {
 			max_time = Mathf.Min (audio_sources [i].clip.length, distance / wave_speed);
 			yield return new WaitForSeconds (max_time);
-			// コルーチンの処理  
-//			audio_sources [i - 1].Stop ();
-			
+			// コルーチンの処理
+			audio_sources [i - 1].Stop ();
 			audio_sources[i].Play();
 		}
-
-
-
-	}  
+	}
 }
 

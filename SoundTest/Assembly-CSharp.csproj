@@ -46,10 +46,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Script\Camera.cs" />
+     <Compile Include="Assets\Script\GUIScript.cs" />
      <Compile Include="Assets\Script\MoveSoundSpere.cs" />
      <Compile Include="Assets\Script\Player.cs" />
      <Compile Include="Assets\Script\SoundCreate.cs" />
      <Compile Include="Assets\Script\Source.cs" />
+     <Compile Include="Assets\Script\SpereResize.cs" />
  <Reference Include="UnityEngine.Analytics">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>

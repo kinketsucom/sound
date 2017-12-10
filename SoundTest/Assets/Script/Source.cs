@@ -27,11 +27,7 @@ public class Source : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
-//		//AudioSourceコンポーネントを取得し、変数に格納
-//		audio_source = GetComponent<AudioSource>();
-//		audio_source.Play ();
-
-		//Audioを動的に追加
+		// Audioを動的に追加
 		for (int i = 0; i < sound_num; i++) {
 			this.gameObject.AddComponent<AudioSource> ();
 		}
@@ -39,13 +35,12 @@ public class Source : MonoBehaviour {
 		for (int i = 0; i < sound_num; i++) {
 			audio[i].clip = Resources.Load<AudioClip>(i.ToString());
 		}
-//		ファイル追加完了
-
-
+		// ファイル追加完了
 
 	}
 
 	void Start () {
+		
 	}
 	
 	// Update is called once per frame

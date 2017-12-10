@@ -7,7 +7,7 @@ python MakeSin.py 440.000
 python MakeSin.py 493.883
 python MakeSin.py 493.883
 python MakeSin.py 523.251
-sox -c 2  -r 44100 ./dat/sin261.626.dat ./wav/sin261_626.wav
+sox -c 2 m -r 44100 ./dat/sin261.626.dat ./wav/sin261_626.wav
 sox -c 2 -r 44100 ./dat/sin293.665.dat ./wav/sin293_665.wav
 sox -c 2 -r 44100 ./dat/sin329.628.dat ./wav/sin329.628.wav
 sox -c 2 -r 44100 ./dat/sin349.228.dat ./wav/sin349_228.wav
