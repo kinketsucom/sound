@@ -1,6 +1,6 @@
 # Link
-- [Version up info](#Versionupinfo)
-- [メッシュ作成の記録](#メッシュ作成の記録)
++ [Version up info](#Version-up-info)
++ [メッシュ作成の記録](#メッシュ作成の記録)
 
 # <u>Version up info</u>
 +ver1.0
