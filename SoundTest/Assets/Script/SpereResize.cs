@@ -13,7 +13,7 @@ public class SpereResize : MonoBehaviour {
 
 	//接触オブジェクトの設定
 	public GameObject OuterSphereObject;
-	private float time_length = 1;
+//	private float time_length = 1;
 
 	// Use this for initialization
 	void Start () {

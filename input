@@ -1,0 +1,12 @@
+#出てきたもののファイル名に
+#./a.out > input 
+hall.bdf 
+-1000d0      ! minimum c2
+1000d0 ! maximum c2
+-1000d0      ! minimum c3
+1000d0  ! maximum c3
+0.0000001 ! cordination difference between both sides
+2        ! number of layers
+1        ! number of boundaries
+1  2  1  ! boundary No / layder in the back side / layer in the upper side
+#2  3  1

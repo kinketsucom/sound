@@ -11,9 +11,12 @@ public class GUIScript : MonoBehaviour {
 	//プレファブ
 	public GameObject OuterSpereObjectPrefab;
 
+	//音源の長さ
+	private float sound_length =1.0f;
+
 	// Use this for initialization
 	void Start () {
-		SubCam.SetActive(false);	
+		SubCam.SetActive(false);	//視覚化用のサブカメラ
 	}
 	
 	// Update is called once per frame
@@ -38,10 +41,12 @@ public class GUIScript : MonoBehaviour {
 
 	IEnumerator StartSoundCoRoutine(){
 		// コルーチンの処理  
-		for (int i = 0; i < 8; i++) {
-			yield return new WaitForSeconds (1);
+		for (int i = 0; i < 16; i++) {
+			yield return new WaitForSeconds (sound_length);
 			GameObject obj = Instantiate (OuterSpereObjectPrefab, transform.position, Quaternion.identity);
-			obj.GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> (i.ToString());
+			int a = i % 8;
+			obj.GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> (a.ToString());//一旦音源のループをさせる。
+//			obj.GetComponent<AudioSource> ().clip = Resources.Load<AudioClip> (i.ToString());
 		}
 	}
 }

@@ -19,19 +19,19 @@ public class Camera : MonoBehaviour {
 	void Update () {
 
 		if ( Input.GetKeyDown(KeyCode.UpArrow) == true ) {
-			// Torigger
+			// Trigger
 			this.transform.position += new Vector3 (0, 0, camera_move_step);
 		}
 		if ( Input.GetKeyDown(KeyCode.DownArrow) == true ) {
-			// Torigger
+			// Trigger
 			this.transform.position += new Vector3 (0, 0, -camera_move_step);
 		}
 		if ( Input.GetKeyDown(KeyCode.RightArrow) == true ) {
-			// Torigger
+			// Trigger
 			this.transform.position += new Vector3 (camera_move_step, 0, 0);
 		}
 		if ( Input.GetKeyDown(KeyCode.LeftArrow) == true ) {
-			// Torigger
+			// Trigger
 			this.transform.position += new Vector3 (-camera_move_step, 0, 0);
 		}
 	}
@@ -42,6 +42,8 @@ public class Camera : MonoBehaviour {
 
 		if(other.gameObject.CompareTag("Outer")){
 			audio_source = other.GetComponent<AudioSource> ();
+			//カメラとソースの距離
+			float distance_source_and_camera = Vector3.Magnitude (this.gameObject.transform.position);
 			float distance = other.gameObject.transform.localScale.x - Vector3.Magnitude(this.gameObject.transform.position) ;
 			print (other.gameObject.transform.localScale.x.ToString()+" "+this.gameObject.transform.position.ToString()+" "+distance.ToString());
 			if (distance >= 331.44) {
