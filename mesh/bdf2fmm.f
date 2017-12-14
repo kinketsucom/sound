@@ -8,13 +8,13 @@ c
        program bdf2fmm
        implicit none
 
-c      a text line of the *.bdf file.        
+c      a text line of the *.bdf file.
        character bdf_line*75
        integer elem_no , shee_no , grid_no1 , grid_no2 , grid_no3
-       integer grid_no 
+       integer grid_no
        real*8  grid_c1 , grid_c2 , grid_c3
        integer flag_out
-       integer c2_bmin_cnt , c2_bmax_cnt , c3_bmin_cnt 
+       integer c2_bmin_cnt , c2_bmax_cnt , c3_bmin_cnt
        integer c3_bmax_cnt
        integer bound_num   , elem_nv(2,100)
        real*8 c2_min , c2_max , c3_min , c3_max , c_error
@@ -52,7 +52,7 @@ c      Reading conditions from the file     ./a.out < input
        read(*,'(a)') bdf_file
 c       write(*,*) 'output file            :' // bdf_file
        read(*,*) c2_min
-c       write(*,*) 'minimam c2 cordination :',c2_min
+C       write(*,*) 'minimam c2 cordination :',c2_min
        read(*,*) c2_max
 c       write(*,*) 'maximam c2 cordination :',c2_max
        read(*,*) c3_min
@@ -70,7 +70,7 @@ c       read(*,*) buf_line
        end do
 
 
-       
+
 c      Opening the bdf file
        open(91,FILE=bdf_file)
 
@@ -105,10 +105,10 @@ c        Transration from the character value to the numerical value
             count_elem = count_elem + 1
          end if
 
-         
+
 
 c        Checking whether or not the grid is on the priodic boundary
-c        Storeing grids on the priodic boundary to C*_BM*****  
+c        Storeing grids on the priodic boundary to C*_BM*****
          if ( flag_out .ne. 0 ) then
             flag_out = 0
 
@@ -172,7 +172,7 @@ c     $              grid_no
 
 
          end if
-         
+
          if (bdf_line(1:7) == 'ENDDATA') exit
        end do
 
@@ -184,7 +184,7 @@ c      Overwriteing cordinate 1,3 of the grids on the right priodic boundary
           do i=1 , c2_bmin_cnt
              do j=1 , c2_bmax_cnt
                 if (c2_bmax(1,j) .le. c2_bmin(1,i) + c_error) then
-                 if (c2_bmax(1,j) .ge. c2_bmin(1,i) - c_error) then         
+                 if (c2_bmax(1,j) .ge. c2_bmin(1,i) - c_error) then
                   if (c2_bmax(3,j) .le. c2_bmin(3,i) + c_error) then
                    if (c2_bmax(3,j) .ge. c2_bmin(3,i) - c_error) then
                       c2_bmax(1,j) = c2_bmin(1,i)
@@ -204,7 +204,7 @@ c      Overwriteing cordinate 1,3 of the grids on the right priodic boundary
           stop
        end if
 
-c      Overwriteing cordinate 1,3 of the grids on the right priodic boundary 
+c      Overwriteing cordinate 1,3 of the grids on the right priodic boundary
        if ( c3_bmin_cnt .eq. c3_bmax_cnt ) then
           do i=1 , c3_bmin_cnt
              do j=1 , c3_bmax_cnt
@@ -222,7 +222,7 @@ c      Overwriteing cordinate 1,3 of the grids on the right priodic boundary
            end do
       else
           write(*,*) '3 cordinate boundary error'
-          write(*,*) 
+          write(*,*)
      &    'number of grids on the left  side:' , c3_bmin_cnt
           write(*,*)
      &    'number of grids on the right side:' , c3_bmax_cnt
@@ -232,9 +232,9 @@ c      Overwriteing cordinate 1,3 of the grids on the right priodic boundary
 
        do i=1 , cp_cnt1
           do j=1 , cp_cnt2
-             if    (c2_bmin(1,cp_no(2,j)) .le. 
+             if    (c2_bmin(1,cp_no(2,j)) .le.
      &              c2_bmin(1,cp_no(1,i)) + c_error) then
-                if (c2_bmin(1,cp_no(2,j)) .ge. 
+                if (c2_bmin(1,cp_no(2,j)) .ge.
      &              c2_bmin(1,cp_no(1,i)) - c_error) then
                    c2_bmin(1,cp_no(2,j)) = c2_bmin(1,cp_no(1,i))
                 end if
@@ -291,7 +291,7 @@ c        element data output
                stop
             end if
 
-c            write(81,*) 
+c            write(81,*)
             write(81,'(4(i6,1x),2(i3,1x))')
      &      elem_no , grid_no1 , grid_no2 , grid_no3
      &              , elem_nv(2,shee_no)  , elem_nv(1,shee_no)
@@ -345,7 +345,7 @@ c               flag_out=2
                j = j + 1
 c               flag_out=2
             else if (grid_no .eq. c3_bmin_no(k)) then
-               write(*,'(a5,2x,i6,1x,4F15.9)') 
+               write(*,'(a5,2x,i6,1x,4F15.9)')
      &              'c3min',grid_no
      &              ,c3_bmin(1,k),c3_bmin(2,k),c3_bmin(3,k)
      &              ,( (grid_c1-c3_bmin(1,k))**2
@@ -357,7 +357,7 @@ c               flag_out=2
                k = k + 1
 c               flag_out=2
             else if (grid_no .eq. c3_bmax_no(l)) then
-               write(*,'(a5,2x,i6,1x,4F15.9)') 
+               write(*,'(a5,2x,i6,1x,4F15.9)')
      &              'c3max',grid_no
      &              ,c3_bmax(1,l),c3_bmax(2,l),c3_bmax(3,l)
      &              ,( (grid_c1-c3_bmax(1,l))**2
@@ -380,15 +380,15 @@ c        grid data output
             end if
 
 c            write(81,*)
-            write(81,'(i6,1x,3(e20.9,1x))') 
+            write(81,'(i6,1x,3(e20.9,1x))')
      &            grid_no , grid_c1 , grid_c2 , grid_c3
-         end if   
+         end if
 
 
 c        bdf data output
          if ( flag_out .ne. 0 ) then
             flag_out = 0
-            write(82,'(a,3x,i7,25x,2(e11.4,5x),/,a,7x,e11.4)') 
+            write(82,'(a,3x,i7,25x,2(e11.4,5x),/,a,7x,e11.4)')
      &            'GRID*',grid_no,grid_c1,grid_c2,'*',grid_c3
          else
             write(82,'(a72)') bdf_line
@@ -397,12 +397,10 @@ c        bdf data output
 
 
          if (bdf_line(1:7) == 'ENDDATA') exit
-       end do  
+       end do
 
  9102  close(91)
  8101  close(81)
  8102  close(82)
        write(*,*) 'DONE ...'
        end
-
- 

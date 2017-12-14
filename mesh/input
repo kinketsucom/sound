@@ -1,7 +1,4 @@
-!bdf2fmm.fをコンパイルしてでてきたものa.out
-!./a.out < input で実行
-!patranでつくったメッシュを読み込む
-Mesh.bdf 
+Mesh.bdf
 -1000d0      ! minimum c2
 1000d0 ! maximum c2
 -1000d0      ! minimum c3
