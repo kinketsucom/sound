@@ -1,6 +1,6 @@
-#出てきたもののファイル名に
-#./a.out > input 
-hall.bdf 
+
+
+Mesh.bdf
 -1000d0      ! minimum c2
 1000d0 ! maximum c2
 -1000d0      ! minimum c3

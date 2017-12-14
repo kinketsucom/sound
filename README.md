@@ -15,14 +15,9 @@ FIXIT:オブジェクトの衝突判定を用いて音を表現する方が良�
 
 
 # <u>メッシュ作成の記録</u>
-+ 起動  
-ターミナルで  
-module load patran' 
-patran
-と入力
-
+1. ターミナル->module load patran->patran
 1. File->New->ok
 1. viweport->create->適当なviewportを選択or作成
 1. viewport(青い画面)で右クリック->verify->element->normals
-
+1. Action->Modify
 
