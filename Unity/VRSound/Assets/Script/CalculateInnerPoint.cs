@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class CalculateInnerPoint : MonoBehaviour {
 
@@ -28,6 +30,14 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private Vector3[] mesh_point_center_array;//メッシュの重心
 	private float[,] boundary_condition_q;//境界条件q
 	private float[,] boundary_condition_u;//境界条件u
+
+
+
+
+	//表示用のやつ
+	private Text u0;
+	private Text u1;
+	private Text u2;
 
 	void Awake(){
 
@@ -69,7 +79,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 			}
 		}
 
+
 		//初期化
+		u_array = new float[step_num];
 		boundary_condition_q = new float[step_num,triangle_num];
 		boundary_condition_u = new float[step_num, triangle_num];
 
@@ -185,28 +197,34 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		//重心の出力チェック
-//		foreach (Vector3 value in mesh_point_center_array) {
-//			print (value);
-//		}
+		//表示用
+		u0 = GameObject.Find("u0").GetComponent<Text>();
+		u1 = GameObject.Find("u1").GetComponent<Text>();
+		u2 = GameObject.Find("u2").GetComponent<Text>();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(play_bool)
-//		Vector3 my_location = CameraObj.transform.position;
-//		float r = 0;
-//		//ここが４ぱいアールの簡単な内点計算
-//		foreach (Vector3 value in mesh_point_center_array) {
-//			r = Vector3.Distance (my_location, value);
-//
-//		
-//		}
-//		b = a.Split("\n"[0], System.StringSplitOptions.RemoveEmptyEntries);s
+		//毎フレーム初期化
+		for(int i =0;i<u_array.Length;i++){
+			u_array [i] = 0;
+		}
 
-
-
+		if(GUIManager.play_bool){
+			Vector3 my_location = CameraObj.transform.position;
+			float r = 0;
+			float ds = 8;
+			//ここが４ぱいアールの簡単な内点計算
+			for (int t = 0; t < 3; t++) { //とりあえず0,1,2ステップだけ
+				for (int i = 0; i < mesh_point_center_array.Length; i++) {
+					r = Vector3.Distance (my_location, mesh_point_center_array [i]);
+					u_array [t] += (boundary_condition_u [t, i] + boundary_condition_q [t, i])*ds / (4 * Mathf.PI * r);
+				}
+			}		
+			u0.text = "u0:"+u_array [0].ToString ();
+			u1.text = "u1:"+u_array [1].ToString ();
+			u2.text = "u2:"+u_array [2].ToString ();
 		}
 	}
 
