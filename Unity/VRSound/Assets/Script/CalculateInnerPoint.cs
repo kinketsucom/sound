@@ -13,18 +13,25 @@ public class CalculateInnerPoint : MonoBehaviour {
 	List<string> triangle_list = new List<string>();
 	List<string> point_list = new List<string>();
 	List<string> param_list = new List<string>();
+	List<string> u_list = new List<string>();//ディリクレを読み込む用
+	List<string> q_list = new List<string>();//ノイマンを読み込む用
 	private string file;
 	private int counter = 0;
 	private int triangle_num = 0;
-	private Vector3[] point_vec = {Vector3.zero,Vector3.zero,Vector3.zero} ;//重心計算用
+	private int step_num = 0;
+	private Vector3[] point_vec = {Vector3.zero,Vector3.zero,Vector3.zero} ;//重心計算用 
+	//カメラの設定
+	public GameObject CameraObj;
 
 
 	private float[] u_array; //出力を入れるやつ
 	private Vector3[] mesh_point_center_array;//メッシュの重心
-	private float[] boundary_condition_q;//境界条件q
-	private float[] boundary_condition_u;//境界条件u
+	private float[,] boundary_condition_q;//境界条件q
+	private float[,] boundary_condition_u;//境界条件u
 
 	void Awake(){
+
+
 		file = Application.dataPath + "/Resource/meshparam.d";//三角形を作る番号
 		lines = ReadFile (file); 
 		foreach (string item in lines)
@@ -53,10 +60,72 @@ public class CalculateInnerPoint : MonoBehaviour {
 					if(counter ==1){//三角形の数
 						triangle_num = int.Parse(val);
 					}
+
+					if (counter == 3) {//ステップ数
+						step_num = int.Parse (val);
+					}
 					counter += 1;
 				}
 			}
 		}
+
+		//初期化
+		boundary_condition_q = new float[step_num,triangle_num];
+		boundary_condition_u = new float[step_num, triangle_num];
+
+		//////////ここからディリクレ
+		file = Application.dataPath + "/Resource/fort.100";//現状はディリクレ条件
+		lines = ReadFile (file); 
+		foreach (string item in lines)
+		{
+			u_list.Add (item);
+		}
+
+		int step = 0;
+		//初期条件の読み込み まずはディリクレu
+		foreach (string item in u_list) {
+			dat = item.Split(' ');
+			counter=-1;
+			foreach (string val in dat) {
+				if (val.Length != 0) {
+					if(counter>=1){
+					boundary_condition_u[step,counter] = float.Parse(val);
+					}
+					counter += 1;
+				}
+			}
+			step += 1;
+		}
+		/////////ここからノイマンq
+		file = Application.dataPath + "/Resource/cond_bc.d";//現状はディリクレ条件
+		lines = ReadFile (file); 
+		foreach (string item in lines)
+		{
+			q_list.Add (item);
+		}
+		//次はノイマンq
+		counter = 0;
+		step = 0;
+		//初期条件の読み込み ノイマン
+		foreach (string item in q_list) {
+			if (counter >= triangle_num) {
+				counter = 0;
+				step += 1;
+			}
+			if (step < step_num) {
+				dat = item.Split (' ');
+				foreach (string val in dat) {
+					if (val.Length != 0) {
+						boundary_condition_q [step, counter] = float.Parse (val);
+						counter += 1;
+					}
+				} 
+			} else {
+				break;
+			}
+		}
+
+
 
 		mesh_point_center_array = new Vector3[triangle_num];
 
@@ -108,24 +177,37 @@ public class CalculateInnerPoint : MonoBehaviour {
 			counter += 1;
 
 		}//ここで重心の計算は終了
-			
-
 	}
+
+
+
+
+
 	// Use this for initialization
 	void Start () {
 //		//重心の出力チェック
 //		foreach (Vector3 value in mesh_point_center_array) {
 //			print (value);
 //		}
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float my_location = 
-
-
+		if(play_bool)
+//		Vector3 my_location = CameraObj.transform.position;
+//		float r = 0;
+//		//ここが４ぱいアールの簡単な内点計算
+//		foreach (Vector3 value in mesh_point_center_array) {
+//			r = Vector3.Distance (my_location, value);
+//
+//		
+//		}
 //		b = a.Split("\n"[0], System.StringSplitOptions.RemoveEmptyEntries);s
 
+
+
+		}
 	}
 
 
