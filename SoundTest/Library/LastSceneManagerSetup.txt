@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/SoundTestScene.unity
+- path: Assets/SoundField.unity
   isLoaded: 1
   isActive: 1

@@ -5,7 +5,7 @@ import re
 counter = 0
 triangle_file = open('meshtriangle.d', 'w')#出力先
 point_file = open('meshpoint.d', 'w')#出力先
-parameter_file = open('meshhparam.d', 'w')
+parameter_file = open('meshparam.d', 'w')
 
 
 triangle_num = 0 #三角形の個数(nel)
