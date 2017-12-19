@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -38,6 +39,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private Text u0;
 	private Text u1;
 	private Text u2;
+	private Text player_position;
+
+	public GameObject[] value_cube;
 
 	void Awake(){
 
@@ -201,6 +205,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		u0 = GameObject.Find("u0").GetComponent<Text>();
 		u1 = GameObject.Find("u1").GetComponent<Text>();
 		u2 = GameObject.Find("u2").GetComponent<Text>();
+		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 
 	}
 	
@@ -213,23 +218,29 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 		if(GUIManager.play_bool){
 			Vector3 my_location = CameraObj.transform.position;
+			 
 			float r = 0;
 			float ds = 8;
 			//ここが４ぱいアールの簡単な内点計算
-			for (int t = 0; t < 3; t++) { //とりあえず0,1,2ステップだけ
+			for (int t = 0; t < 17; t++) { //とりあえず0,1,2ステップだけ
 				for (int i = 0; i < mesh_point_center_array.Length; i++) {
 					r = Vector3.Distance (my_location, mesh_point_center_array [i]);
 					u_array [t] += (boundary_condition_u [t, i] + boundary_condition_q [t, i])*ds / (4 * Mathf.PI * r);
 				}
-			}		
+			}
 			u0.text = "u0:"+u_array [0].ToString ();
 			u1.text = "u1:"+u_array [1].ToString ();
 			u2.text = "u2:"+u_array [2].ToString ();
+			player_position.text = "Position:"+my_location.ToString ();
+			for (int i = 0; i < 17; i++) {
+				Vector3 v = value_cube[i].transform.localPosition;
+				v.y = u_array [i];
+				value_cube [i].transform.localPosition = v;
+			}
+
+
 		}
 	}
-
-
-
 
 
 

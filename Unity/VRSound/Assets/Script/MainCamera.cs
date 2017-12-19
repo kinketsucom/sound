@@ -14,6 +14,10 @@ public class MainCamera : MonoBehaviour {
 
 		Vector3 v = this.transform.localPosition;
 		Vector3 l = this.transform.localEulerAngles;
+
+		// カメラの方向から、X-Z平面の単位ベクトルを取得
+		Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
+
 		if (Input.GetKey(KeyCode.W)) {   // Wキーで前進.
 			v.z += 1f;
 		}
