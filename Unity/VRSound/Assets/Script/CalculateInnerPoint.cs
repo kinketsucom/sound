@@ -27,7 +27,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	public GameObject CameraObj;
 
 
-	private float[] u_array; //出力を入れるやつ
+	public static float[] u_array; //出力を入れるやつ
 	private Vector3[] mesh_point_center_array;//メッシュの重心
 	private float[,] boundary_condition_q;//境界条件q
 	private float[,] boundary_condition_u;//境界条件u
@@ -42,6 +42,11 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private Text player_position;
 
 	public GameObject[] value_cube;
+
+	public int position = 0;
+	public int samplerate = 44100;
+	public float frequency = 440;
+
 
 	void Awake(){
 
@@ -222,7 +227,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			float r = 0;
 			float ds = 8;
 			//ここが４ぱいアールの簡単な内点計算
-			for (int t = 0; t < 17; t++) { //とりあえず0,1,2ステップだけ
+			for (int t = 0; t < step_num; t++) { //とりあえず0,1,2ステップだけ
 				for (int i = 0; i < mesh_point_center_array.Length; i++) {
 					r = Vector3.Distance (my_location, mesh_point_center_array [i]);
 					u_array [t] += (boundary_condition_u [t, i] + boundary_condition_q [t, i])*ds / (4 * Mathf.PI * r);
@@ -237,6 +242,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 				v.y = u_array [i];
 				value_cube [i].transform.localPosition = v;
 			}
+				
+
+
 
 
 		}
@@ -260,25 +268,18 @@ public class CalculateInnerPoint : MonoBehaviour {
 	}
 
 
-
-
-
-
-//	void CalcLayer(float t,float x,float y,float z,float slay,float dlay,float alm0){
-//		float[] cta;
-//		float zz = z*z;
-//		float yyzz = y*y + zz;
-//		float ay = Mathf.Abs(y);
-//		float az = Mathf.Abs(x);
-//		float sy = Mathf.Sign (y);
-//		float sz = Mathf.Sign (z);
-//
-//		cta[0] = sy*Mathf.Atan2(-x[0],ay); //Atan2でいいのか問題
-//		cta[1] = sy*Mathf.Atan2(-x[1],ay); //Atan2でいいのか問題
-//
-//
-//		for (int it = 1; it <= 3; it++) {
-//			int itpm = 1 - (it - 1) % 2 * 3; //! 1 -> 1, 2 -> -2, 3 -> -1
-//		}
-//	}
+	void OnAudioRead(float[] data)
+	{
+		int count = 0;
+		while (count < u_array.Length)
+		{
+			data [count] = u_array [count];
+			position++;
+			count++;
+		}
+	}
+	void OnAudioSetPosition(int newPosition)
+	{
+		position = newPosition;
+	}
 }
