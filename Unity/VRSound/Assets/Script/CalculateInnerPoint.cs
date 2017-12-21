@@ -21,7 +21,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private string file;
 	private int counter = 0;
 	private int triangle_num = 0;
-	private int step_num = 0;
+	public static int step_num = 0;
 	private Vector3[] point_vec = {Vector3.zero,Vector3.zero,Vector3.zero} ;//重心計算用 
 	//カメラの設定
 	public GameObject CameraObj;
@@ -268,18 +268,4 @@ public class CalculateInnerPoint : MonoBehaviour {
 	}
 
 
-	void OnAudioRead(float[] data)
-	{
-		int count = 0;
-		while (count < u_array.Length)
-		{
-			data [count] = u_array [count];
-			position++;
-			count++;
-		}
-	}
-	void OnAudioSetPosition(int newPosition)
-	{
-		position = newPosition;
-	}
 }
