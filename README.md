@@ -21,3 +21,6 @@ FIXIT:オブジェクトの衝突判定を用いて音を表現する方が良�
 1. viewport(青い画面)で右クリック->verify->element->normals
 1. Action->Modify
 
+# <u>各ファイルの説明(暫定)</u>
++ fort.100 (現在は)ノイマン条件下なので、ディリクレ条件のファイル
+

@@ -9,17 +9,37 @@ public class MainCamera : MonoBehaviour {
 	public int position = 0;
 	public int samplerate = 44100;
 	public float frequency = 440;
+	AudioClip myClip;
+	AudioSource aud;
+
+
 
 	// Use this for initialization
 	void Start () {
 		step_num = CalculateInnerPoint.step_num;
 		u_array = new float[step_num];
+		aud = GetComponent<AudioSource> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(GUIManager.play_bool){
-			u_array	= CalculateInnerPoint.u_array;
+
+		if (GUIManager.play_bool) {
+//			u_array	= CalculateInnerPoint.u_array;
+//			myClip = AudioClip.Create("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
+//			aud = GetComponent<AudioSource>();
+//			aud.GetOutputData(u_array, 1);
+//			aud.Stop ();
+//			aud.Play ();
+
+			AudioClip myClip = AudioClip.Create ("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
+			aud.clip = myClip;
+			if (!aud.isPlaying ) {
+//				aud.Play ();
+			}
+		} else {
+			aud = GetComponent<AudioSource> ();
+//			aud.Stop ();
 		}
 
 		Vector3 v = this.transform.localPosition;
@@ -30,12 +50,9 @@ public class MainCamera : MonoBehaviour {
 
 		if (Input.GetKey(KeyCode.W)) {   // Wキーで前進.
 			v.z += 1f;
-
-			AudioClip myClip = AudioClip.Create("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
-			AudioSource aud = GetComponent<AudioSource>();
-			aud.Stop ();
-			aud.clip = myClip;
-			aud.Play();
+//			aud.Stop ();
+//			aud.clip = myClip;
+//			aud.Play();
 		}
 		if (Input.GetKey(KeyCode.Z)) {   // Sキーで後退.
 			v.z -= 1f;
@@ -67,15 +84,19 @@ public class MainCamera : MonoBehaviour {
 
 	}
 
-
+	public void AAAAA(){
+		aud.Play ();
+		print(aud.time);
+		print ("play");
+	}
 
 
 	void OnAudioRead(float[] data)
 	{
 		int count = 0;
-		while (count < u_array.Length)
-		{
-			data [count] = u_array [count];
+		while (count < CalculateInnerPoint.u_array.Length)//data.Length)
+		{	
+			data [count] = CalculateInnerPoint.u_array [count];//0.3f * Mathf.Sign (Mathf.Sin (2 * Mathf.PI * frequency * position / samplerate));// u_array [count];
 			position++;
 			count++;
 		}

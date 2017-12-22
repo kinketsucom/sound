@@ -36,12 +36,12 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 
 	//表示用のやつ
-	private Text u0;
-	private Text u1;
-	private Text u2;
+//	private Text u0;
+//	private Text u1;
+//	private Text u2;
 	private Text player_position;
 
-	public GameObject[] value_cube;
+//	public GameObject[] value_cube;//波形表示をきしょくやってた
 
 	public int position = 0;
 	public int samplerate = 44100;
@@ -87,7 +87,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 				}
 			}
 		}
-
+		print (step_num);
 
 		//初期化
 		u_array = new float[step_num];
@@ -207,9 +207,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//表示用
-		u0 = GameObject.Find("u0").GetComponent<Text>();
-		u1 = GameObject.Find("u1").GetComponent<Text>();
-		u2 = GameObject.Find("u2").GetComponent<Text>();
+//		u0 = GameObject.Find("u0").GetComponent<Text>();
+//		u1 = GameObject.Find("u1").GetComponent<Text>();
+//		u2 = GameObject.Find("u2").GetComponent<Text>();
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 
 	}
@@ -233,15 +233,15 @@ public class CalculateInnerPoint : MonoBehaviour {
 					u_array [t] += (boundary_condition_u [t, i] + boundary_condition_q [t, i])*ds / (4 * Mathf.PI * r);
 				}
 			}
-			u0.text = "u0:"+u_array [0].ToString ();
-			u1.text = "u1:"+u_array [1].ToString ();
-			u2.text = "u2:"+u_array [2].ToString ();
+//			u0.text = "u0:"+u_array [0].ToString ();
+//			u1.text = "u1:"+u_array [1].ToString ();
+//			u2.text = "u2:"+u_array [2].ToString ();
 			player_position.text = "Position:"+my_location.ToString ();
-			for (int i = 0; i < 17; i++) {
-				Vector3 v = value_cube[i].transform.localPosition;
-				v.y = u_array [i];
-				value_cube [i].transform.localPosition = v;
-			}
+//			for (int i = 0; i < 17; i++) {
+//				Vector3 v = value_cube[i].transform.localPosition;
+//				v.y = u_array [i];
+//				value_cube [i].transform.localPosition = v;
+//			}
 				
 
 
