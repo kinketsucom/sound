@@ -11,6 +11,7 @@ public class MainCamera : MonoBehaviour {
 	public float frequency = 440;
 	AudioClip myClip;
 	AudioSource aud;
+	float time = 0.0f;
 
 
 
@@ -38,13 +39,20 @@ public class MainCamera : MonoBehaviour {
 //			aud.Play ();
 
 			AudioClip myClip = AudioClip.Create ("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
-			aud.clip = myClip;
-			if (!aud.isPlaying ) {
-//				aud.Play ();
+			time = aud.time;
+			aud.Stop ();
+			if (time >= 2) {//入射波のながさが二秒なので
+				time = 0;
 			}
+			print (time);
+			aud.clip = myClip;
+			aud.time = time;
+			aud.Play ();
+
 		} else {
 			aud = GetComponent<AudioSource> ();
-//			aud.Stop ();
+			aud.Stop ();
+			time = aud.time;
 		}
 			
 		Quaternion cam_forward = this.transform.rotation;
@@ -111,7 +119,8 @@ public class MainCamera : MonoBehaviour {
 		int count = 0;
 		while (count < CalculateInnerPoint.u_array.Length)//data.Length)
 		{	
-			data [count] = 0.3f*CalculateInnerPoint.u_array [count];//0.3f * Mathf.Sign (Mathf.Sin (2 * Mathf.PI * frequency * position / samplerate));// u_array [count];
+//			data [count] = 0.3f*CalculateInnerPoint.u_array [count];
+			data[count] = 0.3f * Mathf.Sign (Mathf.Sin (2 * Mathf.PI * frequency * position / samplerate)); // u_array [count];
 			position++;
 			count++;
 		}
