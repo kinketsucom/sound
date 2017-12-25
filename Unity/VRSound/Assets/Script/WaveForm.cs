@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WaveForm : MonoBehaviour {
 	public LineRenderer lr;
-	private int theta;
 	private int count;
 //	private float[] u_array;
 	private int step_num;
@@ -21,8 +20,7 @@ public class WaveForm : MonoBehaviour {
 		print (leftTop);
 		step_num = CalculateInnerPoint.step_num;
 //		u_array = new float[step_num];
-		theta = 0;
-		lr.SetVertexCount(step_num);
+		lr.positionCount = step_num;
 	}
 
 	// Update is called once per frame

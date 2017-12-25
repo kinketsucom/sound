@@ -7,8 +7,8 @@ public class MainCamera : MonoBehaviour {
 	private float[] u_array;
 	private int step_num;
 	public int position = 0;
-	public int samplerate = 100;
-	public float frequency = 100;
+	public int samplerate = 44100;
+	public float frequency = 440;
 	AudioClip myClip;
 	AudioSource aud;
 	float time = 0.0f;
@@ -38,13 +38,13 @@ public class MainCamera : MonoBehaviour {
 //			aud.Stop ();
 //			aud.Play ();
 
-			AudioClip myClip = AudioClip.Create ("MySinusoid", samplerate * 10, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
+			AudioClip myClip = AudioClip.Create ("MySinusoid", samplerate * 2, 1, samplerate, true, OnAudioRead, OnAudioSetPosition);
 			time = aud.time;
 			aud.Stop ();
 			if (time >= 2) {//入射波のながさが二秒なので
 				time = 0;
 			}
-			print (time);
+//			print (time);
 			aud.clip = myClip;
 			aud.time = time;
 			aud.Play ();
@@ -117,7 +117,7 @@ public class MainCamera : MonoBehaviour {
 	void OnAudioRead(float[] data)
 	{
 		int count = 0;
-		while (count < data.Length)//CalculateInnerPoint.u_array.Length)//data.Length)
+		while (count < CalculateInnerPoint.u_array.Length)//data.Length)
 		{	
 //			data [count] = 0.3f*CalculateInnerPoint.u_array [count];
 			data[count] = 0.3f * Mathf.Sign (Mathf.Sin (2 * Mathf.PI * frequency * position / samplerate)); // u_array [count];

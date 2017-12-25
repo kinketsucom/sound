@@ -49,7 +49,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	public float frequency = 440;
 
 
-	void Start(){
+	void Awake(){
 		log.GetComponent<Text>().text = "load start";
 
 		file = Application.dataPath + "/Resource/meshparam.d";//三角形を作る番号
@@ -202,14 +202,14 @@ public class CalculateInnerPoint : MonoBehaviour {
 			counter += 1;
 
 		}//ここで重心の計算は終了
-//	}
+	}
 
 
 
 
 
 	// Use this for initialization
-//	void Start () {
+	void Start () {
 		//表示用
 //		u0 = GameObject.Find("u0").GetComponent<Text>();
 //		u1 = GameObject.Find("u1").GetComponent<Text>();
