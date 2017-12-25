@@ -40,6 +40,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 //	private Text u1;
 //	private Text u2;
 	private Text player_position;
+	public GameObject log;
 
 //	public GameObject[] value_cube;//波形表示をきしょくやってた
 
@@ -48,8 +49,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 	public float frequency = 440;
 
 
-	void Awake(){
-
+	void Start(){
+		log.GetComponent<Text>().text = "load start";
 
 		file = Application.dataPath + "/Resource/meshparam.d";//三角形を作る番号
 		lines = ReadFile (file); 
@@ -57,19 +58,21 @@ public class CalculateInnerPoint : MonoBehaviour {
 		{
 			param_list.Add (item);
 		}
+		log.GetComponent<Text>().text = "loaded param.d";
+
 		file = Application.dataPath + "/Resource/meshtriangle.d";//三角形を作る番号
 		lines = ReadFile (file); 
 		foreach (string item in lines)
 		{
 			triangle_list.Add (item);
 		}
+		log.GetComponent<Text>().text = "loaded triangle.d";
 		file = Application.dataPath + "/Resource/meshpoint.d";
 		lines = ReadFile (file); 
 		foreach (string item in lines)
 		{
 			point_list.Add (item);
 		}
-
 		///////////初期設定
 		/// 三角形メッシュの数を取得する
 		foreach (string item in param_list) {
@@ -87,8 +90,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 				}
 			}
 		}
-		print (step_num);
-
+//		print (step_num);
+		log.GetComponent<Text>().text = "loaded meshpoint.d";
 		//初期化
 		u_array = new float[step_num];
 		boundary_condition_q = new float[step_num,triangle_num];
@@ -117,8 +120,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 			}
 			step += 1;
 		}
+		log.GetComponent<Text>().text = "set Dirichlet";
 		/////////ここからノイマンq
-		file = Application.dataPath + "/Resource/cond_bc.d";//現状はディリクレ条件
+		file = Application.dataPath + "/Resource/cond_bc.d";//現状はノイマン条件
 		lines = ReadFile (file); 
 		foreach (string item in lines)
 		{
@@ -146,7 +150,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			}
 		}
 
-
+		log.GetComponent<Text>().text = "set Neumann";
 
 		mesh_point_center_array = new Vector3[triangle_num];
 
@@ -198,14 +202,14 @@ public class CalculateInnerPoint : MonoBehaviour {
 			counter += 1;
 
 		}//ここで重心の計算は終了
-	}
+//	}
 
 
 
 
 
 	// Use this for initialization
-	void Start () {
+//	void Start () {
 		//表示用
 //		u0 = GameObject.Find("u0").GetComponent<Text>();
 //		u1 = GameObject.Find("u1").GetComponent<Text>();
