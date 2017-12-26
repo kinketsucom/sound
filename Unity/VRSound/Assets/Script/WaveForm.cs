@@ -25,9 +25,12 @@ public class WaveForm : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		int length = 300;
-		for (int i = 0; i < step_num; i++) {
-			lr.SetPosition (i, new Vector3 (sub_camera_position.x-length + 2*length*(float)i/(float)step_num, CalculateInnerPoint.u_array[i], sub_camera_position.z+100));//表示位置を考える必要があるとりあえず-50から50になてば素敵
+
+		if (GUIManager.play_bool) {
+			int length = 300;
+			for (int i = 0; i < CalculateInnerPoint.samplerate * CalculateInnerPoint.time; i++) {
+				lr.SetPosition (i, new Vector3 (sub_camera_position.x - length + 2 * length * (float)i / ((float)CalculateInnerPoint.samplerate * CalculateInnerPoint.time), CalculateInnerPoint.u_array [i], sub_camera_position.z + 100));//表示位置を考える必要があるとりあえず-50から50になてば素敵
+			}
 		}
 
 

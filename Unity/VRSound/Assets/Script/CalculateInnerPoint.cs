@@ -16,8 +16,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 	List<string> triangle_list = new List<string>();
 	List<string> point_list = new List<string>();
 	List<string> param_list = new List<string>();
-	List<string> u_list = new List<string>();//ディリクレを読み込む用
-	List<string> q_list = new List<string>();//ノイマンを読み込む用
+//	List<string> u_list = new List<string>();//ディリクレを読み込む用
+//	List<string> q_list = new List<string>();//ノイマンを読み込む用
 	private string file;
 	private int counter = 0;
 	private int triangle_num = 0;
@@ -27,29 +27,38 @@ public class CalculateInnerPoint : MonoBehaviour {
 	public GameObject CameraObj;
 
 
-	public static float[] u_array; //出力を入れるやつ
-	private Vector3[] mesh_point_center_array;//メッシュの重心
-	private float[,] boundary_condition_q;//境界条件q
-	private float[,] boundary_condition_u;//境界条件u
 
+	public static float[] u_array; //出力を入れるやつ
+	public static Vector3[] mesh_point_center_array;//メッシュの重心
+
+	public static float[,] boundary_condition_q;//境界条件q
+	public static float[,] boundary_condition_u;//境界条件u
+
+	//音源の設定
+	private Vector3 origin_point;
+	public static float[] origin_wave;
+	private float[] differential_origin_wave;
+	private Vector3 normal_vec = new Vector3(0,0,0);
+	private float wave_speed = 340.29f;
+	public static int samplerate = 4000;
+	public static int time=1;
+	private float frequency = 440;
+	private float loudness = 1000;//入射波のうるささ
+
+	public static float[,] bc_q;
+	public static float[,] bc_u;
 
 
 
 	//表示用のやつ
-//	private Text u0;
-//	private Text u1;
-//	private Text u2;
-	private Text player_position;
+
 	public GameObject log;
-
-//	public GameObject[] value_cube;//波形表示をきしょくやってた
-
 	public int position = 0;
-	public int samplerate = 44100;
-	public float frequency = 440;
+	private float duration=0;
 
 
 	void Awake(){
+		
 		log.GetComponent<Text>().text = "load start";
 
 		file = Application.dataPath + "/Resource/meshparam.d";//三角形を作る番号
@@ -93,10 +102,20 @@ public class CalculateInnerPoint : MonoBehaviour {
 //		print (step_num);
 		log.GetComponent<Text>().text = "loaded meshpoint.d";
 		//初期化
-		u_array = new float[step_num];
-		boundary_condition_q = new float[step_num,triangle_num];
-		boundary_condition_u = new float[step_num, triangle_num];
+//		u_array = new float[step_num];
+		u_array = new float[samplerate*time];
+//		origin_wave = new float[step_num];
+//		boundary_condition_q = new float[step_num,triangle_num];
+//		boundary_condition_u = new float[step_num, triangle_num];
 
+		//
+		boundary_condition_q = new float[samplerate*time, triangle_num];
+		boundary_condition_u = new float[samplerate*time, triangle_num];
+		origin_wave = new float[samplerate*time];
+		differential_origin_wave = new float[samplerate*time];
+
+
+		/*
 		//////////ここからディリクレ
 		file = Application.dataPath + "/Resource/fort.100";//現状はディリクレ条件
 		lines = ReadFile (file); 
@@ -152,10 +171,15 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 		log.GetComponent<Text>().text = "set Neumann";
 
+		*/
+
 		mesh_point_center_array = new Vector3[triangle_num];
 
 		///////////重心の計算
 		/// まずは三角形をなすnodeを取得
+		/// 
+
+		log.GetComponent<Text>().text = "calculate center point";
 		counter = 0;
 		int num_counter = 0;
 		foreach (string item in triangle_list) {
@@ -211,47 +235,110 @@ public class CalculateInnerPoint : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//表示用
-//		u0 = GameObject.Find("u0").GetComponent<Text>();
-//		u1 = GameObject.Find("u1").GetComponent<Text>();
-//		u2 = GameObject.Find("u2").GetComponent<Text>();
-		player_position = GameObject.Find ("Position").GetComponent<Text> ();
+		log.GetComponent<Text>().text = "calculate origin wave";
+		origin_point = new Vector3(0,0,0);
+		for (int i = 0; i < samplerate * time; i++) {
+			origin_wave[i] = loudness*Mathf.Sin(2*Mathf.PI*frequency*i/samplerate);
+			differential_origin_wave[i] = loudness*-2*Mathf.PI*frequency*Mathf.Cos(2*Mathf.PI*frequency*i/samplerate);
+		}
 
+
+		log.GetComponent<Text>().text = "calculate u and q";
+		for(int i = 0; i< samplerate*time; i++){//時間
+			for (int j = 0; j < mesh_point_center_array.Length; j++) {
+				//法線ベクトルの計算
+				normal_vec = new Vector3(0,0,0);
+				if (mesh_point_center_array [j].x == 0.0f) {//手前0
+					normal_vec.x = 0;
+				} else if (mesh_point_center_array [j].x < 40.0f) {//間
+
+					if (mesh_point_center_array [j].z == 0.0f) {//みぎ1
+						normal_vec.z = 1;
+					} else if (mesh_point_center_array [j].z == 6.0f) {//ひだり2
+						normal_vec.z = -1;
+					}else{//
+						if(mesh_point_center_array[j].y == 20.0f){//上3
+							normal_vec.y = -1;
+						}else{//下4
+							normal_vec.y = 1;
+						}
+					}
+				} else {//x奥5
+					normal_vec.x = -1;
+				}
+
+
+				//uとqの計算
+				float r = Vector3.Distance (mesh_point_center_array[j], origin_point);
+				int delay = (int)(i - samplerate*r / wave_speed);
+				if(delay>=0){
+					boundary_condition_u [i,j] = origin_wave [delay]/(4*Mathf.PI*r);
+					boundary_condition_q [i, j] = differential_origin_wave [delay] * Vector3.Dot (normal_vec, mesh_point_center_array [j]) / (wave_speed * r);
+				}
+			}
+
+		}
+
+		log.GetComponent<Text>().text = "load finished";
+
+
+	
+
+
+
+
+		//
+
+		//書き出し用
+//		for(int i =0 ;i<samplerate*time;i++){
+//			string hoge = boundary_condition_u [i, 0].ToString();
+//			textSave (hoge);
+//		}
 	}
+
+	public static void textSave(string txt,Vector3 position){//保存用関数
+		StreamWriter sw = new StreamWriter("./WaveShape/"+position.ToString()+".txt",true); //true=追記 false=上書き
+		sw.WriteLine(txt);
+		sw.Flush();
+		sw.Close();
+	}
+
+
 	
 	// Update is called once per frame
 	void Update () {
-		//毎フレーム初期化
-		for(int i =0;i<u_array.Length;i++){
-			u_array [i] = 0;
-		}
+		duration = Time.deltaTime;
+		print (duration);
 
-		if(GUIManager.play_bool){
-			Vector3 my_location = CameraObj.transform.position;
-			 
-			float r = 0;
-			float ds = 8;
-			//ここが４ぱいアールの簡単な内点計算
-			for (int t = 0; t < step_num; t++) { //とりあえず0,1,2ステップだけ
-				for (int i = 0; i < mesh_point_center_array.Length; i++) {
-					r = Vector3.Distance (my_location, mesh_point_center_array [i]);
-					u_array [t] += (boundary_condition_u [t, i] + boundary_condition_q [t, i])*ds / (4 * Mathf.PI * r);
-				}
-			}
-//			u0.text = "u0:"+u_array [0].ToString ();
-//			u1.text = "u1:"+u_array [1].ToString ();
-//			u2.text = "u2:"+u_array [2].ToString ();
-			player_position.text = "Position:"+my_location.ToString ();
-//			for (int i = 0; i < 17; i++) {
-//				Vector3 v = value_cube[i].transform.localPosition;
-//				v.y = u_array [i];
-//				value_cube [i].transform.localPosition = v;
+		if (GUIManager.play_bool) {
+			//毎フレーム初期化
+//			for (int i = 0; i < u_array.Length; i++) {
+//				u_array [i] = 0;
 //			}
-				
 
-
-
+//			float r = 0;
+//			float ds = 8;
+//			//ここが４ぱいアールの簡単な内点計算
+//			for (int t = 0; t < samplerate * time; t++) { //とりあえず0,1,2ステップだけ
+//				for (int i = 0; i < mesh_point_center_array.Length; i++) {
+//					r = Vector3.Distance (my_location, mesh_point_center_array [i]);
+//					u_array [t] += (boundary_condition_u [t, i] + (boundary_condition_q [t, i] / r)) * ds / (4 * Mathf.PI*r);
+//				}
+//			}
+//			for (int t = 0; t < step_num; t++) { //とりあえず0,1,2ステップだけ
+//				for (int i = 0; i < mesh_point_center_array.Length; i++) {
+//					r = Vector3.Distance (my_location, mesh_point_center_array [i]);
+//					u_array [t] += (boundary_condition_u [t, i] + boundary_condition_q [t, i])*ds / (4 * Mathf.PI * r);
+//				}
+//			}
+								
 
 		}
+
+
+
+
+
 	}
 
 

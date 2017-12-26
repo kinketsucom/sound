@@ -18,13 +18,6 @@ public class Scatterer : MonoBehaviour {
 	void Start () {
 		ReadFile ();
 		xyz_scale_array = scale_array [scale_array.Length-1].Split(' ');
-//		//空白配列を消したいがなぜかできない
-//		foreach (string val in xyz_scale_array) {
-//			if (val != " ") {
-//				print (val);
-//			}
-//		}
-//		print ("*******");
 		x = float.Parse(xyz_scale_array [2]);
 		y = float.Parse(xyz_scale_array [8]);
 		z =  float.Parse(xyz_scale_array [14]);
@@ -33,10 +26,9 @@ public class Scatterer : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-//		print (size_txt);
-	}
+//	// Update is called once per frame
+//	void Update () {
+//	}
 
 
 
@@ -48,6 +40,7 @@ public class Scatterer : MonoBehaviour {
 			// 一行毎読み込み
 			scale_array = File.ReadAllLines(fi);
 		} catch (Exception e) {
+			print (e);
 			// 改行コード
 //			size_txt += SetDefaultText ();
 		}
