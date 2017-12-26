@@ -107,11 +107,11 @@ public class MainCamera : MonoBehaviour {
 
 	}
 
-	public void AAAAA(){
-		aud.Play ();
-		print(aud.time);
-		print ("play");
-	}
+//	public void AAAAA(){
+//		aud.Play ();
+//		print(aud.time);
+//		print ("play");
+//	}
 
 
 	void OnAudioRead(float[] data)
