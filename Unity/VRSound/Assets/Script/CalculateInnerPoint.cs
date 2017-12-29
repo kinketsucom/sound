@@ -40,8 +40,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private float[] differential_origin_wave;
 	private Vector3 normal_vec = new Vector3(0,0,0);
 	private float wave_speed = 340.29f;
-	public static int samplerate = 4000;
-	public static int time=1;
+	public static int samplerate = 8000;
+	public static int time=2;
 	private float frequency = 440;
 	private float loudness = 1000;//入射波のうるささ
 
@@ -239,6 +239,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		origin_point = new Vector3(0,0,0);
 		for (int i = 0; i < samplerate * time; i++) {
 			origin_wave[i] = loudness*Mathf.Sin(2*Mathf.PI*frequency*i/samplerate);
+//			TextSa (origin_wave [i].ToString());
 			differential_origin_wave[i] = loudness*-2*Mathf.PI*frequency*Mathf.Cos(2*Mathf.PI*frequency*i/samplerate);
 		}
 
@@ -294,6 +295,12 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			string hoge = boundary_condition_u [i, 0].ToString();
 //			textSave (hoge);
 //		}
+	}
+	public static void TextSa(string txt){//保存用関数
+		StreamWriter sw = new StreamWriter("./WaveShape/test.txt",true); //true=追記 false=上書き
+		sw.WriteLine(txt);
+		sw.Flush();
+		sw.Close();
 	}
 
 	public static void textSave(string txt,Vector3 position){//保存用関数

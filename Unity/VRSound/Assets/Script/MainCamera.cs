@@ -13,6 +13,7 @@ public class MainCamera : MonoBehaviour {
 	AudioSource aud;
 //	float time = 0.0f;
 
+	public static bool key_down;
 
 	//カメラ位置
 	private Text player_position;
@@ -54,6 +55,7 @@ public class MainCamera : MonoBehaviour {
 //			aud.Stop ();
 //			time = aud.time;
 		
+			key_down = false;
 		}
 			Quaternion cam_forward = this.transform.rotation;
 			Vector3 vec = cam_forward.eulerAngles;
@@ -78,6 +80,7 @@ public class MainCamera : MonoBehaviour {
 				player_position.text = this.transform.localPosition.ToString ();
 				if (GUIManager.play_bool) {
 					CalculateInnerPoint.u_array = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time);
+				key_down = true;
 				//書き出し用
 //				for (int i = 0; i < CalculateInnerPoint.samplerate * CalculateInnerPoint.time; i++) {
 //					string hoge = CalculateInnerPoint.u_array [i].ToString ();
