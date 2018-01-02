@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 
 public class MainCamera : MonoBehaviour {
@@ -14,11 +15,13 @@ public class MainCamera : MonoBehaviour {
 //	float time = 0.0f;
 
 	public static bool key_down;
+	public static int calc_frame = 100;
+	public static int start_position = 1000;
 
 	//カメラ位置
 	private Text player_position;
 
-
+	public static float wave_max=0;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +29,7 @@ public class MainCamera : MonoBehaviour {
 //		u_array = new float[step_num];
 		aud = GetComponent<AudioSource> ();
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
+		   
 	}
 	
 	// Update is called once per frame
@@ -79,7 +83,7 @@ public class MainCamera : MonoBehaviour {
 				v.z += 1f;
 				player_position.text = this.transform.localPosition.ToString ();
 				if (GUIManager.play_bool) {
-					CalculateInnerPoint.u_array = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time);
+					CalculateInnerPoint.u_array = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time,start_position);
 				key_down = true;
 				//書き出し用
 //				for (int i = 0; i < CalculateInnerPoint.samplerate * CalculateInnerPoint.time; i++) {
@@ -123,11 +127,45 @@ public class MainCamera : MonoBehaviour {
 	}
 
 	public void AAAAA(){
-		myClip = AudioClip.Create("hoge", CalculateInnerPoint.samplerate * CalculateInnerPoint.time, 1, CalculateInnerPoint.samplerate, false, OnAudioRead, OnAudioSetPosition);
-		aud = GetComponent<AudioSource>();
-		aud.clip = myClip;
-//		aud.GetOutputData(CalculateInnerPoint.u_array, 1);
+		//playボタンで音をつくるんだけど。。。
+
+		AudioSource aud = GetComponent<AudioSource>();
+		int count = 0;
+//		foreach (float val in CalculateInnerPoint.sound_array) {
+//			CalculateInnerPoint.sound_array [count] = CalculateInnerPoint.sound_array [count] * 0.0f;
+//		}
+		float[] hoge = new float[CalculateInnerPoint.sound_array.Length];
+		aud.clip.SetData (CalculateInnerPoint.sound_array, 1000);
 		aud.Play ();
+
+
+//		myClip = AudioClip.Create("fuga", CalculateInnerPoint.samplerate * CalculateInnerPoint.time, 2, CalculateInnerPoint.samplerate, true, OnAudioRead, OnAudioSetPosition);
+////		myClip = AudioClip.Create("hoge", CalculateInnerPoint.samplerate * CalculateInnerPoint.time, 1, CalculateInnerPoint.samplerate, false, OnAudioRead, OnAudioSetPosition);
+//		aud = GetComponent<AudioSource>();
+//		aud.clip = myClip;
+////		aud.GetOutputData(CalculateInnerPoint.u_array, 1);
+//		aud.Play ();
+	}
+
+
+	public void BBBBB(){
+		for (int i = 1000; i <1100 ; i++) {
+//			float r = Vector3.Distance (new Vector3(0,0,0), CalculateInnerPoint.mesh_point_center_array [i]);
+			print (CalculateInnerPoint.boundary_condition_u [i, 1]); //+ (CalculateInnerPoint.boundary_condition_q [i, 0] / r));
+		}
+		print("#################こんでぃしょんU");
+		for (int i = 1000; i <1100 ; i++) {
+			print (CalculateInnerPoint.boundary_condition_q [i, 1]); //+ (CalculateInnerPoint.boundary_condition_q [i, 0] / r));
+		}
+		print("#################こんでぃしょんQ");
+		for (int i = 1000; i <1100 ; i++) {
+			print (CalculateInnerPoint.u_array [i]);
+		}
+		print ("#################UUUUUUUUU");
+
+		AudioSource aud = GetComponent<AudioSource>();
+		aud.Stop ();
+
 	}
 
 
@@ -136,9 +174,10 @@ public class MainCamera : MonoBehaviour {
 		int count = 0;
 		while (count < data.Length)
 		{	
-			data [count] = 10*CalculateInnerPoint.u_array [count];
+			data [count] = CalculateInnerPoint.sound_array [count];
+//			data [count] = 10*CalculateInnerPoint.u_array [count];
 //			data[count] = 0.3f * Mathf.Sign (Mathf.Sin (2 * Mathf.PI * frequency * position / samplerate)); // u_array [count];
-			position++;
+//			position++;
 			count++;
 		}
 	}
@@ -148,11 +187,12 @@ public class MainCamera : MonoBehaviour {
 	}
 
 
-	private float[] CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time){
+	private float[] CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
 		float[] u_array = new float[samplerate * time];
 		float r = 0;
 		float ds = 8;
-		for (int t = 0; t < samplerate * time; t =t+10) { 
+
+		for (int t = start_position; t < start_position+calc_frame; t++) { //ここの開始位置を考える
 			for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
 				r = Vector3.Distance (position, CalculateInnerPoint.mesh_point_center_array [i]);
 				u_array [t] += (CalculateInnerPoint.boundary_condition_u [t, i] + (CalculateInnerPoint.boundary_condition_q [t, i] / r)) * ds / (4 * Mathf.PI*r);
