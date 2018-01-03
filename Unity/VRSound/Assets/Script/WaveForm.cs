@@ -28,7 +28,7 @@ public class WaveForm : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		
 		if (GUIManager.play_bool&&MainCamera.key_down) {
 //			int length = 2;
 			for (int i = MainCamera.start_position; i < MainCamera.start_position+MainCamera.calc_frame; i++) {

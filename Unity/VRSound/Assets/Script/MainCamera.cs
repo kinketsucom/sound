@@ -29,7 +29,6 @@ public class MainCamera : MonoBehaviour {
 //		u_array = new float[step_num];
 		aud = GetComponent<AudioSource> ();
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
-		   
 	}
 	
 	// Update is called once per frame
