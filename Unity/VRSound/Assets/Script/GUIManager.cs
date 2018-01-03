@@ -5,17 +5,14 @@ using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour {
 
+	//全体の計算処理開始フラグ
 	public static bool play_bool=false;
 
-	private GameObject start_button;
+	//表示用
+	private GameObject start_button;//全体の計算処理開始スタートボタン
 	private Text start_button_text;
-
-	private GameObject frame_counter;
+	private GameObject frame_counter;//再生中音のフレーム位置
 	private Text frame_counter_text;
-
-
-
-
 	public static int frame=0;
 
 	// Use this for initialization
@@ -27,15 +24,22 @@ public class GUIManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {		
 		if (play_bool) {
+			if (frame > CalculateInnerPoint.samplerate * CalculateInnerPoint.time) {
+				MainCamera.emmit_sound = false;
+				frame = 0;//frameの初期化
+			}
 			frame_counter_text.text = "counter"+frame.ToString();
-			frame += 1;
+			if (MainCamera.emmit_sound) {
+				frame += 1;
+			}
 		}
-		
+
 	}
 
 	public void StartCalculate(){
+		
 		if (play_bool) {
 			play_bool = false;//falseに
 			frame = 0;//frameの初期化
