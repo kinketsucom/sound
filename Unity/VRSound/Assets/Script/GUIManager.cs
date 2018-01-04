@@ -6,48 +6,32 @@ using UnityEngine.UI;
 public class GUIManager : MonoBehaviour {
 
 	//全体の計算処理開始フラグ
-	public static bool play_bool=false;
+//	public static bool play_bool=false;
 
 	//表示用
-	private GameObject start_button;//全体の計算処理開始スタートボタン
-	private Text start_button_text;
+	private GameObject LogObj;
 	private GameObject frame_counter;//再生中音のフレーム位置
 	private Text frame_counter_text;
-	public static int frame=0;
+	public static int frame=9000;
 
 	// Use this for initialization
 	void Start () {
-		start_button= GameObject.Find ("StartButtonText");
+		LogObj = GameObject.Find ("Log");
 		frame_counter = GameObject.Find ("FrameCounterText");
-		start_button_text = start_button.GetComponent<Text> ();
 		frame_counter_text = frame_counter.GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {		
-		if (play_bool) {
 			if (frame > CalculateInnerPoint.samplerate * CalculateInnerPoint.time) {
 				MainCamera.emmit_sound = false;
 				frame = 0;//frameの初期化
+			LogObj.GetComponent<Text>().text = "emmit finished";
 			}
 			frame_counter_text.text = "counter"+frame.ToString();
 			if (MainCamera.emmit_sound) {
+				CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [frame].ToString(),"u_array");
 				frame += 1;
 			}
-		}
-
-	}
-
-	public void StartCalculate(){
-		
-		if (play_bool) {
-			play_bool = false;//falseに
-			frame = 0;//frameの初期化
-			start_button_text.text = "Stop now";
-
-		} else {//再生中のやつ
-			play_bool = true;
-			start_button_text.text = "Playing now";
-		}
 	}
 }

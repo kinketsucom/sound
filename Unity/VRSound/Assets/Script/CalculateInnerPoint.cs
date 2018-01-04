@@ -60,7 +60,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		time = Mathf.CeilToInt(aud.clip.samples / samplerate);//FIXIT:
 		time = 2;//FIXIT:ここはあとで
 
-		Time.fixedDeltaTime = 1 / samplerate;
+//		Time.fixedDeltaTime = 1 / samplerate;
 
 		//////////////////パラメータの読み込み////////////////////
 		log.GetComponent<Text>().text = "load start";
@@ -243,7 +243,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		sound_array = new float[aud.clip.samples * aud.clip.channels];
 		aud.clip.GetData (sound_array, 0);
 		log.GetComponent<Text>().text = "got origin wave";
-		//////////音源データの取得ここまで////
+		////////////////////音源データの取得ここまで////////////////////
 
 
 		////////////////////境界要素の計算////////////////////
@@ -277,19 +277,22 @@ public class CalculateInnerPoint : MonoBehaviour {
 				int delay = (int)(i - samplerate*r / wave_speed);
 				if(delay>=0){
 					boundary_condition_u [i,j] = sound_array [delay]/(4*Mathf.PI*r);
-					boundary_condition_q [i,j] = -(r * sound_array [delay + 1] + (wave_speed - r) * sound_array [delay]) / (4 * Mathf.PI * wave_speed * r * r);
+					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*(r*sound_array[delay+1]+(wave_speed-r)*sound_array[delay])/(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
+//					boundary_condition_q [i,j] = -(r * sound_array [delay + 1] + (wave_speed - r) * sound_array [delay]) / (4 * Mathf.PI * wave_speed * r * r);
 				}
 			}
 
 		}
 		////////////////////境界要素お計算終了////////////////////
 		log.GetComponent<Text>().text = "load finished";
-		log.gameObject.SetActive (false);
 	}
 
 
 	// Use this for initialization
 	void Start () {
+		for (int i = 9000; i < 10000; i++) {
+			TextSaveTitle (sound_array[i].ToString(),"original");
+		}
 	}
 
 	// Update is called once per frame
@@ -326,4 +329,10 @@ public class CalculateInnerPoint : MonoBehaviour {
 		sw.Close();
 	}
 
+	public static void TextSaveTitle(string txt,string title){//保存用関数
+		StreamWriter sw = new StreamWriter("./WaveShape/"+title+".txt",true); //true=追記 false=上書き
+		sw.WriteLine(txt);
+		sw.Flush();
+		sw.Close();
+	}
 }

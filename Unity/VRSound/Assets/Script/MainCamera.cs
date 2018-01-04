@@ -26,8 +26,10 @@ public class MainCamera : MonoBehaviour {
 
 	//波形描画設定
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
-	public static int calc_frame = 10;//波形描画をどの程度するか
+	public static int calc_frame = 100;//波形描画をどの程度するか
 
+	//ログ表示
+	private GameObject LogObj;
 
 	// Use this for initialization
 	void Start () {
@@ -39,48 +41,37 @@ public class MainCamera : MonoBehaviour {
 		######################################################
 		*/
 
+		LogObj = GameObject.Find ("Log");
+
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 		player_position.GetComponent<Text> ().text = this.transform.position.ToString ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-//			Quaternion cam_forward = this.transform.rotation;
-//			Vector3 vec = cam_forward.eulerAngles;
-//			Vector3 vec_forward = new Vector3 (vec.x, vec.z, vec.y);
-//			Vector3 vec_side = new Vector3 (vec.y, vec.x, vec.z);
-			Vector3 v = this.transform.localPosition;
-			Vector3 l = this.transform.localEulerAngles;
-
-			// カメラの方向から、X-Z平面の単位ベクトルを取得
-//		Vector3 cameraForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1)).normalized;
-
+		Vector3 v = this.transform.localPosition;
+		Vector3 l = this.transform.localEulerAngles;
 
 		////////////////////移動制御////////////////////
 		if (Input.GetKey (KeyCode.W)) {   // Wキーで前進.
 //				v.z += 1f;
 			player_position.text = this.transform.localPosition.ToString ();
-//				this.transform.Translate (vec_forward.normalized); 
 		}
 		if (Input.GetKey (KeyCode.Z)) {   // Sキーで後退.
 			v.z += 1f;
 			player_position.text = this.transform.localPosition.ToString ();
-//			this.transform.Translate (-vec_forward.normalized); 
 		}
 		if (Input.GetKey (KeyCode.A)) {  // Aキーで左移動.
 //				v.x -= 1f;
 			player_position.text = this.transform.localPosition.ToString ();
-//				this.transform.Translate (-vec_side.normalized);  
 		}
 		if (Input.GetKey (KeyCode.S)) {  // Dキーで右移動.
-//			v.x += 1f;
-//				this.transform.Translate (vec_side.normalized);  
+//			v.x += 1f; 
 		}
 		this.transform.localPosition = v;
 //
 		if (Input.GetKey (KeyCode.UpArrow)) {  // 上矢印キーで上をむく移動.
 			l.x += -1f;
-//			this.transform.Rotate (new Vector3(0, 0, -1f));
 		}
 		if (Input.GetKey (KeyCode.DownArrow)) {  // 下矢印キーでしたをむく移動.
 			l.x += 1f;
@@ -114,6 +105,7 @@ public class MainCamera : MonoBehaviour {
 				u_array [t] += (CalculateInnerPoint.boundary_condition_u [t, i] + (CalculateInnerPoint.boundary_condition_q [t, i] / r)) * ds / (4 * Mathf.PI*r);
 			}
 		}
+
 		return u_array;
 
 	}
@@ -134,6 +126,8 @@ public class MainCamera : MonoBehaviour {
 		########境界要素法を用いる場合はこちらをコメントアウト########
 		######################################################
 		*/
+		LogObj.GetComponent<Text>().text = "emmit started";
+
 	}
 
 
@@ -147,6 +141,12 @@ public class MainCamera : MonoBehaviour {
 		########境界要素法を用いる場合はこちらをコメントアウト########
 		######################################################
 		*/
+
+		for (int i = 0; i < 2000; i++) {
+//			print (CalculateInnerPoint.boundary_condition_u[i,2]);
+//			print (CalculateInnerPoint.boundary_condition_q [i, 2]);
+		}
+		LogObj.GetComponent<Text> ().text = "emmit stoped";
 	}
 
 
