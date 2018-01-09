@@ -19,7 +19,7 @@ public class WaveForm : MonoBehaviour {
 	void Update () {
 		if (MainCamera.emmit_sound) {
 			for (int i = GUIManager.frame; i < GUIManager.frame+MainCamera.calc_frame; i++) {
-				lr.SetPosition (i-GUIManager.frame, new Vector3 (sub_camera_position.x - length + 2 * length * (float)(i-GUIManager.frame) / MainCamera.calc_frame, CalculateInnerPoint.u_array [i]*10000000, sub_camera_position.z + 100));//表示位置を考える必要があるとりあえず-50から50になてば素敵
+				lr.SetPosition (i-GUIManager.frame, new Vector3 (sub_camera_position.x - length + 2 * length * (float)(i-GUIManager.frame) / MainCamera.calc_frame, CalculateInnerPoint.u_array [i]*1000, sub_camera_position.z + 100));//表示位置を考える必要があるとりあえず-50から50になてば素敵
 			}
 		}
 	}

@@ -12,7 +12,7 @@ public class GUIManager : MonoBehaviour {
 	private GameObject LogObj;
 	private GameObject frame_counter;//再生中音のフレーム位置
 	private Text frame_counter_text;
-	public static int frame=9000;
+	public static int frame=0;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +30,6 @@ public class GUIManager : MonoBehaviour {
 			}
 			frame_counter_text.text = "counter"+frame.ToString();
 			if (MainCamera.emmit_sound) {
-				CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [frame].ToString(),"u_array");
 				frame += 1;
 			}
 	}

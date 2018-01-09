@@ -105,7 +105,9 @@ public class MainCamera : MonoBehaviour {
 				u_array [t] += (CalculateInnerPoint.boundary_condition_u [t, i] + (CalculateInnerPoint.boundary_condition_q [t, i] / r)) * ds / (4 * Mathf.PI*r);
 			}
 		}
-
+		if (start_position > 300) {
+			CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [start_position].ToString (), "u_array");
+		}
 		return u_array;
 
 	}
