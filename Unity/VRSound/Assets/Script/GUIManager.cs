@@ -26,7 +26,7 @@ public class GUIManager : MonoBehaviour {
 			if (frame > CalculateInnerPoint.samplerate * CalculateInnerPoint.time) {
 				MainCamera.emmit_sound = false;
 				frame = 0;//frameの初期化
-			LogObj.GetComponent<Text>().text = "emmit finished";
+				LogObj.GetComponent<Text>().text = "emmit finished";
 			}
 			frame_counter_text.text = "counter"+frame.ToString();
 			if (MainCamera.emmit_sound) {

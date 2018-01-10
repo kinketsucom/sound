@@ -22,11 +22,12 @@ public class MainCamera : MonoBehaviour {
 	private Text player_position;
 
 //	public static float wave_max=0;
-
+	private float wave_speed = 340.29f;
 
 	//波形描画設定
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
 	public static int calc_frame = 100;//波形描画をどの程度するか
+	private float[] dot;
 
 	//ログ表示
 	private GameObject LogObj;
@@ -42,9 +43,12 @@ public class MainCamera : MonoBehaviour {
 		*/
 
 		LogObj = GameObject.Find ("Log");
-
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 		player_position.GetComponent<Text> ().text = this.transform.position.ToString ();
+		dot = new float[CalculateInnerPoint.mesh_point_center_array.Length];
+//		for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
+//			dot[i] = Vector3.Dot (CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
+//		}
 	}
 	
 	// Update is called once per frame
@@ -58,8 +62,8 @@ public class MainCamera : MonoBehaviour {
 			player_position.text = this.transform.localPosition.ToString ();
 		}
 		if (Input.GetKey (KeyCode.Z)) {   // Sキーで後退.
-			v.z += 1f;
 			player_position.text = this.transform.localPosition.ToString ();
+			v.z += 1f;
 		}
 		if (Input.GetKey (KeyCode.A)) {  // Aキーで左移動.
 //				v.x -= 1f;
@@ -102,14 +106,16 @@ public class MainCamera : MonoBehaviour {
 		for (int t = start_position; t < start_position+calc_frame; t++) { //ここの開始位置を考える
 			for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
 				r = Vector3.Distance (position, CalculateInnerPoint.mesh_point_center_array [i]);
-				u_array [t] += (CalculateInnerPoint.boundary_condition_u [t, i] + (CalculateInnerPoint.boundary_condition_q [t, i] / r)) * ds / (4 * Mathf.PI*r);
+				float dot = Vector3.Dot (position - CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
+				int delay = (int)(t - samplerate*r / wave_speed);
+				if (delay >= 0) {
+					u_array[t] +=  (CalculateInnerPoint.boundary_condition_q[delay,i]*Mathf.Pow(r,2) - dot*CalculateInnerPoint.boundary_condition_u[delay,i]) * CalculateInnerPoint.mesh_size[i] / (4 * Mathf.PI * Mathf.Pow (r, 3));
+				}
+//				u_array [t] += (CalculateInnerPoint.boundary_condition_q [t, i] + dot[i]*CalculateInnerPoint.boundary_condition_u [t, i]/Mathf.Pow(r,2) ) * ds / (4 * Mathf.PI*r);
 			}
 		}
-		if (start_position > 300) {
-			CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [start_position].ToString (), "u_array");
-		}
+		CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [start_position].ToString (), "u_array");
 		return u_array;
-
 	}
 
 	public void AAAAA(){

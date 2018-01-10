@@ -37,6 +37,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 	//この情報をあとで使い回す
 	public static Vector3[] mesh_point_center_array;//メッシュの重心記録用
+	public static Vector3[] mesh_point_center_norm_array;//メッシュの重心の法線ベクトル
+	public static float[] mesh_size;
 	public static float[,] boundary_condition_q;//境界条件q
 	public static float[,] boundary_condition_u;//境界条件u
 
@@ -54,15 +56,15 @@ public class CalculateInnerPoint : MonoBehaviour {
 	public GameObject log;
 	public int position = 0;
 
+	private float[] test_q;
+	private float[] test_cos;
 
 	void Awake(){
 
 
 		AudioSource aud = GetComponent<AudioSource>();
 		time = Mathf.CeilToInt(aud.clip.samples / samplerate);//FIXIT:
-		time = 2;//FIXIT:ここはあとで
-
-//		Time.fixedDeltaTime = 1 / samplerate;
+		time = 1;//FIXIT:ここはあとで
 
 		//////////////////パラメータの読み込み////////////////////
 		log.GetComponent<Text>().text = "load start";
@@ -163,6 +165,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 		boundary_condition_q = new float[samplerate*time, triangle_num];//FIXIT:左側のパラメータはあとで
 		boundary_condition_u = new float[samplerate*time, triangle_num];//FIXIT:左側のパラメータはあとで
 		mesh_point_center_array = new Vector3[triangle_num];
+		mesh_point_center_norm_array = new Vector3[triangle_num];
+		mesh_size = new float[triangle_num];
 
 		log.GetComponent<Text>().text = "loaded all initial datas";
 		////////////////////パラメータの取得ここまで////////////////////
@@ -249,40 +253,6 @@ public class CalculateInnerPoint : MonoBehaviour {
 			}
 				
 			//meshpoint.dは１からだが配列は0から始まるので1を引いている
-//			int vec_count = 0;
-//			for (int i = 0; i < 3; i++) {
-//				dat = triangle_list[point_num[counter]-1].Split(' ');
-//				foreach (string val in dat) {
-//					if (val.Length != 0){
-//						switch(vec_count){
-//						case 0:
-//							point_vec [vec_count].x = all_point_vec[int.Parse(val)].x;
-//							point_vec [vec_count].y = all_point_vec[int.Parse(val)].y;
-//							point_vec [vec_count].z = all_point_vec[int.Parse(val)].z;
-////							point_vec [i].x = all_point_vec[int.Parse(val)].x;
-//							vec_count += 1;
-//							break;
-//						case 1:
-//						point_vec [vec_count].x = all_point_vec[int.Parse(val)].x;
-//						point_vec [vec_count].y = all_point_vec[int.Parse(val)].y;
-//						point_vec [vec_count].z = all_point_vec[int.Parse(val)].z;
-////							point_vec [i].y = all_point_vec[int.Parse(val)].y;
-//							vec_count += 1;
-//							break;
-//						case 2:
-//						point_vec [vec_count].x = all_point_vec[int.Parse(val)].x;
-//						point_vec [vec_count].y = all_point_vec[int.Parse(val)].y;
-//						point_vec [vec_count].z = all_point_vec[int.Parse(val)].z;
-////							point_vec [i].z = all_point_vec[int.Parse(val)].z;
-//							vec_count += 1;
-//							break;
-//						default:
-//							break;
-//						}
-//					}
-////				}
-//			}
-
 			point_vec [0] = all_point_vec[point_num[0]-1];
 			point_vec [1] = all_point_vec[point_num[1]-1];
 			point_vec [2] = all_point_vec[point_num[2]-1];
@@ -290,6 +260,13 @@ public class CalculateInnerPoint : MonoBehaviour {
 			mesh_point_center_array[counter].x = (point_vec[0].x+point_vec[1].x+point_vec[2].x)/3;
 			mesh_point_center_array[counter].y = (point_vec[0].y+point_vec[1].y+point_vec[2].y)/3;
 			mesh_point_center_array[counter].z = (point_vec[0].z+point_vec[1].z+point_vec[2].z)/3;
+
+			//メッシュの面積計算
+			Vector3 a = point_vec [1] - point_vec [0];
+			Vector3 b = point_vec [2] - point_vec [0];
+
+			float cal = Mathf.Pow (Vector3.Magnitude (a), 2) * Mathf.Pow (Vector3.Magnitude (b), 2) - Mathf.Pow (Vector3.Dot (a, b), 2);
+			mesh_size [counter] = Mathf.Sqrt (cal) / 2;
 			counter += 1;
 		}
 		log.GetComponent<Text>().text = "calculated center point";
@@ -303,13 +280,21 @@ public class CalculateInnerPoint : MonoBehaviour {
 		log.GetComponent<Text>().text = "got origin wave";
 		////////////////////音源データの取得ここまで////////////////////
 
+//		test_q = new float[sound_array.Length];
+//		test_cos = new float[sound_array.Length];
+
+		//テスト用音源データ
+		for (int i = 0; i < sound_array.Length; i++) {
+//			sound_array [i] = Mathf.Sin (2 * Mathf.PI * 440 * i / 44100);
+//			test_cos [i] = Mathf.Cos (2 * Mathf.PI * 440 * i / 44100);
+		}
+
 
 		////////////////////境界要素の計算////////////////////
-		origin_point = new Vector3(0,0,0);
+		origin_point = new Vector3(0,0,0);//new Vector3(40,20,6);
 		for(int i = 0; i< samplerate*time; i++){//FIXIT:時間はまだ取得していない
 			for (int j = 0; j < mesh_point_center_array.Length; j++) {
 				//法線ベクトルの計算
-
 				normal_vec = new Vector3(0,0,0);
 				//外部問題の法線ベクトル
 				if (mesh_point_center_array [j].x == 0.0f) {//手前0
@@ -331,21 +316,24 @@ public class CalculateInnerPoint : MonoBehaviour {
 					normal_vec.x = -1;
 				}
 
+				mesh_point_center_norm_array[j] = normal_vec;
 				//内部問題ならここを追加
 //				normal_vec *= -1;
 				
 
-				Vector3 g = mesh_point_center_array [j];
 				//uとqの計算
 				float r = Vector3.Distance (mesh_point_center_array[j], origin_point);
 				int delay = (int)(i - samplerate*r / wave_speed);
 				if(delay>=0){
-					boundary_condition_u [i,j] = sound_array [delay]/(4*Mathf.PI*r);
-					boundary_condition_q [i, j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)* (samplerate*r*sound_array[delay+1]+(wave_speed-samplerate*r)*sound_array[delay]) /(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
-//					boundary_condition_q [i,j] = -(r * sound_array [delay + 1] + (wave_speed - r) * sound_array [delay]) / (4 * Mathf.PI * wave_speed * r * r);
+//					float fuga = sound_array [delay];
+					boundary_condition_u [i,j] = sound_array [delay];///(4*Mathf.PI*r);
+					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*samplerate*(sound_array[delay+1]-sound_array[delay]) / (wave_speed*r);
+//					if (j == 791) {
+//						test_q [i] = (-2 * Mathf.PI * 440 * Vector3.Dot (mesh_point_center_array [j], normal_vec) * test_cos [delay]) / (wave_speed * r);
+//					}
+//					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*(samplerate*r*sound_array[delay+1]+(wave_speed-samplerate*r)*sound_array[delay]) /(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
 				}
 			}
-
 		}
 		////////////////////境界要素お計算終了////////////////////
 		log.GetComponent<Text>().text = "load finished";
@@ -363,7 +351,37 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			string hoge = sound_array[i].ToString();
 //			TextSaveTitle (hoge,"original");
 //		}
-			
+
+//		for (int i = 0; i < samplerate*time; i++) {
+//			string hoge = boundary_condition_u[i,791].ToString();
+//			TextSaveTitle (hoge,"bcu");
+//		}
+//
+//		for (int i = 0; i < samplerate*time; i++) {
+//			string hoge = boundary_condition_q[i,791].ToString();
+//			TextSaveTitle (hoge,"bcq");
+//		}
+//		for (int i = 0; i < samplerate*time; i++) {
+//			string hoge = test_q[i].ToString();
+//			TextSaveTitle (hoge,"test_bcq");
+//		}
+//			
+//		for(int i = 0;i<boundary_condition_q.GetLength(0);i++){
+//			for (int j = 0; j < boundary_condition_q.GetLength (1); j++) {
+//				if (boundary_condition_q [i, j] != 0) {
+//					print (i.ToString() + ":" + j.ToString ());
+//				}
+//			}
+//		}
+//		for (int i = 0; i < triangle_num; i++) {
+//			string hoge = mesh_size[i].ToString();
+//			TextSaveTitle (hoge,"delete_sqrt");
+//		}
+//		for (int i = 0; i < samplerate*time; i++) {
+//			string hoge = sound_array[i].ToString();
+//			TextSaveTitle (hoge,"AAAoriginal");
+//		}
+
 	}
 		
 	// Update is called once per frame

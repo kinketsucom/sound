@@ -2,26 +2,23 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/CalculateInnerPoint.cs">
     <Files>
-      <File FileName="Assets/Script/CalculateInnerPoint.cs" Line="279" Column="1" />
-      <File FileName="Assets/Script/MainCamera.cs" Line="108" Column="26" />
+      <File FileName="Assets/Script/CalculateInnerPoint.cs" Line="306" Column="1" />
+      <File FileName="Assets/Script/MainCamera.cs" Line="110" Column="5" />
       <File FileName="Assets/Script/WaveForm.cs" Line="25" Column="3" />
       <File FileName="Assets/Script/GUIManager.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>g</Value>
-          <Value>point_num</Value>
-          <Value>this.point_vec</Value>
-          <Value>val</Value>
-          <Value>this.point_list</Value>
+          <Value>this.mesh_point_center_array</Value>
+          <Value>this.mesh_point_center_norm_array</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/admin/Documents/research/Unity/VRSound/Assets/Script/CalculateInnerPoint.cs" line="276" column="1" />
+      <Breakpoint file="/Users/admin/Documents/research/Unity/VRSound/Assets/Script/CalculateInnerPoint.cs" line="306" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches>
