@@ -29,8 +29,8 @@ public class GUIManager : MonoBehaviour {
 				LogObj.GetComponent<Text>().text = "emmit finished";
 			}
 			frame_counter_text.text = "counter"+frame.ToString();
-			if (MainCamera.emmit_sound) {
-				frame += 1;
-			}
+//			if (MainCamera.emmit_sound) {
+////				frame += 1;
+//			}
 	}
 }

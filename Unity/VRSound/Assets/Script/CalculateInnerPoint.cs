@@ -19,7 +19,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	*/
 
 	//カメラの設定
-	public GameObject CameraObj;
+//	public GameObject CameraObj;
 
 	//パラメータ計算のための変数
 	private string file;
@@ -48,7 +48,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	//音源情報
 	private float wave_speed = 340.29f;
 	public static float[] sound_array;//音圧
-	private Vector3 origin_point;//音源の位置
+	private Vector3 origin_point = new Vector3(0.035f,0.035f,0.0135f);//音源の位置
 	public static int samplerate = 44100;//wavのサンプルレートにあわせる
 	public static int time=2;//FIXIT:ここはあとで設定
 
@@ -280,18 +280,19 @@ public class CalculateInnerPoint : MonoBehaviour {
 		log.GetComponent<Text>().text = "got origin wave";
 		////////////////////音源データの取得ここまで////////////////////
 
-//		test_q = new float[sound_array.Length];
-//		test_cos = new float[sound_array.Length];
+
 
 		//テスト用音源データ
+		test_q = new float[sound_array.Length];
+		test_cos = new float[sound_array.Length];
 		for (int i = 0; i < sound_array.Length; i++) {
-//			sound_array [i] = Mathf.Sin (2 * Mathf.PI * 440 * i / 44100);
-//			test_cos [i] = Mathf.Cos (2 * Mathf.PI * 440 * i / 44100);
+			sound_array [i] = Mathf.Sin (2 * Mathf.PI * 440 * i / 44100);
+			test_cos [i] = Mathf.Cos (2 * Mathf.PI * 440 * i / 44100);
 		}
 
 
 		////////////////////境界要素の計算////////////////////
-		origin_point = new Vector3(0,0,0);//new Vector3(40,20,6);
+
 		for(int i = 0; i< samplerate*time; i++){//FIXIT:時間はまだ取得していない
 			for (int j = 0; j < mesh_point_center_array.Length; j++) {
 				//法線ベクトルの計算
@@ -326,12 +327,12 @@ public class CalculateInnerPoint : MonoBehaviour {
 				int delay = (int)(i - samplerate*r / wave_speed);
 				if(delay>=0){
 //					float fuga = sound_array [delay];
-					boundary_condition_u [i,j] = sound_array [delay];///(4*Mathf.PI*r);
-					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*samplerate*(sound_array[delay+1]-sound_array[delay]) / (wave_speed*r);
+					boundary_condition_u [i,j] = sound_array [delay]/(4*Mathf.PI*r);
+//					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*samplerate*(sound_array[delay+1]-sound_array[delay]) / (wave_speed*r);
 //					if (j == 791) {
 //						test_q [i] = (-2 * Mathf.PI * 440 * Vector3.Dot (mesh_point_center_array [j], normal_vec) * test_cos [delay]) / (wave_speed * r);
 //					}
-//					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*(samplerate*r*sound_array[delay+1]+(wave_speed-samplerate*r)*sound_array[delay]) /(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
+					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j]-origin_point,normal_vec) * (wave_speed*sound_array[delay] + samplerate*r*(sound_array[delay+1]-sound_array[delay])) /(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
 				}
 			}
 		}
@@ -377,10 +378,47 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			string hoge = mesh_size[i].ToString();
 //			TextSaveTitle (hoge,"delete_sqrt");
 //		}
+
+//		境界uの確認
+//		float r = Vector3.Distance (new Vector3 (-1, 0, 0),origin_point);
 //		for (int i = 0; i < samplerate*time; i++) {
-//			string hoge = sound_array[i].ToString();
-//			TextSaveTitle (hoge,"AAAoriginal");
+//			int delay = (int)(i - samplerate*r / wave_speed);
+//			if (delay >= 0) {
+//				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
+//				string hoge = fuga.ToString ();
+//				TextSaveTitle (hoge, "AAAu_original");
+//			} else {//遅延待ち
+//
+//				TextSaveTitle ("0", "AAAu_original");
+//			
+//			}
+//
 //		}
+
+
+		//境界qの確認
+//		Vector3 x = mesh_point_center_array [0];
+//		Vector3 norm = mesh_point_center_norm_array [0];
+//		float r = Vector3.Distance (x, origin_point);
+//		float dot = Vector3.Dot(x-origin_point,norm);
+//
+//		for(int i = 0 ;i< test_q.Length;i++){
+//			int delay = (int)(i - samplerate*r/wave_speed);
+//			if(delay>=0){
+//				test_q[i] = -dot*(wave_speed * sound_array[delay] + 2*Mathf.PI*440*r*test_cos[delay])/(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
+//			}
+//		}
+//
+//		for (int i = 0; i < samplerate*time; i++) {
+//			string hoge = boundary_condition_q[i,0].ToString();
+//			TextSaveTitle (hoge,"AAAbcq");
+//		}
+//
+//		for (int i = 0; i < samplerate*time; i++) {
+//			string hoge = test_q[i].ToString();
+//			TextSaveTitle (hoge,"AAAtest_q");
+//		}
+
 
 	}
 		
