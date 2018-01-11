@@ -48,7 +48,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	//音源情報
 	private float wave_speed = 340.29f;
 	public static float[] sound_array;//音圧
-	private Vector3 origin_point = new Vector3(0.035f,0.035f,0.0135f);//音源の位置
+	public Vector3 origin_point = new Vector3(0.035f,0.035f,0.0135f);//音源の位置
 	public static int samplerate = 44100;//wavのサンプルレートにあわせる
 	public static int time=2;//FIXIT:ここはあとで設定
 
@@ -283,13 +283,13 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 
 		//テスト用音源データ
-		test_q = new float[sound_array.Length];
-		test_cos = new float[sound_array.Length];
-		for (int i = 0; i < sound_array.Length; i++) {
-			sound_array [i] = Mathf.Sin (2 * Mathf.PI * 440 * i / 44100);
-			test_cos [i] = Mathf.Cos (2 * Mathf.PI * 440 * i / 44100);
-		}
-
+//		test_q = new float[sound_array.Length];
+//		test_cos = new float[sound_array.Length];
+//		for (int i = 0; i < sound_array.Length; i++) {
+//			sound_array [i] = Mathf.Sin (2 * Mathf.PI * 440 * i / 44100);
+//			test_cos [i] = Mathf.Cos (2 * Mathf.PI * 440 * i / 44100);
+//		}
+//
 
 		////////////////////境界要素の計算////////////////////
 
@@ -380,20 +380,17 @@ public class CalculateInnerPoint : MonoBehaviour {
 //		}
 
 //		境界uの確認
-//		float r = Vector3.Distance (new Vector3 (-1, 0, 0),origin_point);
-//		for (int i = 0; i < samplerate*time; i++) {
-//			int delay = (int)(i - samplerate*r / wave_speed);
-//			if (delay >= 0) {
-//				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
-//				string hoge = fuga.ToString ();
-//				TextSaveTitle (hoge, "AAAu_original");
-//			} else {//遅延待ち
-//
-//				TextSaveTitle ("0", "AAAu_original");
-//			
-//			}
-//
-//		}
+		float r = Vector3.Distance (new Vector3 (0, 0, -1),origin_point);
+		for (int i = 0; i < samplerate*time; i++) {
+			int delay = (int)(i - samplerate*r / wave_speed);
+			if (delay >= 0) {
+				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
+				string hoge = fuga.ToString ();
+				TextSaveTitle (hoge, "AAAu_original");
+			} else {//遅延待ち
+				TextSaveTitle ("0", "AAAu_original");			
+			}
+		}
 
 
 		//境界qの確認

@@ -26,12 +26,12 @@ public class MainCamera : MonoBehaviour {
 
 	//波形描画設定
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
-	public static int calc_frame = 1;//波形描画をどの程度するか
+	public static int calc_frame = 100;//波形描画をどの程度するか
 
 	//ログ表示
 	private GameObject LogObj;
 
-	private 
+	private bool boo = true;
 
 	// Use this for initialization
 	void Start () {
@@ -46,16 +46,20 @@ public class MainCamera : MonoBehaviour {
 		LogObj = GameObject.Find ("Log");
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 		player_position.GetComponent<Text> ().text = this.transform.position.ToString ();
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+	}
+
+	void LateUpdate(){
 		Vector3 v = this.transform.localPosition;
 		Vector3 l = this.transform.localEulerAngles;
-
 		////////////////////移動制御////////////////////
 		if (Input.GetKey (KeyCode.W)) {   // Wキーで前進.
-//				v.z += 1f;
+			//				v.z += 1f;
 			player_position.text = this.transform.localPosition.ToString ();
 		}
 		if (Input.GetKey (KeyCode.Z)) {   // Sキーで後退.
@@ -63,14 +67,14 @@ public class MainCamera : MonoBehaviour {
 			v.z += 1f;
 		}
 		if (Input.GetKey (KeyCode.A)) {  // Aキーで左移動.
-//				v.x -= 1f;
+			//				v.x -= 1f;
 			player_position.text = this.transform.localPosition.ToString ();
 		}
 		if (Input.GetKey (KeyCode.S)) {  // Dキーで右移動.
-//			v.x += 1f; 
+			//			v.x += 1f; 
 		}
 		this.transform.localPosition = v;
-//
+		//
 		if (Input.GetKey (KeyCode.UpArrow)) {  // 上矢印キーで上をむく移動.
 			l.x += -1f;
 		}
@@ -87,36 +91,40 @@ public class MainCamera : MonoBehaviour {
 		////////////////////移動制御ここまで////////////////////
 
 
-		////////////////////波形の描画計算////////////////////
 		if (emmit_sound) {
+			////////////////////波形の描画計算////////////////////
 			GUIManager.frame += 1;
 			CalculateInnerPoint.u_array = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time,GUIManager.frame);
+			////////////////////波形の描画計算ここまで////////////////////
+			 
+			////////////////////波形の保存////////////////////
+//			CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [GUIManager.frame].ToString (), "u_array_late");
+			////////////////////波形の保存ここまで////////////////////
 		}
-		////////////////////波形の描画計算ここまで////////////////////
-		
-	}
 
-	void LateUpdate(){
-		CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [GUIManager.frame].ToString (), "u_array_late");
 	}
 
 
+	//FIXIT:これ、計算最終フレームだけで良いのでは？
 	private float[] CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
 		float[] u_array = new float[samplerate * time];
-//		float u;
 		for (int t = start_position; t < start_position+calc_frame; t++) { //ここの開始位置を考える
 			for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
 				float r = Vector3.Distance (position, CalculateInnerPoint.mesh_point_center_array [i]);
 				float dot = Vector3.Dot (position - CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
 				int delay = (int)(t - samplerate*r / wave_speed);
 				if (delay >= 0) {
+					if(boo){
+						print (t);
+						boo = false;
+					}
 					u_array[t] +=  ( CalculateInnerPoint.boundary_condition_q[delay,i] / r - dot * CalculateInnerPoint.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * CalculateInnerPoint.mesh_size[i] / (4.0f * Mathf.PI);
 				}
 //				u_array [t] += (CalculateInnerPoint.boundary_condition_q [t, i] + dot[i]*CalculateInnerPoint.boundary_condition_u [t, i]/Mathf.Pow(r,2) ) * ds / (4 * Mathf.PI*r);
 			}
 		}
 
-		CalculateInnerPoint.TextSaveTitle (u_array [start_position].ToString (), "u_array");
+//		CalculateInnerPoint.TextSaveTitle (u_array [start_position].ToString (), "u_array");
 		return u_array;
 	}
 		

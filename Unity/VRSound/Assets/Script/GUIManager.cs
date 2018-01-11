@@ -12,7 +12,7 @@ public class GUIManager : MonoBehaviour {
 	private GameObject LogObj;
 	private GameObject frame_counter;//再生中音のフレーム位置
 	private Text frame_counter_text;
-	public static int frame=0;
+	public static int frame=40000;
 
 	// Use this for initialization
 	void Start () {
@@ -32,5 +32,20 @@ public class GUIManager : MonoBehaviour {
 //			if (MainCamera.emmit_sound) {
 ////				frame += 1;
 //			}
+	}
+
+
+	public void CheckData(){
+		float min = 100000000;
+		for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
+			float dis = Vector3.Distance(CalculateInnerPoint.mesh_point_center_array[i], new Vector3(-1,0,0));
+			if(min>dis){
+				min = dis;
+				print(min.ToString()+":"+i.ToString());
+
+			}
+		}
+		print ("おしまい");
+	
 	}
 }
