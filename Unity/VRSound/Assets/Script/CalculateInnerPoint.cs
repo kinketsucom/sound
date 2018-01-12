@@ -279,7 +279,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		aud.clip.GetData (sound_array, 0);
 		log.GetComponent<Text>().text = "got origin wave";
 		////////////////////音源データの取得ここまで////////////////////
-
+		///
 
 
 		//テスト用音源データ
