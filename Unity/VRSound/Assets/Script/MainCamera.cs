@@ -108,7 +108,7 @@ public class MainCamera : MonoBehaviour {
 	//FIXIT:これ、計算最終フレームだけで良いのでは？
 	private float[] CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
 		float[] u_array = new float[samplerate * time];
-		for (int t = start_position; t < start_position+calc_frame; t++) { //ここの開始位置を考える
+		for (int t = start_position; t < start_position+1/*calc_frame*/; t++) { //ここの開始位置を考える
 			for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
 				float r = Vector3.Distance (position, CalculateInnerPoint.mesh_point_center_array [i]);
 				float dot = Vector3.Dot (position - CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
@@ -119,7 +119,7 @@ public class MainCamera : MonoBehaviour {
 //				u_array [t] += (CalculateInnerPoint.boundary_condition_q [t, i] + dot[i]*CalculateInnerPoint.boundary_condition_u [t, i]/Mathf.Pow(r,2) ) * ds / (4 * Mathf.PI*r);
 			}
 		}
-
+		print (start_position.ToString () + "おわった"+u_array[start_position]);
 //		CalculateInnerPoint.TextSaveTitle (u_array [start_position].ToString (), "u_array");
 		return u_array;
 	}
