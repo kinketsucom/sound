@@ -94,7 +94,7 @@ public class MainCamera : MonoBehaviour {
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
 			GUIManager.frame += 1;
-			CalculateInnerPoint.u_array = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time,GUIManager.frame);
+			CalculateInnerPoint.u_array[GUIManager.frame] = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time,GUIManager.frame);
 			////////////////////波形の描画計算ここまで////////////////////
 			 
 			////////////////////波形の保存////////////////////
@@ -106,21 +106,16 @@ public class MainCamera : MonoBehaviour {
 
 
 	//FIXIT:これ、計算最終フレームだけで良いのでは？
-	private float[] CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
-		float[] u_array = new float[samplerate * time];
-		for (int t = start_position; t < start_position+1/*calc_frame*/; t++) { //ここの開始位置を考える
-			for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
-				float r = Vector3.Distance (position, CalculateInnerPoint.mesh_point_center_array [i]);
-				float dot = Vector3.Dot (position - CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
-				int delay = (int)(t - samplerate*r / wave_speed);
-				if (delay >= 0) {
-					u_array[t] +=  ( CalculateInnerPoint.boundary_condition_q[delay,i] / r - dot * CalculateInnerPoint.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * CalculateInnerPoint.mesh_size[i] / (4.0f * Mathf.PI);
-				}
-//				u_array [t] += (CalculateInnerPoint.boundary_condition_q [t, i] + dot[i]*CalculateInnerPoint.boundary_condition_u [t, i]/Mathf.Pow(r,2) ) * ds / (4 * Mathf.PI*r);
+	private float CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
+		float u_array = 0;
+		for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
+		float r = Vector3.Distance (position, CalculateInnerPoint.mesh_point_center_array [i]);
+		float dot = Vector3.Dot (position - CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
+		int delay = (int)(start_position - samplerate*r / wave_speed);
+			if (delay >= 0) {
+				u_array +=  ( CalculateInnerPoint.boundary_condition_q[delay,i] / r - dot * CalculateInnerPoint.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * CalculateInnerPoint.mesh_size[i] / (4.0f * Mathf.PI);
 			}
 		}
-		print (start_position.ToString () + "おわった"+u_array[start_position]);
-//		CalculateInnerPoint.TextSaveTitle (u_array [start_position].ToString (), "u_array");
 		return u_array;
 	}
 		

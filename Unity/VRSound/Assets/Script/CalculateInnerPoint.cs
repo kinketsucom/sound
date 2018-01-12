@@ -380,17 +380,17 @@ public class CalculateInnerPoint : MonoBehaviour {
 //		}
 
 //		境界uの確認
-//		float r = Vector3.Distance (new Vector3 (-2, 0, 0),origin_point);
-//		for (int i = 0; i < samplerate*time; i++) {
-//			int delay = (int)(i - samplerate*r / wave_speed);
-//			if (delay >= 0) {
-//				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
-//				string hoge = fuga.ToString ();
-//				TextSaveTitle (hoge, "AAAu_original");
-//			} else {//遅延待ち
-//				TextSaveTitle ("0", "AAAu_original");			
-//			}
-//		}
+		float r = Vector3.Distance (new Vector3 (-2, 0, 0),origin_point);
+		for (int i = 0; i < samplerate*time; i++) {
+			int delay = (int)(i - samplerate*r / wave_speed);
+			if (delay >= 0) {
+				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
+				string hoge = fuga.ToString ();
+				TextSaveTitle (hoge, "AAAu_original");
+			} else {//遅延待ち
+				TextSaveTitle ("0", "AAAu_original");			
+			}
+		}
 //
 
 		//境界qの確認

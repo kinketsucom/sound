@@ -12,7 +12,7 @@ public class GUIManager : MonoBehaviour {
 	private GameObject LogObj;
 	private GameObject frame_counter;//再生中音のフレーム位置
 	private Text frame_counter_text;
-	public static int frame=15000;
+	public static int frame=0;
 
 	// Use this for initialization
 	void Start () {

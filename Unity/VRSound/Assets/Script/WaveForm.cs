@@ -19,10 +19,7 @@ public class WaveForm : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void LateUpdate () {
-
 		Observable.NextFrame().Subscribe(_ => MakeLine());
-
-
 	}
 
 	private void MakeLine(){
@@ -32,10 +29,9 @@ public class WaveForm : MonoBehaviour {
 				if (MainCamera.calc_frame - t - 1 > 0) {
 					lr.SetPosition (t - GUIManager.frame, new Vector3 (sub_camera_position.x - length + 2 * length * (float)(t - GUIManager.frame) / MainCamera.calc_frame,0, sub_camera_position.z + z));//表示位置を考える必要があるとりあえず-50から50になてば素敵
 				} else {
-					lr.SetPosition (t - GUIManager.frame, new Vector3 (sub_camera_position.x - length + 2 * length * (float)(t - GUIManager.frame) / MainCamera.calc_frame, CalculateInnerPoint.u_array [t-MainCamera.calc_frame+1]*1000, sub_camera_position.z + z));//表示位置を考える必要があるとりあえず-50から50になてば素敵
+					lr.SetPosition (t - GUIManager.frame, new Vector3 (sub_camera_position.x - length + 2 * length * (float)(t - GUIManager.frame) / MainCamera.calc_frame, CalculateInnerPoint.u_array [t-MainCamera.calc_frame+1]*100, sub_camera_position.z + z));//表示位置を考える必要があるとりあえず-50から50になてば素敵
 				}
 			}
-			print (GUIManager.frame.ToString () +"wave作成"+CalculateInnerPoint.u_array[GUIManager.frame]);
 		}
 	}
 
