@@ -98,7 +98,7 @@ public class MainCamera : MonoBehaviour {
 			////////////////////波形の描画計算ここまで////////////////////
 			 
 			////////////////////波形の保存////////////////////
-//			CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [GUIManager.frame].ToString (), "u_array_late");
+			CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [GUIManager.frame].ToString (), "u_array_late");
 			////////////////////波形の保存ここまで////////////////////
 		}
 
@@ -114,10 +114,6 @@ public class MainCamera : MonoBehaviour {
 				float dot = Vector3.Dot (position - CalculateInnerPoint.mesh_point_center_array [i], CalculateInnerPoint.mesh_point_center_norm_array [i]);
 				int delay = (int)(t - samplerate*r / wave_speed);
 				if (delay >= 0) {
-					if(boo){
-						print (t);
-						boo = false;
-					}
 					u_array[t] +=  ( CalculateInnerPoint.boundary_condition_q[delay,i] / r - dot * CalculateInnerPoint.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * CalculateInnerPoint.mesh_size[i] / (4.0f * Mathf.PI);
 				}
 //				u_array [t] += (CalculateInnerPoint.boundary_condition_q [t, i] + dot[i]*CalculateInnerPoint.boundary_condition_u [t, i]/Mathf.Pow(r,2) ) * ds / (4 * Mathf.PI*r);

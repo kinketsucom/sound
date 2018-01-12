@@ -265,8 +265,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 			Vector3 a = point_vec [1] - point_vec [0];
 			Vector3 b = point_vec [2] - point_vec [0];
 
-			float cal = Mathf.Pow (Vector3.Magnitude (a), 2) * Mathf.Pow (Vector3.Magnitude (b), 2) - Mathf.Pow (Vector3.Dot (a, b), 2);
-			mesh_size [counter] = Mathf.Sqrt (cal) / 2;
+//			float cal = Mathf.Pow (Vector3.Magnitude (a), 2) * Mathf.Pow (Vector3.Magnitude (b), 2) - Mathf.Pow (Vector3.Dot (a, b), 2);
+			mesh_size [counter] = Vector3.Magnitude(Vector3.Cross(a,b))/2;
 			counter += 1;
 		}
 		log.GetComponent<Text>().text = "calculated center point";
@@ -298,16 +298,16 @@ public class CalculateInnerPoint : MonoBehaviour {
 				//法線ベクトルの計算
 				normal_vec = new Vector3(0,0,0);
 				//外部問題の法線ベクトル
-				if (mesh_point_center_array [j].x == 0.0f) {//手前0
+				if (mesh_point_center_array [j].x <= 0.0f) {//手前0
 					normal_vec.x = 1;
-				} else if (mesh_point_center_array [j].x < 80.0f) {//間
+				} else if (mesh_point_center_array [j].x < 0.07f) {//間
 
-					if (mesh_point_center_array [j].z == 0.0f) {//みぎ1
+					if (mesh_point_center_array [j].z <= 0.0f) {//みぎ1
 						normal_vec.z = 1;
-					} else if (mesh_point_center_array [j].z == 12.0f) {//ひだり2
+					} else if (mesh_point_center_array [j].z >= 0.027f) {//ひだり2
 						normal_vec.z = -1;
 					}else{//
-						if(mesh_point_center_array[j].y == 40.0f){//上3
+						if(mesh_point_center_array[j].y >= 0.07f){//上3
 							normal_vec.y = -1;
 						}else{//下4
 							normal_vec.y = 1;
@@ -380,18 +380,18 @@ public class CalculateInnerPoint : MonoBehaviour {
 //		}
 
 //		境界uの確認
-		float r = Vector3.Distance (new Vector3 (0, 0, -1),origin_point);
-		for (int i = 0; i < samplerate*time; i++) {
-			int delay = (int)(i - samplerate*r / wave_speed);
-			if (delay >= 0) {
-				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
-				string hoge = fuga.ToString ();
-				TextSaveTitle (hoge, "AAAu_original");
-			} else {//遅延待ち
-				TextSaveTitle ("0", "AAAu_original");			
-			}
-		}
-
+//		float r = Vector3.Distance (new Vector3 (-2, 0, 0),origin_point);
+//		for (int i = 0; i < samplerate*time; i++) {
+//			int delay = (int)(i - samplerate*r / wave_speed);
+//			if (delay >= 0) {
+//				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
+//				string hoge = fuga.ToString ();
+//				TextSaveTitle (hoge, "AAAu_original");
+//			} else {//遅延待ち
+//				TextSaveTitle ("0", "AAAu_original");			
+//			}
+//		}
+//
 
 		//境界qの確認
 //		Vector3 x = mesh_point_center_array [0];
