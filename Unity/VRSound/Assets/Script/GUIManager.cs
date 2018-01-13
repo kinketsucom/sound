@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour {
-
-	//全体の計算処理開始フラグ
-//	public static bool play_bool=false;
-
 	//表示用
 	private GameObject LogObj;
 	private GameObject frame_counter;//再生中音のフレーム位置
@@ -19,6 +15,7 @@ public class GUIManager : MonoBehaviour {
 		LogObj = GameObject.Find ("Log");
 		frame_counter = GameObject.Find ("FrameCounterText");
 		frame_counter_text = frame_counter.GetComponent<Text> ();
+
 	}
 	
 	// Update is called once per frame
@@ -27,6 +24,8 @@ public class GUIManager : MonoBehaviour {
 				MainCamera.emmit_sound = false;
 				frame = 0;//frameの初期化
 				LogObj.GetComponent<Text>().text = "emmit finished";
+
+			print("fin");
 			}
 			frame_counter_text.text = "counter"+frame.ToString();
 //			if (MainCamera.emmit_sound) {
@@ -36,17 +35,6 @@ public class GUIManager : MonoBehaviour {
 
 
 	public void CheckData(){
-//		float min = 100000000;
-//		for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {
-//			float dis = Vector3.Distance(CalculateInnerPoint.mesh_point_center_array[i], new Vector3(-1,0,0));
-//			if(min>dis){
-//				min = dis;
-//				print(min.ToString()+":"+i.ToString());
-//
-//			}
-//		}
-//		print ("おしまい");
-	
 		for (int i = 0; i < CalculateInnerPoint.mesh_size.Length; i++) {
 			print (CalculateInnerPoint.mesh_size [i]);
 		}

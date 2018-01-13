@@ -6,18 +6,6 @@ using System.IO;
 
 
 public class MainCamera : MonoBehaviour {
-	/*
-	######################################################
-	########音を流す場合コメントアウト########
-	//音を再生するための変数
-	public int position = 0;
-	AudioClip myClip;
-	AudioSource aud;
-	########境界要素法を用いる場合はこちらをコメントアウト########
-	######################################################
-	*/
-
-
 	//カメラ位置
 	private Text player_position;
 
@@ -28,21 +16,17 @@ public class MainCamera : MonoBehaviour {
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
 	public static int calc_frame = 100;//波形描画をどの程度するか
 
+	//プレイヤーの移動設定
+	Vector3 v;
+	Vector3 l;
+
+
 	//ログ表示
 	private GameObject LogObj;
 
-	private bool boo = true;
 
 	// Use this for initialization
 	void Start () {
-		/*
-		######################################################
-		########音を流す場合コメントアウト########
-		aud = GetComponent<AudioSource> ();
-		########境界要素法を用いる場合はこちらをコメントアウト########
-		######################################################
-		*/
-
 		LogObj = GameObject.Find ("Log");
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 		player_position.GetComponent<Text> ().text = this.transform.position.ToString ();
@@ -52,11 +36,8 @@ public class MainCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	}
-
-	void LateUpdate(){
-		Vector3 v = this.transform.localPosition;
-		Vector3 l = this.transform.localEulerAngles;
+		v = this.transform.localPosition;
+		l = this.transform.localEulerAngles;
 		////////////////////移動制御////////////////////
 		if (Input.GetKey (KeyCode.W)) {   // Wキーで前進.
 			//				v.z += 1f;
@@ -89,20 +70,24 @@ public class MainCamera : MonoBehaviour {
 		}
 		this.transform.localEulerAngles = l;
 		////////////////////移動制御ここまで////////////////////
+	}
 
+//	void LateUpdate(){
+//	}
 
+	void FixedUpdate(){
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
 			GUIManager.frame += 1;
 			CalculateInnerPoint.u_array[GUIManager.frame] = CaluInnnerPointWhenMove (v, CalculateInnerPoint.samplerate, CalculateInnerPoint.time,GUIManager.frame);
 			////////////////////波形の描画計算ここまで////////////////////
-			 
+
 			////////////////////波形の保存////////////////////
 			CalculateInnerPoint.TextSaveTitle (CalculateInnerPoint.u_array [GUIManager.frame].ToString (), "u_array_late");
 			////////////////////波形の保存ここまで////////////////////
 		}
-
 	}
+
 
 
 	//FIXIT:これ、計算最終フレームだけで良いのでは？
@@ -122,22 +107,7 @@ public class MainCamera : MonoBehaviour {
 
 	public void AAAAA(){
 		emmit_sound = true;
-		/*
-		######################################################
-		########音を流す場合コメントアウト########
-		AudioSource aud = GetComponent<AudioSource>();
-		int count = 0;
-		foreach (float val in CalculateInnerPoint.sound_array) {
-			CalculateInnerPoint.sound_array [count] = CalculateInnerPoint.sound_array [count] * 0.0f;
-		}
-		float[] hoge = new float[CalculateInnerPoint.sound_array.Length];
-		aud.clip.SetData (CalculateInnerPoint.sound_array, 1000);
-		aud.Play ();
-		########境界要素法を用いる場合はこちらをコメントアウト########
-		######################################################
-		*/
 		LogObj.GetComponent<Text>().text = "emmit started";
-
 	}
 		
 
@@ -151,42 +121,6 @@ public class MainCamera : MonoBehaviour {
 		########境界要素法を用いる場合はこちらをコメントアウト########
 		######################################################
 		*/
-
-
-
-//		for (int i = 0; i < 2000; i++) {
-////			print (CalculateInnerPoint.boundary_condition_u[i,2]);
-////			print (CalculateInnerPoint.boundary_condition_q [i, 2]);
-//		}
 		LogObj.GetComponent<Text> ().text = "emmit stoped";
 	}
-
-
-
-	/*
-		######################################################
-		########音を流す場合コメントアウト########
-	void OnAudioRead(float[] data)
-	{
-		int count = 0;
-		while (count < data.Length)
-		{	
-			data [count] = 10*CalculateInnerPoint.u_array [count];
-			position++;
-			count++;
-		}
-	}
-	void OnAudioSetPosition(int newPosition)
-	{
-		position = newPosition;
-	}
-		########境界要素法を用いる場合はこちらをコメントアウト########
-		######################################################
-		*/
-
-
-
-
-
-
 }

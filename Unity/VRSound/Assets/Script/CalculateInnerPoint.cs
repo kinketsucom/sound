@@ -49,7 +49,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private float wave_speed = 340.29f;
 	public static float[] sound_array;//音圧
 	public Vector3 origin_point = new Vector3(0.035f,0.035f,0.0135f);//音源の位置
-	public static int samplerate = 44100;//wavのサンプルレートにあわせる
+	public static int samplerate = 8000;//wavのサンプルレートにあわせる
 	public static int time=2;//FIXIT:ここはあとで設定
 
 	//表示用のやつ
@@ -61,10 +61,10 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 	void Awake(){
 
-
+		Time.fixedDeltaTime = 1 / samplerate;//FIXIT:ここは高速化のためのやつだが8000はゆにてぃではまにあってない
 		AudioSource aud = GetComponent<AudioSource>();
 		time = Mathf.CeilToInt(aud.clip.samples / samplerate);//FIXIT:
-		time = 1;//FIXIT:ここはあとで
+		time = 3;//FIXIT:ここはあとで
 
 		//////////////////パラメータの読み込み////////////////////
 		log.GetComponent<Text>().text = "load start";
@@ -326,12 +326,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 				float r = Vector3.Distance (mesh_point_center_array[j], origin_point);
 				int delay = (int)(i - samplerate*r / wave_speed);
 				if(delay>=0){
-//					float fuga = sound_array [delay];
 					boundary_condition_u [i,j] = sound_array [delay]/(4*Mathf.PI*r);
-//					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j],normal_vec)*samplerate*(sound_array[delay+1]-sound_array[delay]) / (wave_speed*r);
-//					if (j == 791) {
-//						test_q [i] = (-2 * Mathf.PI * 440 * Vector3.Dot (mesh_point_center_array [j], normal_vec) * test_cos [delay]) / (wave_speed * r);
-//					}
 					boundary_condition_q [i,j] = -Vector3.Dot(mesh_point_center_array[j]-origin_point,normal_vec) * (wave_speed*sound_array[delay] + samplerate*r*(sound_array[delay+1]-sound_array[delay])) /(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
 				}
 			}
@@ -380,17 +375,17 @@ public class CalculateInnerPoint : MonoBehaviour {
 //		}
 
 //		境界uの確認
-		float r = Vector3.Distance (new Vector3 (-2, 0, 0),origin_point);
-		for (int i = 0; i < samplerate*time; i++) {
-			int delay = (int)(i - samplerate*r / wave_speed);
-			if (delay >= 0) {
-				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
-				string hoge = fuga.ToString ();
-				TextSaveTitle (hoge, "AAAu_original");
-			} else {//遅延待ち
-				TextSaveTitle ("0", "AAAu_original");			
-			}
-		}
+//		float r = Vector3.Distance (new Vector3 (-2, 0, 0),origin_point);
+//		for (int i = 0; i < samplerate*time; i++) {
+//			int delay = (int)(i - samplerate*r / wave_speed);
+//			if (delay >= 0) {
+//				float fuga = sound_array [delay] / (4 * Mathf.PI * r);
+//				string hoge = fuga.ToString ();
+//				TextSaveTitle (hoge, "AAAu_original");
+//			} else {//遅延待ち
+//				TextSaveTitle ("0", "AAAu_original");			
+//			}
+//		}
 //
 
 		//境界qの確認

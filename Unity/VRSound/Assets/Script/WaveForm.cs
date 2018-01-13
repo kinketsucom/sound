@@ -18,7 +18,11 @@ public class WaveForm : MonoBehaviour {
 		lr.positionCount = MainCamera.calc_frame;
 	}
 	// Update is called once per frame
-	void LateUpdate () {
+//	void LateUpdate () {
+//		
+//	}
+//
+	void FixedUpdate(){
 		Observable.NextFrame().Subscribe(_ => MakeLine());
 	}
 
