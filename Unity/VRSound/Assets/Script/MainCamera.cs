@@ -9,7 +9,7 @@ public class MainCamera : MonoBehaviour {
 	//カメラ位置
 	private Text player_position;
 
-//	public static float wave_max=0;
+
 	private float wave_speed = 340.29f;
 
 	//波形描画設定
@@ -30,8 +30,6 @@ public class MainCamera : MonoBehaviour {
 		LogObj = GameObject.Find ("Log");
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 		player_position.GetComponent<Text> ().text = this.transform.position.ToString ();
-
-
 	}
 	
 	// Update is called once per frame
@@ -113,14 +111,6 @@ public class MainCamera : MonoBehaviour {
 
 	public void BBBBB(){
 		emmit_sound = false;
-		/*
-		######################################################
-		########音を流す場合コメントアウト########
-		AudioSource aud = GetComponent<AudioSource>();
-		aud.Stop ();
-		########境界要素法を用いる場合はこちらをコメントアウト########
-		######################################################
-		*/
 		LogObj.GetComponent<Text> ().text = "emmit stoped";
 	}
 }
