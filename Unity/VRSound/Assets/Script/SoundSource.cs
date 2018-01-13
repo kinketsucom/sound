@@ -16,7 +16,7 @@ public class SoundSource : MonoBehaviour {
 	}
 
 	public void SetClipData(){
-		aud_source.clip.SetData (CalculateInnerPoint.sound_array,0);
+		aud_source.clip.SetData (Static.sound_array,0);
 		aud_source.Play ();
 	}
 }

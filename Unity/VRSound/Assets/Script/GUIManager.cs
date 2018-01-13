@@ -20,7 +20,7 @@ public class GUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {		
-			if (frame > CalculateInnerPoint.samplerate * CalculateInnerPoint.time) {
+		if (frame > Static.samplerate * Static.time) {
 				MainCamera.emmit_sound = false;
 				frame = 0;//frameの初期化
 				LogObj.GetComponent<Text>().text = "emmit finished";
@@ -35,8 +35,8 @@ public class GUIManager : MonoBehaviour {
 
 
 	public void CheckData(){
-		for (int i = 0; i < CalculateInnerPoint.mesh_size.Length; i++) {
-			print (CalculateInnerPoint.mesh_size [i]);
+		for (int i = 0; i < Static.mesh_size.Length; i++) {
+			print (Static.mesh_size [i]);
 		}
 	}
 }
