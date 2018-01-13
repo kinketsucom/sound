@@ -17,7 +17,7 @@ public class WaveForm : MonoBehaviour {
 		sub_camera_position = SubCameraObj.transform.position;
 		lr.positionCount = MainCamera.calc_frame;
 	}
-	// Update is called once per frame
+
 //	void LateUpdate () {
 //		
 //	}

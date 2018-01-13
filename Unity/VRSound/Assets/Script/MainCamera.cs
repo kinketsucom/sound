@@ -88,7 +88,6 @@ public class MainCamera : MonoBehaviour {
 
 
 
-	//FIXIT:これ、計算最終フレームだけで良いのでは？
 	private float CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
 		float u_array = 0;
 		for (int i = 0; i < CalculateInnerPoint.mesh_point_center_array.Length; i++) {

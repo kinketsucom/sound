@@ -62,9 +62,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	void Awake(){
 
 		Time.fixedDeltaTime = 1 / samplerate;//FIXIT:ここは高速化のためのやつだが8000はゆにてぃではまにあってない
-		AudioSource aud = GetComponent<AudioSource>();
-		time = Mathf.CeilToInt(aud.clip.samples / samplerate);//FIXIT:
-		time = 3;//FIXIT:ここはあとで
+
 
 		//////////////////パラメータの読み込み////////////////////
 		log.GetComponent<Text>().text = "load start";
@@ -158,12 +156,24 @@ public class CalculateInnerPoint : MonoBehaviour {
 		}
 
 
+		AudioSource aud = GetComponent<AudioSource>();
+		time = Mathf.CeilToInt(aud.clip.samples / samplerate);//FIXIT:
+
+		/////////////////////音源データの取得////////////////////
+		//音源データを取得したはず
+		//微分のために配列を１つ多くしている
+		sound_array = new float[aud.clip.samples * aud.clip.channels+1];
+		aud.clip.GetData (sound_array, 0);
+		log.GetComponent<Text>().text = "got origin wave";
+		////////////////////音源データの取得ここまで////////////////////
+
 
 		//初期化
 		//波形計算用の配列
 		u_array = new float[samplerate*time];
-		boundary_condition_q = new float[samplerate*time, triangle_num];//FIXIT:左側のパラメータはあとで
-		boundary_condition_u = new float[samplerate*time, triangle_num];//FIXIT:左側のパラメータはあとで
+		//微分のために配列を１つ追加
+		boundary_condition_q = new float[samplerate*time, triangle_num];
+		boundary_condition_u = new float[samplerate*time, triangle_num];
 		mesh_point_center_array = new Vector3[triangle_num];
 		mesh_point_center_norm_array = new Vector3[triangle_num];
 		mesh_size = new float[triangle_num];
@@ -273,13 +283,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 		////////////////////重心の計算ここまで////////////////////
 
 
-		/////////////////////音源データの取得////////////////////
-		//音源データを取得したはず
-		sound_array = new float[aud.clip.samples * aud.clip.channels];
-		aud.clip.GetData (sound_array, 0);
-		log.GetComponent<Text>().text = "got origin wave";
-		////////////////////音源データの取得ここまで////////////////////
-		///
+
+
 
 
 		//テスト用音源データ
@@ -331,7 +336,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 				}
 			}
 		}
-		////////////////////境界要素お計算終了////////////////////
+		////////////////////境界要素の計算終了////////////////////
 		log.GetComponent<Text>().text = "load finished";
 	}
 
@@ -430,7 +435,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			return File.ReadAllLines(file);
 		} catch (Exception e) {
 			// 改行コード
-			//			size_txt += SetDefaultText ();
+			print(e);
 			return null;
 		}
 	}

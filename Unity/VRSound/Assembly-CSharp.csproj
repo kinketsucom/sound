@@ -56,6 +56,7 @@
      <Compile Include="Assets\Script\MainCamera.cs" />
      <Compile Include="Assets\Script\Scatterer.cs" />
      <Compile Include="Assets\Script\SoundSource.cs" />
+     <Compile Include="Assets\Script\Static.cs" />
      <Compile Include="Assets\Script\WaveForm.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
