@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UniRx;
 
 
 public class MainCamera : MonoBehaviour {
@@ -43,7 +44,7 @@ public class MainCamera : MonoBehaviour {
 		}
 		if (Input.GetKey (KeyCode.Z)) {   // Sキーで後退.
 			player_position.text = this.transform.localPosition.ToString ();
-			v.z += 1f;
+			v.z += Time.deltaTime*1f;
 		}
 		if (Input.GetKey (KeyCode.A)) {  // Aキーで左移動.
 			//				v.x -= 1f;
@@ -76,17 +77,17 @@ public class MainCamera : MonoBehaviour {
 	void FixedUpdate(){
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
+			print (GUIManager.frame);
 			Static.u_array[GUIManager.frame] = CaluInnnerPointWhenMove (v, Static.samplerate, Static.time,GUIManager.frame);
-			GUIManager.frame += 1;
+
 			////////////////////波形の描画計算ここまで////////////////////
 
 			////////////////////波形の保存////////////////////
 			CalculateInnerPoint.TextSaveTitle (Static.u_array [GUIManager.frame].ToString (), "u_array_late");
 			////////////////////波形の保存ここまで////////////////////
+			GUIManager.frame += 1;
 		}
 	}
-
-
 
 	private float CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
 		float u_array = 0;
@@ -100,7 +101,6 @@ public class MainCamera : MonoBehaviour {
 		}
 		return u_array;
 	}
-		
 
 	public void AAAAA(){
 		emmit_sound = true;

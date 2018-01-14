@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 
 public class CalculateInnerPoint : MonoBehaviour {
+
+
+
 	/*境界要素なら必要な変数
 	####################
 	public static int step_num = 0;
@@ -17,6 +20,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	List<string> q_list = new List<string>();//##########ノイマンを読み込む用
 	####################
 	*/
+
 
 	//パラメータ計算のための変数
 	private string file;
@@ -41,7 +45,6 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 	void Awake(){
 		
-		Time.fixedDeltaTime = 1 / Static.samplerate;//FIXIT:ここは高速化のためのやつだが8000はゆにてぃではまにあってない
 
 
 		//////////////////パラメータの読み込み////////////////////
@@ -135,9 +138,13 @@ public class CalculateInnerPoint : MonoBehaviour {
 			num_counter += 1;
 		}
 
-
 		AudioSource aud = GetComponent<AudioSource>();
 		Static.time = Mathf.CeilToInt(aud.clip.samples / Static.samplerate);//FIXIT:
+
+
+//		Time.fixedDeltaTime = 1 / Static.samplerate;//FIXIT:ここは高速化のためのやつだが8000はゆにてぃではまにあってない
+		Time.fixedDeltaTime = 1 /30;
+
 
 		/////////////////////音源データの取得////////////////////
 		//音源データを取得したはず
@@ -147,6 +154,14 @@ public class CalculateInnerPoint : MonoBehaviour {
 		log.GetComponent<Text>().text = "got origin wave";
 		////////////////////音源データの取得ここまで////////////////////
 
+
+		//テスト用
+		float f = 100;
+		float pi = Mathf.PI;
+		for (int t = 0; t < Static.sound_array.Length; t++) {
+			Static.sound_array[t] = Mathf.Sin(2*pi*f*t/Static.samplerate);
+		}
+		 
 
 		//初期化
 		//波形計算用の配列
@@ -160,9 +175,6 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 		log.GetComponent<Text>().text = "loaded all initial datas";
 		////////////////////パラメータの取得ここまで////////////////////
-
-
-
 
 		/*
 		######################################################
@@ -323,6 +335,38 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		if (Write.write_bool) {
+			//		境界uの確認
+			float r = Vector3.Distance (new Vector3 (-1, 0, 0), Static.origin_point);
+			for (int i = 0; i < Static.samplerate * Static.time; i++) {
+				int delay = (int)(i - Static.samplerate * r / Static.wave_speed);
+				if (delay >= 0) {
+					float fuga = Static.sound_array [delay] / (4 * Mathf.PI * r);
+					string hoge = fuga.ToString ();
+					TextSaveTitle (hoge, "AAAu_original");
+				} else {//遅延待ち
+					TextSaveTitle ("0", "AAAu_original");			
+				}
+			}
+			print ("original書き出し終了");
+		}
+
+
+		//境界qの確認
+		//		Vector3 x = Static.mesh_point_center_array [0];
+		//		Vector3 norm = Static.mesh_point_center_norm_array [0];
+		//		float r = Vector3.Distance (x, Static.origin_point);
+		//		float dot = Vector3.Dot(x-Static.origin_point,norm);
+		//
+		//		for(int i = 0 ;i< test_q.Length;i++){
+		//			int delay = (int)(i - samplerate*r/wave_speed);
+		//			if(delay>=0){
+		//				test_q[i] = -dot*(wave_speed * sound_array[delay] + 2*Mathf.PI*440*r*test_cos[delay])/(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
+		//			}
+		//		}
+
+
+
 //		for (int i = 0; i < Static.Static.mesh_point_center_array.Length; i++) {
 //			string hoge = Static.Static.mesh_point_center_array[i].x.ToString()+" "+Static.Static.mesh_point_center_array[i].y.ToString()+" "+Static.mesh_point_center_array[i].z.ToString();
 //			TextSaveTitle (hoge,"mesh_center");
@@ -359,32 +403,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			TextSaveTitle (hoge,"delete_sqrt");
 //		}
 
-//		境界uの確認
-		float r = Vector3.Distance (new Vector3 (-2, 0, 0),Static.origin_point);
-		for (int i = 0; i < Static.samplerate*Static.time; i++) {
-			int delay = (int)(i - Static.samplerate*r / Static.wave_speed);
-			if (delay >= 0) {
-				float fuga = Static.sound_array [delay] / (4 * Mathf.PI * r);
-				string hoge = fuga.ToString ();
-				TextSaveTitle (hoge, "AAAu_original");
-			} else {//遅延待ち
-				TextSaveTitle ("0", "AAAu_original");			
-			}
-		}
 
-
-		//境界qの確認
-//		Vector3 x = Static.mesh_point_center_array [0];
-//		Vector3 norm = Static.mesh_point_center_norm_array [0];
-//		float r = Vector3.Distance (x, Static.origin_point);
-//		float dot = Vector3.Dot(x-Static.origin_point,norm);
-//
-//		for(int i = 0 ;i< test_q.Length;i++){
-//			int delay = (int)(i - samplerate*r/wave_speed);
-//			if(delay>=0){
-//				test_q[i] = -dot*(wave_speed * sound_array[delay] + 2*Mathf.PI*440*r*test_cos[delay])/(4*Mathf.PI*wave_speed*Mathf.Pow(r,3));
-//			}
-//		}
 //
 //		for (int i = 0; i < samplerate*time; i++) {
 //			string hoge = Static.boundary_condition_q[i,0].ToString();

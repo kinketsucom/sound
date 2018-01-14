@@ -19,12 +19,11 @@ public class GUIManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {		
-		if (frame > Static.samplerate * Static.time) {
+	void FixedUpdate () {		
+		if (frame >= Static.samplerate * Static.time) {
 				MainCamera.emmit_sound = false;
 				frame = 0;//frameの初期化
 				LogObj.GetComponent<Text>().text = "emmit finished";
-
 			print("fin");
 			}
 			frame_counter_text.text = "counter"+frame.ToString();
