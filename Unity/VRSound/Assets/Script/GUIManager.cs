@@ -21,7 +21,7 @@ public class GUIManager : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {	
 
-
+//
 		if (Static.frame >= Static.samplerate * Static.time) {
 				MainCamera.emmit_sound = false;
 				Static.frame = 0;//frameの初期化

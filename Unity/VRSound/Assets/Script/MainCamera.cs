@@ -78,6 +78,8 @@ public class MainCamera : MonoBehaviour {
 			////////////////////波形の描画計算////////////////////
 			Static.u_array[Static.frame] = CaluInnnerPointWhenMove (v, Static.samplerate, Static.time,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
+
+
 			////////////////////波形の保存////////////////////
 			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "u_array_late");
 			////////////////////波形の保存ここまで////////////////////
@@ -88,12 +90,12 @@ public class MainCamera : MonoBehaviour {
 	private float CaluInnnerPointWhenMove(Vector3 position,int samplerate,int time, int start_position){
 		float u_array = 0;
 		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
-		float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
-		float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
-		int delay = (int)(start_position - samplerate*r / wave_speed);
-			if (delay >= 0) {
-				u_array +=  ( Static.boundary_condition_q[delay,i] / r - dot * Static.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * Static.mesh_size[i] / (4.0f * Mathf.PI);
-			}
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
+			int delay = (int)(start_position - samplerate*r / wave_speed);
+				if (delay >= 0) {
+					u_array +=  ( Static.boundary_condition_q[delay,i] / r - dot * Static.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * Static.mesh_size[i] / (4.0f * Mathf.PI);
+				}
 		}
 		return u_array;
 	}
