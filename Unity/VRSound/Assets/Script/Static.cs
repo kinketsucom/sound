@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Static : MonoBehaviour {
 
+
 	//波形の基本情報
 	public static int samplerate = 8000;//wavのサンプルレートにあわせる
 	public static int time=1;//初期の時間.コードで動的に設定する
@@ -21,13 +22,12 @@ public class Static : MonoBehaviour {
 	//内点計算による波形
 	public static float[] u_array;//波形表示用の配列
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	//波形描画用
+	public static int calc_frame = 8000;//波形描画をどの程度するか
+	public static int frame=0;//現在フレーム
+
+	//デバッグ
+	// 現在の経過時間を取得
+	public static float check_time;
+
 }

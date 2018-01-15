@@ -143,7 +143,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 
 //		Time.fixedDeltaTime = 1 / Static.samplerate;//FIXIT:ここは高速化のためのやつだが8000はゆにてぃではまにあってない
-		Time.fixedDeltaTime = 1 /30;
+		Time.fixedDeltaTime = (float)1/8000; //TIPS:波形描画が見れるのは実際1/1000くらいまで
 
 
 		/////////////////////音源データの取得////////////////////
@@ -155,16 +155,17 @@ public class CalculateInnerPoint : MonoBehaviour {
 		////////////////////音源データの取得ここまで////////////////////
 
 
-		//テスト用
-		float f = 100;
-		float pi = Mathf.PI;
-		for (int t = 0; t < Static.sound_array.Length; t++) {
-			Static.sound_array[t] = Mathf.Sin(2*pi*f*t/Static.samplerate);
-		}
+//		//テスト用
+//		float f = 100;
+//		float pi = Mathf.PI;
+//		for (int t = 0; t < Static.sound_array.Length; t++) {
+//			Static.sound_array[t] = Mathf.Sin(2*pi*f*t/Static.samplerate);
+//		}
 		 
 
 		//初期化
 		//波形計算用の配列
+		//60秒くらいまでは耐えそうつまり500,000この配列くらい
 		Static.u_array = new float[Static.samplerate*Static.time];
 		//微分のために配列を１つ追加
 		Static.boundary_condition_q = new float[Static.samplerate*Static.time, triangle_num];
@@ -417,13 +418,6 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 
 	}
-		
-	// Update is called once per frame
-	void Update () {
-	}
-
-
-
 
 
 	// 読み込み関数

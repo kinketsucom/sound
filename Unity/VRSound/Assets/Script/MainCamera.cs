@@ -10,12 +10,11 @@ public class MainCamera : MonoBehaviour {
 	//カメラ位置
 	private Text player_position;
 
-
 	private float wave_speed = 340.29f;
 
 	//波形描画設定
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
-	public static int calc_frame = 100;//波形描画をどの程度するか
+
 
 	//プレイヤーの移動設定
 	Vector3 v;
@@ -44,7 +43,7 @@ public class MainCamera : MonoBehaviour {
 		}
 		if (Input.GetKey (KeyCode.Z)) {   // Sキーで後退.
 			player_position.text = this.transform.localPosition.ToString ();
-			v.z += Time.deltaTime*1f;
+			v.z += Time.deltaTime*1.25f;
 		}
 		if (Input.GetKey (KeyCode.A)) {  // Aキーで左移動.
 			//				v.x -= 1f;
@@ -77,15 +76,12 @@ public class MainCamera : MonoBehaviour {
 	void FixedUpdate(){
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
-			print (GUIManager.frame);
-			Static.u_array[GUIManager.frame] = CaluInnnerPointWhenMove (v, Static.samplerate, Static.time,GUIManager.frame);
-
+			Static.u_array[Static.frame] = CaluInnnerPointWhenMove (v, Static.samplerate, Static.time,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
-
 			////////////////////波形の保存////////////////////
-			CalculateInnerPoint.TextSaveTitle (Static.u_array [GUIManager.frame].ToString (), "u_array_late");
+			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "u_array_late");
 			////////////////////波形の保存ここまで////////////////////
-			GUIManager.frame += 1;
+			Static.frame += 1;
 		}
 	}
 
@@ -105,6 +101,7 @@ public class MainCamera : MonoBehaviour {
 	public void AAAAA(){
 		emmit_sound = true;
 		LogObj.GetComponent<Text>().text = "emmit started";
+		Static.check_time = Time.realtimeSinceStartup;
 	}
 		
 
