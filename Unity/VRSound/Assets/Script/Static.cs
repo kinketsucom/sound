@@ -30,4 +30,7 @@ public class Static : MonoBehaviour {
 	// 現在の経過時間を取得
 	public static float check_time;
 
+	void Start(){
+		print ("fuga");
+	}
 }
