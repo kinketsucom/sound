@@ -13,7 +13,7 @@ public class SoundSource : MonoBehaviour {
 	} 
 
 	void FixedUpdate(){
-		if (Static.frame % 8000 == 7999) {
+		if (Static.frame % 2000 == 1999) {
 			SetClipData ();
 		}
 	}
