@@ -371,10 +371,10 @@ public class CalculateInnerPoint : MonoBehaviour {
 			}
 		}
 
-		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {
-			print (Static.mesh_size[i].ToString ("F5") + ":" +i.ToString ()); 
-//			print (Static.mesh_point_center_array[i].ToString ("F3") + ":" + Static.mesh_point_center_norm_array [i].ToString ("F3")+":"+i.ToString ()); 
-		}
+//		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {
+//			print (Static.mesh_size[i].ToString ("F5") + ":" +i.ToString ()); 
+////			print (Static.mesh_point_center_array[i].ToString ("F3") + ":" + Static.mesh_point_center_norm_array [i].ToString ("F3")+":"+i.ToString ()); 
+//		}
 
 
 		//境界qの確認
