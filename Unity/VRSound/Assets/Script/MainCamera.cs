@@ -29,13 +29,15 @@ public class MainCamera : MonoBehaviour {
 	void Start () {
 		LogObj = GameObject.Find ("Log");
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
-		player_position.GetComponent<Text> ().text = this.transform.position.ToString ();
+
+		v = Static.check_position;
+		player_position.GetComponent<Text> ().text = v.ToString ("F3");
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		v = this.transform.localPosition;
-		l = this.transform.localEulerAngles;
+
 		////////////////////移動制御////////////////////
 		if (Input.GetKey (KeyCode.W)) {   // Wキーで前進.
 			//				v.z += 1f;
@@ -68,6 +70,8 @@ public class MainCamera : MonoBehaviour {
 		}
 		this.transform.localEulerAngles = l;
 		////////////////////移動制御ここまで////////////////////
+		v = this.transform.localPosition;
+		l = this.transform.localEulerAngles; 
 	}
 
 //	void LateUpdate(){
@@ -85,7 +89,7 @@ public class MainCamera : MonoBehaviour {
 		}
 	}
 
-	private float CaluInnnerPointWhenMove(Vector3 position, int start_position){
+	private float CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
 		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
@@ -93,24 +97,26 @@ public class MainCamera : MonoBehaviour {
 			float ry = Vector3.Distance (position+new Vector3(0,0.0001f,0), Static.mesh_point_center_array [i]);
 			float rz = Vector3.Distance (position+new Vector3(0,0,0.0001f), Static.mesh_point_center_array [i]);
 			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
-			int delay = (int)(start_position - Static.samplerate*r / wave_speed);
-			float delayf = (start_position - Static.samplerate * r / wave_speed);
-			float delayx = (start_position - Static.samplerate*rx / wave_speed);
-			float delayy = (start_position - Static.samplerate*ry / wave_speed);
-			float delayz = (start_position - Static.samplerate*rz / wave_speed);
-			Vector3 bibun = new Vector3 (0, 0, 0);
-				if (delay >= 0) {
+			int delay = (int)(start_frame - Static.samplerate*r / wave_speed);
+			float delayf = (start_frame - Static.samplerate*r / wave_speed);
+			float delayx = (start_frame - Static.samplerate*rx / wave_speed);
+			float delayy = (start_frame - Static.samplerate*ry / wave_speed);
+			float delayz = (start_frame - Static.samplerate*rz / wave_speed);
+
+			if (delay > 0) {
+				Vector3 bibun = new Vector3 (0, 0, 0);
 				bibun.x = ForSecondLayer (delay,delayf, delayx, i, r, rx);
 				bibun.y = ForSecondLayer (delay,delayf, delayy, i, r, ry);
 				bibun.z = ForSecondLayer (delay,delayf, delayz, i, r, rz);
 
+				//これが一番新しいやつ
 				u_array += OneLayer(delayf,i,r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r);
 //				u_array +=  ( Static.boundary_condition_q[delay,i] / r + dot * Static.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * Static.mesh_size[i] / (4.0f * Mathf.PI);
-				}
+			}
 		}
 		return u_array;
 	}
@@ -139,7 +145,7 @@ public class MainCamera : MonoBehaviour {
 				u_plus = Static.boundary_condition_u [delay+1, i] * (1 - delta) + Static.boundary_condition_u [delay+2, i] * delta;
 			}
 		}
-			
+
 		result = u_plus / (4 * Mathf.PI * raxsis) - u / (4 * Mathf.PI * r);
 		return result;
 	}
