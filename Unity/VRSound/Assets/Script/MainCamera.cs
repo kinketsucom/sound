@@ -74,8 +74,6 @@ public class MainCamera : MonoBehaviour {
 		l = this.transform.localEulerAngles; 
 	}
 
-//	void LateUpdate(){
-//	}
 
 	void FixedUpdate(){
 		if (emmit_sound) {
@@ -94,22 +92,24 @@ public class MainCamera : MonoBehaviour {
 		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
 			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
-			int delay = (int)(start_frame - Static.samplerate*r / wave_speed);
+			float delayf = start_frame - Static.samplerate * r / wave_speed;
+			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += FirstLayer(i,delay,r) + SecondLayer(i,dot,r);
+				u_array += FirstLayer(i,delayf,r);//+ SecondLayer(i,dot,r);
 			}
 		}
 		return u_array;
 	}
-	public float SecondLayer(int i,float dot, float r){
+
+	private float SecondLayer(int i,float dot, float r){
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
 		int n = Static.frame;
 		int m1 = 0;
 		int m2 = 0;
 		m1 = (int)(n - r * Static.samplerate / Static.wave_speed)+1;
-		m2 = (int)(n - r * Static.samplerate / Static.wave_speed-1)+1;
+		m2 = (int)(n - r * Static.samplerate / Static.wave_speed-1.0f)+1;
 		result = F_j_T (i, dot, r, (n - m1 + 1)*del_t) * Static.boundary_condition_u [m1, i] + F_j_T (i, dot, r, (m2 - n + 1))*Static.boundary_condition_u[m2,i];
 		return result;
 	}

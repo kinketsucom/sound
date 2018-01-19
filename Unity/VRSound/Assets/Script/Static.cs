@@ -29,7 +29,7 @@ public class Static : MonoBehaviour {
 	//デバッグ
 	// 現在の経過時間を取得
 	public static float check_time;
-	public static Vector3 check_position = new Vector3(2.0f,0f,0f);
+	public static Vector3 check_position = new Vector3(-0.5f,0.5f,0.5f);
 
 	void Awake(){
 		Time.fixedDeltaTime = (float)1/500;

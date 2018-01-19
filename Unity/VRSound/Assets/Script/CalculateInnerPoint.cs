@@ -285,12 +285,19 @@ public class CalculateInnerPoint : MonoBehaviour {
 		float del_t = 1.0f/Static.samplerate;
 		float lambda = 10.0f *del_t;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-//			Static.f [t] = size*1.0f;テスト用
+			if (t < Static.samplerate * lambda) {
 				Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI / lambda * t / Static.samplerate);
+			} else {
+				Static.f [t] = 0;
+			}
 		}
 		float[] f_hat = new float[Static.f.Length];
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			f_hat[t] = Mathf.Sin(2 * Mathf.PI /lambda*t/Static.samplerate);
+			if (t < Static.samplerate * lambda) {
+				f_hat[t] = Mathf.Sin(2 * Mathf.PI /lambda*t/Static.samplerate);
+			} else {
+				Static.f [t] = 0;
+			}
 		}
 
 
@@ -336,7 +343,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 					//テスト用
 					Static.boundary_condition_u [i, j] = Static.f[delay]/(4*Mathf.PI*r);
 					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
-
+					
 					//これは１のときのやつやからけす
 //					Static.boundary_condition_q [i, j] = size*-Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 3));
 				}
@@ -355,7 +362,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			for (int i = 0; i < Static.samplerate * Static.time; i++) {
 				int delay = (int)(i - Static.samplerate * r / Static.wave_speed);
 				if (delay > 0) {
-					float fuga = Static.f [delay] / (4 * Mathf.PI * r);
+					float fuga = Static.f [delay] / (4.0f * Mathf.PI * r);
 					string hoge = fuga.ToString ();
 					TextSaveTitle (hoge, "AAAu_original");
 				} else {//遅延待ち
@@ -365,6 +372,13 @@ public class CalculateInnerPoint : MonoBehaviour {
 			print ("original書き出し終了");
 		}
 
+////		//境界qの確認テスト
+//		for (int i = 0; i < Static.samplerate * Static.time; i++) {
+//			float fuga = Static.boundary_condition_q [i, 0];
+//			string hoge = fuga.ToString ();
+//			TextSaveTitle (hoge, "AAAq");
+//		}
+//		print ("q書き出し終了");
 
 //		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {
 //			if (vec_check [i] != Static.mesh_point_center_norm_array [i]) {
