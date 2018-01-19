@@ -124,17 +124,16 @@ public class MainCamera : MonoBehaviour {
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
 		int n = Static.frame;
-		int m1 = (int)(r * Static.samplerate / Static.wave_speed + n);
-		int m2 = (int)(r * Static.samplerate / Static.wave_speed + n);
-
-		result = F_j_T (i, dot, r, (n - m1 + 1) / Static.samplerate)*Static.boundary_condition_u[i, (int)m1/Static.samplerate] + F_j_T (i, dot, r, (m2 - n + 1) / Static.samplerate)*Static.boundary_condition_u[i,(int)m2/Static.samplerate];
+		int m1 = (int)(n - r*Static.samplerate/ Static.wave_speed);
+		int m2 = (int)(n-  r*Static.samplerate/ Static.wave_speed)+1;
+		result = F_j_T (i, dot, r, (n - m1 + 1))*Static.boundary_condition_u[(int)(m1*del_t), i] + F_j_T (i, dot, r, (m2 - n + 1) )*Static.boundary_condition_u[(int)(m2*del_t),i];
 		return result;
 	}
 
 	private float F_j_T(int i,float dot, float r, float T){//SecondLayer計算用
 		float del_t = 1.0f/Static.samplerate;
 		float result = 0.0f;
-		result = dot / (4.0f * Mathf.PI *del_t * Mathf.Pow (r, 3)) * Static.mesh_size [i] *T;
+		result = dot / (4.0f * Mathf.PI *del_t * Mathf.Pow (r, 3)) * Static.mesh_size [i] * T;
 		return result;
 	}
 
