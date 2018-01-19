@@ -31,7 +31,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private List<string> param_list = new List<string>();
 //	private Vector3 normal_vec = new Vector3(0,0,0);//メッシュの法線ベクトル
 	private Vector3[] all_point_vec;//三角形の点を保持しておく
-	private Vector3 cube_size = new Vector3(0,0,0);
+//	private Vector3 cube_size = new Vector3(0,0,0);
 
 	//表示用のやつ
 	public GameObject log;
@@ -127,7 +127,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			num_counter += 1;
 		}
 
-		cube_size = all_point_vec [num_counter-1];
+		Static.cube_size = all_point_vec [num_counter-1];
 		AudioSource aud = GetComponent<AudioSource>();
 		Static.time = Mathf.CeilToInt(aud.clip.samples / Static.samplerate);//FIXIT:
 

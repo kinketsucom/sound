@@ -96,10 +96,18 @@ public class MainCamera : MonoBehaviour {
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += FirstLayer(i,delayf,r);//+ SecondLayer(i,dot,r);
+				u_array += /*FirstLayer(i,delayf,r)*/+ SecondLayer(i,dot,r);
 			}
 		}
 		return u_array;
+	}
+
+	public float FirstLayer(int i,float delayf,float r){
+		float result = 0.0f;
+		float delta = delayf - (int)delayf;
+		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
+		result = -q * Static.mesh_size [i] / (4.0f * Mathf.PI * r);
+		return result;
 	}
 
 	private float SecondLayer(int i,float dot, float r){
@@ -122,13 +130,7 @@ public class MainCamera : MonoBehaviour {
 	}
 
 
-	public float FirstLayer(int i,float delayf,float r){
-		float result = 0.0f;
-		float delta = delayf - (int)delayf;
-		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
-		result = q * Static.mesh_size [i] / (4.0f * Mathf.PI * r);
-		return result;
-	}
+
 		
 
 

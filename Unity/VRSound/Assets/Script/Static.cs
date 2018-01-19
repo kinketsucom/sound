@@ -22,6 +22,9 @@ public class Static : MonoBehaviour {
 	//内点計算による波形
 	public static float[] u_array;//波形表示用の配列
 
+	//散乱体の形状
+	public static Vector3 cube_size;
+
 	//波形描画用
 	public static int calc_frame = 4000;//波形描画をどの程度するか
 	public static int frame=0;//現在フレーム
