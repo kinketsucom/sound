@@ -335,7 +335,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 					//テスト用
 					Static.boundary_condition_u [i, j] = Static.f[delay]/(4*Mathf.PI*r);
-						Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
+					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
 
 					//これは１のときのやつやからけす
 //					Static.boundary_condition_q [i, j] = size*-Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 3));
