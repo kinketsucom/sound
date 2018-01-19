@@ -281,10 +281,10 @@ public class CalculateInnerPoint : MonoBehaviour {
 			f_dot[t] = 2*pi*f*Mathf.Cos(2*pi*f*t/Static.samplerate);
 		}
 //		//テスト用
-		float del_t = 1/Static.samplerate;
+		float del_t = 1.0f/Static.samplerate;
 		float lambda = 10.0f *del_t;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			Static.f[t] = 1- Mathf.Cos(2 * Mathf.PI /lambda* t/Static.samplerate);
+			Static.f[t] = 1 - Mathf.Cos( 2 * Mathf.PI /lambda* t/Static.samplerate );
 		}
 		float[] f_hat = new float[Static.f.Length];
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
