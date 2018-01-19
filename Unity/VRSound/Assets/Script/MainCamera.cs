@@ -122,10 +122,13 @@ public class MainCamera : MonoBehaviour {
 	}
 	public float SecondLayer(int i,float dot, float r){
 		float result = 0.0f;
+		float del_t = 1 / Static.samplerate;
 		int n = Static.frame;
-		int m1 = (int)(r * Static.samplerate / Static.wave_speed + n)+1;
-		int m2 = (int)(r * Static.samplerate / Static.wave_speed + n)+2;
+		int m1 = (int)(r * Static.samplerate / Static.wave_speed + n);
+		int m2 = (int)(r * Static.samplerate / Static.wave_speed + n);
 
+//		string sma = (n - r * Static.samplerate / Static.wave_speed).ToString ("F3");
+//		print( sma + ":" + m1.ToString("F3"));
 		result = F_j_T (i, dot, r, (n - m1 + 1) / Static.samplerate)*Static.boundary_condition_u[i, (int)m1/Static.samplerate] + F_j_T (i, dot, r, (m2 - n + 1) / Static.samplerate)*Static.boundary_condition_u[i,(int)m2/Static.samplerate];
 		return result;
 	}
