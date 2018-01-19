@@ -96,19 +96,13 @@ public class MainCamera : MonoBehaviour {
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += /*FirstLayer(i,delayf,r)*/+ SecondLayer(i,dot,r);
+				u_array += FirstLayer(i,delayf,r)+ SecondLayer(i,dot,r);
 			}
 		}
 		return u_array;
 	}
 
-	public float FirstLayer(int i,float delayf,float r){
-		float result = 0.0f;
-		float delta = delayf - (int)delayf;
-		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
-		result = -q * Static.mesh_size [i] / (4.0f * Mathf.PI * r);
-		return result;
-	}
+
 
 	private float SecondLayer(int i,float dot, float r){
 		float result = 0.0f;
@@ -118,20 +112,26 @@ public class MainCamera : MonoBehaviour {
 		int m2 = 0;
 		m1 = (int)(n - r * Static.samplerate / Static.wave_speed)+1;
 		m2 = (int)(n - r * Static.samplerate / Static.wave_speed-1.0f)+1;
-		result = F_j_T (i, dot, r, (n - m1 + 1)*del_t) * Static.boundary_condition_u [m1, i] + F_j_T (i, dot, r, (m2 - n + 1))*Static.boundary_condition_u[m2,i];
+		result = F_j_T (i, dot, r, (n - m1 + 1)) * Static.boundary_condition_u [m1, i] + F_j_T (i, dot, r, (m2 - n + 1))*Static.boundary_condition_u[m2,i];
 		return result;
 	}
 
 	private float F_j_T(int i, float dot, float r, float T){//SecondLayer計算用
 		float del_t = 1.0f/Static.samplerate;
 		float result = 0.0f;
-		result = dot * Static.mesh_size [i] * T / (4.0f * Mathf.PI* del_t * Mathf.Pow (r, 3));
+		result = -dot * Static.mesh_size [i] * T / (4.0f * Mathf.PI * Mathf.Pow (r, 3));
 		return result;
 	}
 
 
 
-		
+	public float FirstLayer(int i,float delayf,float r){
+		float result = 0.0f;
+		float delta = delayf - (int)delayf;
+		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
+		result = -q * Static.mesh_size [i] / (4.0f * Mathf.PI * r);
+		return result;
+	}	
 
 
 
