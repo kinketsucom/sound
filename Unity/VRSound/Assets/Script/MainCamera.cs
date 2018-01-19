@@ -131,8 +131,9 @@ public class MainCamera : MonoBehaviour {
 	}
 
 	private float F_j_T(int i,float dot, float r, float T){//SecondLayer計算用
+		float del_t = 1/Static.samplerate;
 		float result = 0.0f;
-		result = dot / (4 * Mathf.PI / Static.samplerate * Mathf.Pow (r, 3)) * Static.mesh_size [i] *T;
+		result = dot / (4 * Mathf.PI *del_t * Mathf.Pow (r, 3)) * Static.mesh_size [i] *T;
 		return result;
 	}
 
