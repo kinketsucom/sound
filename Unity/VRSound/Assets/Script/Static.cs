@@ -29,10 +29,10 @@ public class Static : MonoBehaviour {
 	//デバッグ
 	// 現在の経過時間を取得
 	public static float check_time;
-	public static Vector3 check_position = new Vector3(-1,0,0);
+	public static Vector3 check_position = new Vector3(0,0,0);
 
 	void Awake(){
-		Time.fixedDeltaTime = (float)1/500;
+		Time.fixedDeltaTime = (float)1/600;
 	}
 		
 }

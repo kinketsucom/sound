@@ -91,12 +91,13 @@ public class MainCamera : MonoBehaviour {
 
 	private float CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
+		float delta_move = 0.0001f; 
 		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
-			float rx = Vector3.Distance (position+new Vector3(0.0001f,0,0), Static.mesh_point_center_array [i]);
-			float ry = Vector3.Distance (position+new Vector3(0,0.0001f,0), Static.mesh_point_center_array [i]);
-			float rz = Vector3.Distance (position+new Vector3(0,0,0.0001f), Static.mesh_point_center_array [i]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
+			float rx = Vector3.Distance (position+new Vector3(delta_move,0,0), Static.mesh_point_center_array [i]);
+			float ry = Vector3.Distance (position+new Vector3(0,delta_move,0), Static.mesh_point_center_array [i]);
+			float rz = Vector3.Distance (position+new Vector3(0,0,delta_move), Static.mesh_point_center_array [i]);
+//			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
 			int delay = (int)(start_frame - Static.samplerate*r / wave_speed);
 			float delayf = (start_frame - Static.samplerate*r / wave_speed);
 			float delayx = (start_frame - Static.samplerate*rx / wave_speed);
@@ -104,18 +105,16 @@ public class MainCamera : MonoBehaviour {
 			float delayz = (start_frame - Static.samplerate*rz / wave_speed);
 
 			if (delay > 0) {
-				Vector3 bibun = new Vector3 (0, 0, 0);
-				bibun.x = ForSecondLayer (delay,delayf, delayx, i, r, rx);
-				bibun.y = ForSecondLayer (delay,delayf, delayy, i, r, ry);
-				bibun.z = ForSecondLayer (delay,delayf, delayz, i, r, rz);
-
+				Vector3 bibun = new Vector3 (0.0f, 0.0f, 0.0f);
+				bibun.x = ForSecondLayer (delay,delayf, delayx, i, r, rx)/delta_move;
+				bibun.y = ForSecondLayer (delay,delayf, delayy, i, r, ry)/delta_move;
+				bibun.z = ForSecondLayer (delay,delayf, delayz, i, r, rz)/delta_move;
 				//これが一番新しいやつ
 				u_array += OneLayer(delayf,i,r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
-
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r);
-//				u_array +=  ( Static.boundary_condition_q[delay,i] / r + dot * Static.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * Static.mesh_size[i] / (4.0f * Mathf.PI);
+//				u_array += (Static.boundary_condition_q[delay,i] / r + dot * Static.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * Static.mesh_size[i] / (4.0f * Mathf.PI);
 			}
 		}
 		return u_array;
@@ -125,28 +124,29 @@ public class MainCamera : MonoBehaviour {
 	public float OneLayer(float delayf,int i,float r){
 		float result = 0.0f;
 		float delta = delayf - (int)delayf;
-		float q = Static.boundary_condition_q [(int)delayf, i]*(1-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
-		result = q * Static.mesh_size [i] / (4 * Mathf.PI * r);
+		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
+		result = q * Static.mesh_size [i] / (4.0f * Mathf.PI * r);
 		return result;
 	}
+		
 
 	public float ForSecondLayer(int delay,float delayf, float delayaxis, int i, float r,float raxsis){//iはメッシュの重心のあれをあらわす
 		float result=0.0f;
 		float u_plus = 0.0f;
 		float delta = delayaxis - delay;
-		float u = Static.boundary_condition_u [(int)delayf, i]*(1-delta)+Static.boundary_condition_u [(int)delayf+1, i]*delta;
+		float u = Static.boundary_condition_u [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_u [(int)delayf+1, i]*delta;
 		if ((int)delayaxis == delay) {//同じになってしまうところ
-			u_plus = Static.boundary_condition_u [delay, i] * (1 - delta) + Static.boundary_condition_u [delay+1, i] * delta;
+			u_plus = Static.boundary_condition_u [delay, i] * (1.0f - delta) + Static.boundary_condition_u [delay+1, i] * delta;
 		} else {//異なるところ
 			if ((int)delayaxis < delay) {
-				u_plus = Static.boundary_condition_u [delay-1, i] * (1 - delta) + Static.boundary_condition_u [delay, i] * delta;
+				u_plus = Static.boundary_condition_u [delay-1, i] * (1.0f - delta) + Static.boundary_condition_u [delay, i] * delta;
 			}
 			if ((int)delayaxis > delay) {
-				u_plus = Static.boundary_condition_u [delay+1, i] * (1 - delta) + Static.boundary_condition_u [delay+2, i] * delta;
+				u_plus = Static.boundary_condition_u [delay+1, i] * (1.0f - delta) + Static.boundary_condition_u [delay+2, i] * delta;
 			}
 		}
 
-		result = u_plus / (4 * Mathf.PI * raxsis) - u / (4 * Mathf.PI * r);
+		result = (u_plus / (4.0f * Mathf.PI * raxsis) - u / (4.0f * Mathf.PI * r));
 		return result;
 	}
 
