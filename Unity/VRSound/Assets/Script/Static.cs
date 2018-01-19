@@ -10,7 +10,7 @@ public class Static : MonoBehaviour {
 	public static int time=1;//初期の時間.コードで動的に設定する
 	public static float wave_speed = 340.29f;
 	public static float[] f;//音圧
-	public static Vector3 source_origin_point = new Vector3(0.035f,0.035f,0.0135f);//音源の位置
+	public static Vector3 source_origin_point = new Vector3(0.5f,0.5f,0.5f);//音源の位置
 
 	//境界情報
 	public static Vector3[] mesh_point_center_array;//メッシュの重心
@@ -29,7 +29,7 @@ public class Static : MonoBehaviour {
 	//デバッグ
 	// 現在の経過時間を取得
 	public static float check_time;
-	public static Vector3 check_position = new Vector3(0,0,0);
+	public static Vector3 check_position = new Vector3(2.0f,0f,0f);
 
 	void Awake(){
 		Time.fixedDeltaTime = (float)1/500;

@@ -285,7 +285,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 		float del_t = 1.0f/Static.samplerate;
 		float lambda = 10.0f *del_t;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			Static.f [t] = size*1.0f;// - Mathf.Cos( 2 * Mathf.PI /lambda* t/Static.samplerate );
+//			Static.f [t] = size*1.0f;テスト用
+				Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI / lambda * t / Static.samplerate);
 		}
 		float[] f_hat = new float[Static.f.Length];
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
@@ -330,13 +331,14 @@ public class CalculateInnerPoint : MonoBehaviour {
 //					Static.boundary_condition_u [i,j] = Static.f [delay]/(4*Mathf.PI*r);
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) * (Static.f[delay] / r + f_dot [delay] / Static.wave_speed) / (4 * Mathf.PI * Mathf.Pow (r, 2));
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot(Static.mesh_point_center_array[j]-Static.source_origin_point,Static.mesh_point_center_norm_array[j]) * (Static.wave_speed*Static.f[delay] + Static.samplerate*r*(Static.f[delay+1]-Static.f[delay])) /(4*Mathf.PI*Static.wave_speed*Mathf.Pow(r,3));
+
+
 					//テスト用
 					Static.boundary_condition_u [i, j] = Static.f[delay]/(4*Mathf.PI*r);
-//					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
-
+						Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
 
 					//これは１のときのやつやからけす
-					Static.boundary_condition_q [i, j] = size*-Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 3));
+//					Static.boundary_condition_q [i, j] = size*-Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 3));
 				}
 			}
 		}
@@ -373,10 +375,10 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			}
 //		}
 
-		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
+//		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 //			print (Static.mesh_size[i].ToString ("F5") + ":" +i.ToString ()); 
 //			print (Static.mesh_point_center_array[i].ToString ("F3") + ":" + Static.mesh_point_center_norm_array [i].ToString ("F3")+":"+i.ToString ()); 
-		}
+//		}
 
 
 		//境界qの確認
