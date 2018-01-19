@@ -274,12 +274,12 @@ public class CalculateInnerPoint : MonoBehaviour {
 		////////////////////境界要素の計算////////////////////
 
 //		//テスト用
-//		f_dot = new float[Static.samplerate*Static.time];
-//		float f = 440;
-//		float pi = Mathf.PI;
-//		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-//			f_dot[t] = 2*pi*f*Mathf.Cos(2*pi*f*t/Static.samplerate);
-//		}
+		f_dot = new float[Static.samplerate*Static.time];
+		float f = 440;
+		float pi = Mathf.PI;
+		for (int t = 0; t < Static.samplerate*Static.time; t++) {
+			f_dot[t] = 2*pi*f*Mathf.Cos(2*pi*f*t/Static.samplerate);
+		}
 //		//テスト用
 		float lambda = 10 / Static.samplerate;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
@@ -325,8 +325,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 				float r = Vector3.Distance (Static.mesh_point_center_array[j], Static.source_origin_point);
 				int delay = (int)(i - Static.samplerate*r / Static.wave_speed);
 				if(delay>=0){
-					Static.boundary_condition_u [i,j] = Static.f [delay]/(4*Mathf.PI*r);
-					Static.boundary_condition_q [i,j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) * (Static.f[delay] / r + f_dot [delay] / Static.wave_speed) / (4 * Mathf.PI * Mathf.Pow (r, 2));
+//					Static.boundary_condition_u [i,j] = Static.f [delay]/(4*Mathf.PI*r);
+//					Static.boundary_condition_q [i,j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) * (Static.f[delay] / r + f_dot [delay] / Static.wave_speed) / (4 * Mathf.PI * Mathf.Pow (r, 2));
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot(Static.mesh_point_center_array[j]-Static.source_origin_point,Static.mesh_point_center_norm_array[j]) * (Static.wave_speed*Static.f[delay] + Static.samplerate*r*(Static.f[delay+1]-Static.f[delay])) /(4*Mathf.PI*Static.wave_speed*Mathf.Pow(r,3));
 					//テスト用
 					Static.boundary_condition_u [i,j] = (1-Static.f[delay])/(4*Mathf.PI*r);

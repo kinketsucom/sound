@@ -97,7 +97,7 @@ public class MainCamera : MonoBehaviour {
 			float rx = Vector3.Distance (position+new Vector3(delta_move,0,0), Static.mesh_point_center_array [i]);
 			float ry = Vector3.Distance (position+new Vector3(0,delta_move,0), Static.mesh_point_center_array [i]);
 			float rz = Vector3.Distance (position+new Vector3(0,0,delta_move), Static.mesh_point_center_array [i]);
-//			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
 			int delay = (int)(start_frame - Static.samplerate*r / wave_speed);
 			float delayf = (start_frame - Static.samplerate*r / wave_speed);
 			float delayx = (start_frame - Static.samplerate*rx / wave_speed);
@@ -109,9 +109,10 @@ public class MainCamera : MonoBehaviour {
 				bibun.x = ForSecondLayer (delay,delayf, delayx, i, r, rx)/delta_move;
 				bibun.y = ForSecondLayer (delay,delayf, delayy, i, r, ry)/delta_move;
 				bibun.z = ForSecondLayer (delay,delayf, delayz, i, r, rz)/delta_move;
+				//これが新しいやつ
+				u_array += OneLayer(i,delay,r) + SecondLayer(i,dot,r);
 				//これが一番新しいやつ
-				u_array += OneLayer(delayf,i,r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
-
+//				u_array += OneLayer(i,delay,r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r);
 //				u_array += (Static.boundary_condition_q[delay,i] / r + dot * Static.boundary_condition_u[delay,i] / Mathf.Pow(r,3)) * Static.mesh_size[i] / (4.0f * Mathf.PI);
@@ -119,9 +120,24 @@ public class MainCamera : MonoBehaviour {
 		}
 		return u_array;
 	}
+	public float SecondLayer(int i,float dot, float r){//u(x,t)
+		float result = 0.0f;
+		int n = Static.frame;
+		int m1 = (int)(r * Static.samplerate / Static.wave_speed + n)+1;
+		int m2 = (int)(r * Static.samplerate / Static.wave_speed + n)+2;
+
+		result = F_j_T (i, dot, r, (n - m1 + 1) / Static.samplerate); F_j_T (i, dot, r, (m2 - n + 1) / Static.samplerate);
+		return result;
+	}
+
+	private float F_j_T(int i,float dot, float r, float T){//SecondLayer計算用
+		float result = 0.0f;
+		result = dot / (4 * Mathf.PI / Static.samplerate * Mathf.Pow (r, 3)) * Static.mesh_size [i] *T;
+		return result;
+	}
 
 
-	public float OneLayer(float delayf,int i,float r){
+	public float OneLayer(int i,float delayf,float r){
 		float result = 0.0f;
 		float delta = delayf - (int)delayf;
 		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
@@ -145,10 +161,11 @@ public class MainCamera : MonoBehaviour {
 				u_plus = Static.boundary_condition_u [delay+1, i] * (1.0f - delta) + Static.boundary_condition_u [delay+2, i] * delta;
 			}
 		}
-
 		result = (u_plus / (4.0f * Mathf.PI * raxsis) - u / (4.0f * Mathf.PI * r));
 		return result;
 	}
+
+
 
 	public void AAAAA(){
 		emmit_sound = true;
