@@ -91,7 +91,7 @@ public class MainCamera : MonoBehaviour {
 
 	private float CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
-		float delta_move = 0.0001f; 
+		float delta_move = 0.0001f;
 		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
 			float rx = Vector3.Distance (position+new Vector3(delta_move,0,0), Static.mesh_point_center_array [i]);
@@ -110,7 +110,7 @@ public class MainCamera : MonoBehaviour {
 				bibun.y = ForSecondLayer (delay,delayf, delayy, i, r, ry)/delta_move;
 				bibun.z = ForSecondLayer (delay,delayf, delayz, i, r, rz)/delta_move;
 				//これが新しいやつ
-				u_array += OneLayer(i,delay,r) - SecondLayer(i,dot,r);
+				u_array += OneLayer(i,delay,r) + SecondLayer(i,dot,r);
 				//これが一番新しいやつ
 //				u_array += OneLayer(i,delay,r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
@@ -126,16 +126,16 @@ public class MainCamera : MonoBehaviour {
 		int n = Static.frame;
 		int m1 = 0;
 		int m2 = 0;
-		m1 = (int)(n - r * del_t / Static.wave_speed)+1;
-		m2 = (int)(n - r * del_t / Static.wave_speed);
-		result = F_j_T (i, dot, r, (n - m1 + 1)*del_t)*Static.boundary_condition_u[(int)(m1*del_t), i] + F_j_T (i, dot, r, (m2 - n + 1)*del_t)*Static.boundary_condition_u[(int)(m2*del_t),i];
+		m1 = (int)(n - r * Static.samplerate / Static.wave_speed)+1;
+		m2 = (int)(n - r * Static.samplerate/ Static.wave_speed);
+		result = F_j_T (i, dot, r, (n - m1 + 1)) * Static.boundary_condition_u [(int)(m1), i] + F_j_T (i, dot, r, (m2 - n + 1))*Static.boundary_condition_u[(int)(m2),i];
 		return result;
 	}
 
-	private float F_j_T(int i,float dot, float r, float T){//SecondLayer計算用
+	private float F_j_T(int i, float dot, float r, float T){//SecondLayer計算用
 		float del_t = 1.0f/Static.samplerate;
 		float result = 0.0f;
-		result = dot * Static.mesh_size [i] * T / (4.0f * Mathf.PI *del_t * Mathf.Pow (r, 3));
+		result = dot * Static.mesh_size [i] * T / (4.0f * Mathf.PI * Mathf.Pow (r, 3));
 		return result;
 	}
 
