@@ -281,7 +281,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			f_dot[t] = 2*pi*f*Mathf.Cos(2*pi*f*t/Static.samplerate);
 		}
 //		//テスト用
-		float lambda = 10 / Static.samplerate;
+		float lambda = 10.0f / Static.samplerate;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
 			Static.f[t] = 1- Mathf.Cos(2 * Mathf.PI /lambda*t/Static.samplerate);
 		}
@@ -330,7 +330,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot(Static.mesh_point_center_array[j]-Static.source_origin_point,Static.mesh_point_center_norm_array[j]) * (Static.wave_speed*Static.f[delay] + Static.samplerate*r*(Static.f[delay+1]-Static.f[delay])) /(4*Mathf.PI*Static.wave_speed*Mathf.Pow(r,3));
 					//テスト用
 					Static.boundary_condition_u [i,j] = (1-Static.f[delay])/(4*Mathf.PI*r);
-					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((1 - Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
+					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
 				
 				
 				}
@@ -360,14 +360,14 @@ public class CalculateInnerPoint : MonoBehaviour {
 		}
 
 
-		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {
-			if (vec_check [i] != Static.mesh_point_center_norm_array [i]) {
-				print (i.ToString () + "番目");
-				print (vec_check [i].ToString ("F3") + ":" + Static.mesh_point_center_norm_array [i].ToString ("F3")); 
-				print (Static.mesh_point_center_array [i].ToString("F3"));
-			} else {
-			}
-		}
+//		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {
+//			if (vec_check [i] != Static.mesh_point_center_norm_array [i]) {
+//				print (i.ToString () + "番目");
+//				print (vec_check [i].ToString ("F3") + ":" + Static.mesh_point_center_norm_array [i].ToString ("F3")); 
+//				print (Static.mesh_point_center_array [i].ToString("F3"));
+//			} else {
+//			}
+//		}
 
 //		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 //			print (Static.mesh_size[i].ToString ("F5") + ":" +i.ToString ()); 

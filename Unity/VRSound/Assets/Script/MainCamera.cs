@@ -110,7 +110,7 @@ public class MainCamera : MonoBehaviour {
 				bibun.y = ForSecondLayer (delay,delayf, delayy, i, r, ry)/delta_move;
 				bibun.z = ForSecondLayer (delay,delayf, delayz, i, r, rz)/delta_move;
 				//これが新しいやつ
-				u_array += OneLayer(i,delay,r) + SecondLayer(i,dot,r);
+				u_array += OneLayer(i,delay,r) - SecondLayer(i,dot,r);
 				//これが一番新しいやつ
 //				u_array += OneLayer(i,delay,r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
 //				u_array += Static.boundary_condition_q [delay, i] * Static.mesh_size[i] / (4.0f*Mathf.PI*r) + Vector3.Dot(Static.mesh_point_center_norm_array[i],bibun)*Static.mesh_size[i];
@@ -120,13 +120,13 @@ public class MainCamera : MonoBehaviour {
 		}
 		return u_array;
 	}
-	public float SecondLayer(int i,float dot, float r){//u(x,t)
+	public float SecondLayer(int i,float dot, float r){
 		float result = 0.0f;
 		int n = Static.frame;
 		int m1 = (int)(r * Static.samplerate / Static.wave_speed + n)+1;
 		int m2 = (int)(r * Static.samplerate / Static.wave_speed + n)+2;
 
-		result = F_j_T (i, dot, r, (n - m1 + 1) / Static.samplerate); F_j_T (i, dot, r, (m2 - n + 1) / Static.samplerate);
+		result = F_j_T (i, dot, r, (n - m1 + 1) / Static.samplerate)*Static.boundary_condition_u[i, (int)m1/Static.samplerate] + F_j_T (i, dot, r, (m2 - n + 1) / Static.samplerate)*Static.boundary_condition_u[i,(int)m2/Static.samplerate];
 		return result;
 	}
 
