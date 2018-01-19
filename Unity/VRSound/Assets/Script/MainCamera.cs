@@ -124,9 +124,9 @@ public class MainCamera : MonoBehaviour {
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
 		int n = Static.frame;
-		int m1 = (int)(n - r*Static.samplerate/ Static.wave_speed);
-		int m2 = (int)(n-  r*Static.samplerate/ Static.wave_speed)+1;
-		result = F_j_T (i, dot, r, (n - m1 + 1))*Static.boundary_condition_u[(int)(m1*del_t), i] + F_j_T (i, dot, r, (m2 - n + 1) )*Static.boundary_condition_u[(int)(m2*del_t),i];
+		int m1 = (int)(n - r*del_t/ Static.wave_speed)+1;
+		int m2 = (int)(n-  r*del_t/ Static.wave_speed)+2;
+		result = F_j_T (i, dot, r, (n - m1 + 1)*del_t)*Static.boundary_condition_u[m1, i] + F_j_T (i, dot, r, (m2 - n + 1)*del_t)*Static.boundary_condition_u[m2,i];
 		return result;
 	}
 
