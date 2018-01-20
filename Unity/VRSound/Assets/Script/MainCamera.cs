@@ -96,7 +96,7 @@ public class MainCamera : MonoBehaviour {
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += FirstLayer(i,delayf,r)+ SecondLayer(i,dot,r);
+				u_array += FirstLayer(i,delayf,r) - SecondLayer(i,dot,r);
 			}
 		}
 		return u_array;
