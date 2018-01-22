@@ -28,18 +28,6 @@ public class MainCamera : MonoBehaviour {
 	//ログ表示
 	private GameObject LogObj;
 
-	//スレッド
-	private Thread _thread;
-
-	void Awake(){
-		_thread = new Thread (DoHeavyProcess);
-		_thread.Start ();
-	}
-	private void DoHeavyProcess()
-	{
-		// 別スレッドで実行する処理
-		// UnityのAPIは使えない
-	}
 
 	// Use this for initialization
 	void Start () {
