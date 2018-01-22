@@ -33,6 +33,10 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private Vector3[] all_point_vec;//三角形の点を保持しておく
 //	private Vector3 cube_size = new Vector3(0,0,0);
 
+	private float maxx = 0;
+	private float maxy = 0;
+	private float maxz = 0;
+
 	//表示用のやつ
 	public GameObject log;
 
@@ -109,14 +113,23 @@ public class CalculateInnerPoint : MonoBehaviour {
 					switch(counter){
 					case 0:
 						all_point_vec [num_counter].x = float.Parse (val);
+						if (maxx < Mathf.Abs (all_point_vec [num_counter].x)) {
+							maxx = Mathf.Abs (all_point_vec [num_counter].x);
+						}
 						counter += 1;
 						break;
 					case 1:
 						all_point_vec [num_counter].y = float.Parse (val);
+						if (maxy < Mathf.Abs (all_point_vec [num_counter].y)) {
+							maxy = Mathf.Abs (all_point_vec [num_counter].y);
+						}
 						counter += 1;
 						break;
 					case 2:
 						all_point_vec [num_counter].z = float.Parse (val);
+						if (maxz < Mathf.Abs (all_point_vec [num_counter].z)) {
+							maxz = Mathf.Abs (all_point_vec [num_counter].z);
+						}
 						counter += 1;
 						break;
 					default:
@@ -126,8 +139,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 			}
 			num_counter += 1;
 		}
+			
 
-		Static.cube_size = all_point_vec [num_counter-1];
+		Static.cube_size = new Vector3 (maxx, maxy, maxz);
 		AudioSource aud = GetComponent<AudioSource>();
 		Static.time = Mathf.CeilToInt(aud.clip.samples / Static.samplerate);//FIXIT:
 
@@ -285,19 +299,19 @@ public class CalculateInnerPoint : MonoBehaviour {
 		float del_t = 1.0f/Static.samplerate;
 		float lambda = 10.0f *del_t;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			if (t < Static.samplerate * lambda) {
+//			if (t < Static.samplerate * lambda) {
 				Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI / lambda * t / Static.samplerate);
-			} else {
-				Static.f [t] = 0;
-			}
+//			} else {
+//				Static.f [t] = 0;
+//			}
 		}
 		float[] f_hat = new float[Static.f.Length];
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			if (t < Static.samplerate * lambda) {
+//			if (t < Static.samplerate * lambda) {
 				f_hat[t] = Mathf.Sin(2 * Mathf.PI /lambda*t/Static.samplerate);
-			} else {
-				Static.f [t] = 0;
-			}
+//			} else {
+//				Static.f [t] = 0;
+//			}
 		}
 
 
