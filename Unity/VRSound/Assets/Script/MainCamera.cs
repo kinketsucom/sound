@@ -103,7 +103,6 @@ public class MainCamera : MonoBehaviour {
 	}
 
 
-
 	private float SecondLayer(int i,float dot, float r){
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
