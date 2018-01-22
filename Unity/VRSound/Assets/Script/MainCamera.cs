@@ -15,6 +15,9 @@ public class MainCamera : MonoBehaviour {
 	//波形描画設定
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
 
+	private bool finishA = false;
+	private bool finishB = false;
+	private bool finishC = false;
 
 	//プレイヤーの移動設定
 	Vector3 v;
@@ -78,7 +81,7 @@ public class MainCamera : MonoBehaviour {
 	void FixedUpdate(){
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
-			Static.u_array[Static.frame] = CaluInnnerPointWhenMove (v,Static.frame);
+			 CaluInnnerPointWhenMove (v,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
 			////////////////////波形の保存////////////////////
 			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "u_array_late");
@@ -87,9 +90,25 @@ public class MainCamera : MonoBehaviour {
 		}
 	}
 
-	private float CaluInnnerPointWhenMove(Vector3 position, int start_frame){
+	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
+		StartCoroutine(Start(position, start_frame));
+	}
+
+	//コルーチンの定義
+	IEnumerator Start (Vector3 position, int start_frame)
+	{
+		// 並列的に実行したい２つの処理があって、その両方が終わるまで待ち合わせをしたい。
+		StartCoroutine(ProcessA(position,start_frame));
+		StartCoroutine(ProcessB(position,start_frame));
+		yield return new WaitUntil(() => finishA && finishB && finishC);
+	}
+
+	IEnumerator ProcessA (Vector3 position, int start_frame)
+	{
+		finishA = false;
 		float u_array = 0;
-		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
+		// 1秒で終わる処理
+		for (int i = 0; i < (int)Static.mesh_point_center_array.Length/2; i++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
 			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
 			float delayf = start_frame - Static.samplerate * r / wave_speed;
@@ -99,7 +118,48 @@ public class MainCamera : MonoBehaviour {
 				u_array += FirstLayer(i,delayf,r) - SecondLayer(i,dot,r);
 			}
 		}
-		return u_array;
+		Static.u_array [start_frame] += u_array;
+		yield return null;
+		finishA = true;
+	}
+
+	IEnumerator ProcessB (Vector3 position, int start_frame)
+	{
+		finishB = false;
+		float u_array = 0;
+		// 1秒で終わる処理
+		for (int i = (int)Static.mesh_point_center_array.Length / 3 + 1; i < (int)Static.mesh_point_center_array.Length * 2/ 3; i++) {
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
+			float delayf = start_frame - Static.samplerate * r / wave_speed;
+			int delay = (int)delayf;
+			if (delay > 0) {
+				//これが新しいやつ
+				u_array += FirstLayer (i, delayf, r) - SecondLayer (i, dot, r);
+			}
+		}
+		Static.u_array [start_frame] += u_array;
+		yield return null;
+		finishB = true;
+	}
+	IEnumerator ProcessC (Vector3 position, int start_frame)
+	{
+		finishC = false;
+		float u_array = 0;
+		// 1秒で終わる処理
+		for (int i = (int)Static.mesh_point_center_array.Length *2/ 3 + 1; i < Static.mesh_point_center_array.Length; i++) {
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
+			float delayf = start_frame - Static.samplerate * r / wave_speed;
+			int delay = (int)delayf;
+			if (delay > 0) {
+				//これが新しいやつ
+				u_array += FirstLayer (i, delayf, r) - SecondLayer (i, dot, r);
+			}
+		}
+		Static.u_array [start_frame] += u_array;
+		yield return null;
+		finishC = true;
 	}
 
 
