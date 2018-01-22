@@ -85,7 +85,7 @@ public class MainCamera : MonoBehaviour {
 			 CaluInnnerPointWhenMove (v,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
 			////////////////////波形の保存////////////////////
-			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "u_array_late");
+//			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "u_array_late");
 			////////////////////波形の保存ここまで////////////////////
 			Static.frame += 1;
 		}
