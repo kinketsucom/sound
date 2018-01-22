@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UniRx;
+using System.Threading;
 
 
 public class MainCamera : MonoBehaviour {
@@ -27,6 +28,18 @@ public class MainCamera : MonoBehaviour {
 	//ログ表示
 	private GameObject LogObj;
 
+	//スレッド
+	private Thread _thread;
+
+	void Awake(){
+		_thread = new Thread (DoHeavyProcess);
+		_thread.Start ();
+	}
+	private void DoHeavyProcess()
+	{
+		// 別スレッドで実行する処理
+		// UnityのAPIは使えない
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -35,7 +48,7 @@ public class MainCamera : MonoBehaviour {
 
 		v = Static.check_position;
 		player_position.GetComponent<Text> ().text = v.ToString ("F3");
-
+		// Scheduler.MainThreadにメインスレッドでアクセスしておく必要がある(初めてアクセスしたときに内部の変数が初期化されるため)
 	}
 	
 	// Update is called once per frame
@@ -90,25 +103,13 @@ public class MainCamera : MonoBehaviour {
 		}
 	}
 
+
+
+
 	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
-		StartCoroutine(Start(position, start_frame));
-	}
-
-	//コルーチンの定義
-	IEnumerator Start (Vector3 position, int start_frame)
-	{
-		// 並列的に実行したい２つの処理があって、その両方が終わるまで待ち合わせをしたい。
-		StartCoroutine(ProcessA(position,start_frame));
-		StartCoroutine(ProcessB(position,start_frame));
-		yield return new WaitUntil(() => finishA && finishB && finishC);
-	}
-
-	IEnumerator ProcessA (Vector3 position, int start_frame)
-	{
-		finishA = false;
 		float u_array = 0;
 		// 1秒で終わる処理
-		for (int i = 0; i < (int)Static.mesh_point_center_array.Length/2; i++) {
+		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
 			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
 			float delayf = start_frame - Static.samplerate * r / wave_speed;
@@ -118,49 +119,9 @@ public class MainCamera : MonoBehaviour {
 				u_array += FirstLayer(i,delayf,r) - SecondLayer(i,dot,r);
 			}
 		}
-		Static.u_array [start_frame] += u_array;
-		yield return null;
-		finishA = true;
+		Static.u_array [start_frame] = u_array;
 	}
-
-	IEnumerator ProcessB (Vector3 position, int start_frame)
-	{
-		finishB = false;
-		float u_array = 0;
-		// 1秒で終わる処理
-		for (int i = (int)Static.mesh_point_center_array.Length / 3 + 1; i < (int)Static.mesh_point_center_array.Length * 2/ 3; i++) {
-			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
-			float delayf = start_frame - Static.samplerate * r / wave_speed;
-			int delay = (int)delayf;
-			if (delay > 0) {
-				//これが新しいやつ
-				u_array += FirstLayer (i, delayf, r) - SecondLayer (i, dot, r);
-			}
-		}
-		Static.u_array [start_frame] += u_array;
-		yield return null;
-		finishB = true;
-	}
-	IEnumerator ProcessC (Vector3 position, int start_frame)
-	{
-		finishC = false;
-		float u_array = 0;
-		// 1秒で終わる処理
-		for (int i = (int)Static.mesh_point_center_array.Length *2/ 3 + 1; i < Static.mesh_point_center_array.Length; i++) {
-			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
-			float delayf = start_frame - Static.samplerate * r / wave_speed;
-			int delay = (int)delayf;
-			if (delay > 0) {
-				//これが新しいやつ
-				u_array += FirstLayer (i, delayf, r) - SecondLayer (i, dot, r);
-			}
-		}
-		Static.u_array [start_frame] += u_array;
-		yield return null;
-		finishC = true;
-	}
+		
 
 
 	private float SecondLayer(int i,float dot, float r){
