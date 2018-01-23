@@ -77,8 +77,7 @@ public class MainCamera : MonoBehaviour {
 		v = this.transform.localPosition;
 		l = this.transform.localEulerAngles; 
 	}
-
-
+		
 	void FixedUpdate(){
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
@@ -90,14 +89,14 @@ public class MainCamera : MonoBehaviour {
 			Static.frame += 1;
 		}
 	}
-
-
+		
 
 
 	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
 		// 1秒で終わる処理
 		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
+
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
 			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
 			float delayf = start_frame - Static.samplerate * r / wave_speed;
@@ -106,6 +105,8 @@ public class MainCamera : MonoBehaviour {
 				//これが新しいやつ
 				u_array += FirstLayer(i,delayf,r) - SecondLayer(i,dot,r);
 			}
+
+
 		}
 		Static.u_array [start_frame] = u_array;
 	}
