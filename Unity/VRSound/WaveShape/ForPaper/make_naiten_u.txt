@@ -3,9 +3,9 @@ set xlabel 'step'
 set ylabel 'p[Pa]'
 set samples 400
 set xrange [0:400]
-set yrange [-0.5:2.5]
+set yrange [-0.1:0.3]
 set output "./ForPaper/eps/naiten_u.eps"
-plot './naiten_u.txt' title ''
+plot './naiten_u.txt' title '' w l
 set terminal png
 set out "./ForPaper/png/naiten_u.png"
-plot './naiten_u.txt' title ''
+plot './naiten_u.txt' title '' w l

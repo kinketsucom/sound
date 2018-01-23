@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  24 JAN 2018 01:59
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  24 JAN 2018 06:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -158,25 +158,32 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSb=\mathgroup6
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (./2018.aux)
+)) (/usr/local/texlive/2017/texmf-dist/tex/latex/here/here.sty) (/usr/local/texlive/2017/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count107
+\float@exts=\toks22
+\float@box=\box46
+\@float@everytoks=\toks23
+\@floatcapt=\box47
+) (./2018.aux)
 \openout1 = `2018.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
-LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 54.
-LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
+LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 55.
+LaTeX Font Info:    ... okay on input line 55.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: dvips
@@ -245,47 +252,47 @@ LaTeX Font Info:    ... okay on input line 54.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 6.72699pt on input line 57.
+(Font)              scaled to size 6.72699pt on input line 58.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 4.805pt on input line 57.
-LaTeX Font Info:    Try loading font information for U+msa on input line 57.
+(Font)              scaled to size 4.805pt on input line 58.
+LaTeX Font Info:    Try loading font information for U+msa on input line 58.
 (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 57.
+LaTeX Font Info:    Try loading font information for U+msb on input line 58.
  (/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 57.
+(Font)              scaled to size 13.83836pt on input line 58.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 57.
+(Font)              scaled to size 13.83836pt on input line 58.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 16.60605pt on input line 57.
+(Font)              scaled to size 16.60605pt on input line 58.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 16.60605pt on input line 57.
+(Font)              scaled to size 16.60605pt on input line 58.
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 19.9311pt on input line 57.
+(Font)              scaled to size 19.9311pt on input line 58.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 19.9311pt on input line 57.
+(Font)              scaled to size 19.9311pt on input line 58.
  [1
 
 
 
 ]
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 58.
+(Font)              scaled to size 9.60999pt on input line 59.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 58.
+(Font)              scaled to size 9.60999pt on input line 59.
  [2
 
 
 
 ]
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 59.
+(Font)              scaled to size 13.83836pt on input line 60.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 13.83836pt on input line 59.
+(Font)              scaled to size 13.83836pt on input line 60.
  (./2018.toc)
 \tf@toc=\write3
 \openout3 = `2018.toc'.
@@ -295,60 +302,48 @@ LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 78.
+(Font)              scaled to size 11.53198pt on input line 79.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 78.
+(Font)              scaled to size 11.53198pt on input line 79.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 78.
+(Font)              scaled to size 11.53198pt on input line 79.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 78.
+(Font)              scaled to size 11.53198pt on input line 79.
  [1
 
 ]
-Overfull \hbox (15.58589pt too wide) in paragraph at lines 136--136
+Overfull \hbox (15.58589pt too wide) in paragraph at lines 137--137
 [] 
  []
 
 [2]
-Overfull \hbox (19.1218pt too wide) in paragraph at lines 178--178
+Overfull \hbox (19.1218pt too wide) in paragraph at lines 179--179
 [] 
  []
 
 [3]
-Overfull \hbox (23.25441pt too wide) in paragraph at lines 186--186
+Overfull \hbox (23.25441pt too wide) in paragraph at lines 187--187
 [] 
  []
 
 [4]
-Overfull \hbox (20.40538pt too wide) in paragraph at lines 196--196
+Overfull \hbox (20.40538pt too wide) in paragraph at lines 197--197
 [] 
  []
 
 [5]
-File: ./eps/ft.eps Graphic file (type eps)
- <./eps/ft.eps>
+File: ./png/ft.png Graphic file (type bmp)
+ <./png/ft.png>
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 238.
+(Font)              scaled to size 8.64899pt on input line 239.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 238.
+(Font)              scaled to size 8.64899pt on input line 239.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 238.
+(Font)              scaled to size 5.76599pt on input line 239.
  [6]
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 248.
-LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 248.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 248.
-LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 248.
-
-
-LaTeX Warning: Reference `fig:naiten' on page 7 undefined on input line 248.
-
-./2018.tex:248: Misplaced alignment tab character &.
-l.248 ...近似手法によるであり,観測点はともに$x^s &
-                                                  = (-0.5,0.5,0.5)$である.
+./2018.tex:249: Misplaced alignment tab character &.
+l.249 ...わせたものでである.,観測点はともに$x^s &
+                                                 = (-0.5,0.5,0.5)$である.
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
 simple: Just type `I\&' now. But if some right brace
@@ -356,12 +351,67 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-File: ./eps/ft.eps Graphic file (type eps)
-<./eps/ft.eps> [7]
+File: ./png/original_u.png Graphic file (type bmp)
+<./png/original_u.png>
 
-LaTeX Warning: Citation `polya1945' on page 8 undefined on input line 294.
+./2018.tex:259: LaTeX Error: There's no line here to end.
 
-[8]
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.259 \begin
+            {figure}[H]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+File: ./eps/original_u.eps Graphic file (type eps)
+<./eps/original_u.eps>
+
+./2018.tex:267: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.267 \begin
+            {figure}[H]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+File: ./png/mix_u.png Graphic file (type bmp)
+<./png/mix_u.png> [7]
+
+./2018.tex:274: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.274 誤
+        差の評価をなんかを用いると数値的に評価できるはずでござる.
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[8] [9]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 315.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 315.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 315.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 315.
+
+
+LaTeX Warning: Citation `polya1945' on page 10 undefined on input line 315.
+
+[10
+
+]
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: dvips
 * paper: <default>
@@ -394,7 +444,7 @@ LaTeX Warning: Citation `polya1945' on page 8 undefined on input line 294.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [9
+ [11
 
 
 
@@ -431,12 +481,12 @@ LaTeX Warning: Citation `polya1945' on page 8 undefined on input line 294.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [10
+ [12
 
 
 
 
-] [11
+] [13
 
 
 
@@ -446,12 +496,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2323 strings out of 493653
- 28754 string characters out of 6148874
- 111701 words of memory out of 5000000
- 5895 multiletter control sequences out of 15000+600000
+ 2403 strings out of 493653
+ 29996 string characters out of 6148874
+ 113085 words of memory out of 5000000
+ 5961 multiletter control sequences out of 15000+600000
  19365 words of font info for 88 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 32i,15n,29p,246b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,15n,29p,250b,409s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2018.dvi (14 pages, 34344 bytes).
+Output written on 2018.dvi (16 pages, 35776 bytes).

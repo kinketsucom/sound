@@ -134,18 +134,12 @@ public class MainCamera : MonoBehaviour {
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-//				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
-				u_array += SecondLayer(j,delayf,dot,r,start_frame);
+				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
 			}
 		}
 		Static.u_array [start_frame] = u_array;
 	}
 		
-
-	private float SecondLayer(int j,float delayf,float dot, float r,int n){
-		
-	}
-
 	private float SecondLayer(int j,float delayf,float dot, float r,int n){
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;

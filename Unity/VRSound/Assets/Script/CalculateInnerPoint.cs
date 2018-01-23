@@ -299,19 +299,19 @@ public class CalculateInnerPoint : MonoBehaviour {
 		float del_t = 1.0f/Static.samplerate;
 		float lambda = 10.0f *del_t;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			if (t < Static.samplerate * lambda) {
+//			if (t < Static.samplerate * lambda) {
 			Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI * t / (lambda*Static.samplerate));
-			} else {
-				Static.f [t] = 0;
-			}
+//			} else {
+//				Static.f [t] = 0;
+//			}
 		}
 		float[] f_hat = new float[Static.f.Length];
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			if (t < Static.samplerate * lambda) {
+//			if (t < Static.samplerate * lambda) {
 			f_hat[t] = 2*Mathf.PI/(lambda*Static.wave_speed)* Mathf.Sin(2 * Mathf.PI*t/(lambda*Static.samplerate));
-			} else {
-				Static.f [t] = 0;
-			}
+//			} else {
+//				Static.f [t] = 0;
+//			}
 		}
 
 
@@ -365,11 +365,11 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 
 ////		//境界qの確認テスト
-		for (int i = 0; i < Static.samplerate * Static.time; i++) {
-			float fuga = Static.boundary_condition_q [i, 0];
-			string hoge = fuga.ToString ();
-			TextSaveTitle (hoge, "AAAq");
-		}
+//		for (int i = 0; i < Static.samplerate * Static.time; i++) {
+//			float fuga = Static.boundary_condition_q [i, 0];
+//			string hoge = fuga.ToString ();
+//			TextSaveTitle (hoge, "AAAq");
+//		}
 //		print ("q書き出し終了");
 
 //		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {
