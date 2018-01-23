@@ -48,3 +48,4 @@
 /Users/admin/Documents/research/Unity/VRSound/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.xml
 /Users/admin/Documents/research/Unity/VRSound/Temp/bin/Debug/UnityEditor.iOS.Extensions.Common.dll
 /Users/admin/Documents/research/Unity/VRSound/Temp/bin/Debug/UnityEditor.iOS.Extensions.Common.dll.mdb
+/Users/admin/Documents/research/Unity/VRSound/obj/Debug/.NETFramework,Version=v4.6.AssemblyAttribute.cs

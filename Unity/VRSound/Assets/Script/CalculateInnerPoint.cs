@@ -299,64 +299,40 @@ public class CalculateInnerPoint : MonoBehaviour {
 		float del_t = 1.0f/Static.samplerate;
 		float lambda = 10.0f *del_t;
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-//			if (t < Static.samplerate * lambda) {
-				Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI / lambda * t / Static.samplerate);
-//			} else {
-//				Static.f [t] = 0;
-//			}
+			if (t < Static.samplerate * lambda) {
+			Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI * t / (lambda*Static.samplerate));
+			} else {
+				Static.f [t] = 0;
+			}
 		}
 		float[] f_hat = new float[Static.f.Length];
 		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-//			if (t < Static.samplerate * lambda) {
-				f_hat[t] = Mathf.Sin(2 * Mathf.PI /lambda*t/Static.samplerate);
-//			} else {
-//				Static.f [t] = 0;
-//			}
+			if (t < Static.samplerate * lambda) {
+			f_hat[t] = 2*Mathf.PI/(lambda*Static.wave_speed)* Mathf.Sin(2 * Mathf.PI*t/(lambda*Static.samplerate));
+			} else {
+				Static.f [t] = 0;
+			}
 		}
 
 
 
-		for(int i = 0; i< Static.samplerate*Static.time; i++){//FIXIT:時間はまだ取得していない
-			for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
-//				//法線ベクトルの計算
-//				Vector3 normal_vec = new Vector3(0,0,0);
-////				外部問題の法線ベクトル
-//				if (Static.mesh_point_center_array [j].x <= 0.0f) {//手前0
-//					normal_vec.x = 1;
-//				} else if (Static.mesh_point_center_array [j].x < cube_size.x) {//間
-//
-//					if (Static.mesh_point_center_array [j].z <= 0.0f) {//みぎ1
-//						normal_vec.z = 1;
-//					} else if (Static.mesh_point_center_array [j].z >= cube_size.z) {//ひだり2
-//						normal_vec.z = -1;
-//					}else{//
-//						if(Static.mesh_point_center_array[j].y >= cube_size.y){//上3
-//							normal_vec.y = -1;
-//						}else{//下4
-//							normal_vec.y = 1;
-//						}
-//					}
-//				} else {//x奥5
-//					normal_vec.x = -1;
-//				}
-//					
-//				vec_check [j] = normal_vec;
 
-				//内部問題ならここを追加
-//				normal_vec *= -1;
+		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
+			//外部問題ならここを追加
+			Static.mesh_point_center_norm_array[j] *= -1;
+			//uとqの計算
+			float r = Vector3.Distance (Static.mesh_point_center_array[j], Static.source_origin_point);
+			for(int i = 0; i< Static.samplerate*Static.time; i++){//FIXIT:時間はまだ取得していない
 
-				//uとqの計算
-				float r = Vector3.Distance (Static.mesh_point_center_array[j], Static.source_origin_point);
 				int delay = (int)(i - Static.samplerate*r / Static.wave_speed);
 				if(delay>=0){
 //					Static.boundary_condition_u [i,j] = Static.f [delay]/(4*Mathf.PI*r);
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) * (Static.f[delay] / r + f_dot [delay] / Static.wave_speed) / (4 * Mathf.PI * Mathf.Pow (r, 2));
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot(Static.mesh_point_center_array[j]-Static.source_origin_point,Static.mesh_point_center_norm_array[j]) * (Static.wave_speed*Static.f[delay] + Static.samplerate*r*(Static.f[delay+1]-Static.f[delay])) /(4*Mathf.PI*Static.wave_speed*Mathf.Pow(r,3));
 
-
 					//テスト用
 					Static.boundary_condition_u [i, j] = Static.f[delay]/(4*Mathf.PI*r);
-					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * ((Static.f [delay]) / r + 2 * Mathf.PI * f_hat [delay] / (lambda * Static.wave_speed));
+					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * (Static.f [delay] / r + f_hat [delay]);
 					
 					//これは１のときのやつやからけす
 //					Static.boundary_condition_q [i, j] = size*-Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 3));
@@ -378,20 +354,22 @@ public class CalculateInnerPoint : MonoBehaviour {
 				if (delay > 0) {
 					float fuga = Static.f [delay] / (4.0f * Mathf.PI * r);
 					string hoge = fuga.ToString ();
-					TextSaveTitle (hoge, "AAAu_original");
+					TextSaveTitle (hoge, "original_u");
 				} else {//遅延待ち
-					TextSaveTitle ("0", "AAAu_original");			
+					TextSaveTitle ("0", "original_u");			
 				}
 			}
 			print ("original書き出し終了");
 		}
 
+
+
 ////		//境界qの確認テスト
-//		for (int i = 0; i < Static.samplerate * Static.time; i++) {
-//			float fuga = Static.boundary_condition_q [i, 0];
-//			string hoge = fuga.ToString ();
-//			TextSaveTitle (hoge, "AAAq");
-//		}
+		for (int i = 0; i < Static.samplerate * Static.time; i++) {
+			float fuga = Static.boundary_condition_q [i, 0];
+			string hoge = fuga.ToString ();
+			TextSaveTitle (hoge, "AAAq");
+		}
 //		print ("q書き出し終了");
 
 //		for (int i = 0; i < Static.mesh_point_center_norm_array.Length; i++) {

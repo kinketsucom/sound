@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  23 JAN 2018 16:23
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  24 JAN 2018 01:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -328,25 +328,40 @@ Overfull \hbox (20.40538pt too wide) in paragraph at lines 196--196
 File: ./eps/ft.eps Graphic file (type eps)
  <./eps/ft.eps>
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 237.
+(Font)              scaled to size 8.64899pt on input line 238.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 237.
+(Font)              scaled to size 8.64899pt on input line 238.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 237.
+(Font)              scaled to size 5.76599pt on input line 238.
  [6]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 269.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 248.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 269.
+(Font)              scaled to size 9.60999pt on input line 248.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 269.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 248.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 269.
+(Font)              scaled to size 9.60999pt on input line 248.
 
 
-LaTeX Warning: Citation `polya1945' on page 7 undefined on input line 269.
+LaTeX Warning: Reference `fig:naiten' on page 7 undefined on input line 248.
 
-[7]
+./2018.tex:248: Misplaced alignment tab character &.
+l.248 ...近似手法によるであり,観測点はともに$x^s &
+                                                  = (-0.5,0.5,0.5)$である.
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+File: ./eps/ft.eps Graphic file (type eps)
+<./eps/ft.eps> [7]
+
+LaTeX Warning: Citation `polya1945' on page 8 undefined on input line 294.
+
+[8]
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: dvips
 * paper: <default>
@@ -379,7 +394,7 @@ LaTeX Warning: Citation `polya1945' on page 7 undefined on input line 269.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [8
+ [9
 
 
 
@@ -416,12 +431,12 @@ LaTeX Warning: Citation `polya1945' on page 7 undefined on input line 269.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [9
+ [10
 
 
 
 
-] [10
+] [11
 
 
 
@@ -431,12 +446,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2320 strings out of 493653
- 28717 string characters out of 6148874
- 111683 words of memory out of 5000000
- 5892 multiletter control sequences out of 15000+600000
+ 2323 strings out of 493653
+ 28754 string characters out of 6148874
+ 111701 words of memory out of 5000000
+ 5895 multiletter control sequences out of 15000+600000
  19365 words of font info for 88 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  32i,15n,29p,246b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2018.dvi (13 pages, 33200 bytes).
+Output written on 2018.dvi (14 pages, 34344 bytes).

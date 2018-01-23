@@ -1,0 +1,11 @@
+set terminal postscript eps enhanced color
+set xlabel 'step'
+set ylabel 'p[Pa]'
+set samples 400
+set xrange [0:400]
+set yrange [-0.5:2.5]
+set output "./ForPaper/eps/original_u.eps"
+plot './original_u.txt' title ''
+set terminal png
+set out "./ForPaper/png/original_u.png"
+plot './original_u.txt' title ''

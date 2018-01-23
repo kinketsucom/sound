@@ -5,13 +5,12 @@ using UnityEngine.UI;
 using System.IO;
 using UniRx;
 using System.Threading;
-
+using System.Threading.Tasks;
+using System;
 
 public class MainCamera : MonoBehaviour {
 	//カメラ位置
 	private Text player_position;
-
-	private float wave_speed = 340.29f;
 
 	//波形描画設定
 	public static bool emmit_sound=false;//音源が音を鳴らしている場合
@@ -37,8 +36,39 @@ public class MainCamera : MonoBehaviour {
 		v = Static.check_position;
 		player_position.GetComponent<Text> ().text = v.ToString ("F3");
 		// Scheduler.MainThreadにメインスレッドでアクセスしておく必要がある(初めてアクセスしたときに内部の変数が初期化されるため)
+		Action<int> hogehoge = (id)=>{
+//			x = x ; //10
+//			print(x);
+			id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+			print("ThreadID : " + id);
+			print("aaa");
+		};
+		hogehoge(5);
+
 	}
-	
+
+	private async Task Func3()
+	{
+		print("---Start---");
+		for (var i = 0; i < 10; ++i)
+		{
+			await Task.Delay(1000);
+			print($"Count:{i}");
+		}
+		print("---End---");
+	}
+
+//	private async Task Func3()
+//	{
+//		print("---Start---");
+//		for (int i = 0; i < 10; ++i)
+//		{
+//			await Task.Delay(1000);
+//			print($"Count:{i}");
+//		}
+//		print("---End---");
+//	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -84,61 +114,63 @@ public class MainCamera : MonoBehaviour {
 			 CaluInnnerPointWhenMove (v,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
 			////////////////////波形の保存////////////////////
-//			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "u_array_late");
+			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "naiten_u");
 			////////////////////波形の保存ここまで////////////////////
 			Static.frame += 1;
 		}
 	}
-		
+
+
+
 
 
 	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
-		// 1秒で終わる処理
-		for (int i = 0; i < Static.mesh_point_center_array.Length; i++) {
-
-			float r = Vector3.Distance (position, Static.mesh_point_center_array [i]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [i], Static.mesh_point_center_norm_array [i]);
-			float delayf = start_frame - Static.samplerate * r / wave_speed;
+		// 1秒で終わるべき処理
+		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += FirstLayer(i,delayf,r) - SecondLayer(i,dot,r);
+//				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
+				u_array += SecondLayer(j,delayf,dot,r,start_frame);
 			}
-
-
 		}
 		Static.u_array [start_frame] = u_array;
 	}
 		
 
+	private float SecondLayer(int j,float delayf,float dot, float r,int n){
+		
+	}
 
-	private float SecondLayer(int i,float dot, float r){
+	private float SecondLayer(int j,float delayf,float dot, float r,int n){
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
-		int n = Static.frame;
 		int m1 = 0;
 		int m2 = 0;
-		m1 = (int)(n - r * Static.samplerate / Static.wave_speed)+1;
-		m2 = (int)(n - r * Static.samplerate / Static.wave_speed-1.0f)+1;
-		result = F_j_T (i, dot, r, (n - m1 + 1)) * Static.boundary_condition_u [m1, i] + F_j_T (i, dot, r, (m2 - n + 1))*Static.boundary_condition_u[m2,i];
+		m1 = (int)delayf;
+		m2 = (int)delayf-1;
+		result = F_j_T (j, dot, r, (n - m1 + 1)) * Static.boundary_condition_u [m1, j] + F_j_T (j, dot, r, (m2 - n + 1))*Static.boundary_condition_u[m2,j];
 		return result;
 	}
 
-	private float F_j_T(int i, float dot, float r, float T){//SecondLayer計算用
+	private float F_j_T(int j, float dot, float r, float T){//SecondLayer計算用
 		float del_t = 1.0f/Static.samplerate;
 		float result = 0.0f;
-		result = -dot * Static.mesh_size [i] * T / (4.0f * Mathf.PI * Mathf.Pow (r, 3));
+		result = dot * Static.mesh_size [j] * T / (4.0f * Mathf.PI * Mathf.Pow (r, 3));
 		return result;
 	}
 
 
 
-	public float FirstLayer(int i,float delayf,float r){
+	public float FirstLayer(int j,float delayf,float r){
 		float result = 0.0f;
 		float delta = delayf - (int)delayf;
-		float q = Static.boundary_condition_q [(int)delayf, i]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, i]*delta;
-		result = -q * Static.mesh_size [i] / (4.0f * Mathf.PI * r);
+		float q = Static.boundary_condition_q [(int)delayf, j]*(1.0f-delta)+Static.boundary_condition_q [(int)delayf+1, j]*delta;
+		result = q * Static.mesh_size [j] / (4.0f * Mathf.PI * r);
 		return result;
 	}	
 

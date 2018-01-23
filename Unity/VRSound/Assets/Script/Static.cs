@@ -35,7 +35,7 @@ public class Static : MonoBehaviour {
 	public static Vector3 check_position = new Vector3(-0.5f,0.5f,0.5f);
 
 	void Awake(){
-		Time.fixedDeltaTime = (float)1/8000;
+		Time.fixedDeltaTime = (float)1/100;
 	}
 		
 }

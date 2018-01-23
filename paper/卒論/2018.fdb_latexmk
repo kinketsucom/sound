@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1516692187 "2018.dvi" "2018.pdf" "2018" 1516692188
-  "2018.dvi" 1516692187 33200 fb6777ff9fe298358de70827b0543820 "latex"
+["dvipdf"] 1516726786 "2018.dvi" "2018.pdf" "2018" 1516728419
+  "2018.dvi" 1516726786 34344 f0e8065e5dc2303409fa213e39b97de9 "latex"
   (generated)
   "2018.pdf"
-["latex"] 1516692186 "2018.tex" "2018.dvi" "2018" 1516692188
+["latex"] 1516726785 "2018.tex" "2018.dvi" "2018" 1516728419
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jis.tfm" 1480098698 468 53f854284f6afa6c36aaa2d1090ecc12 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jisg.tfm" 1480098698 468 53f854284f6afa6c36aaa2d1090ecc12 ""
@@ -56,13 +56,13 @@
   "/usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf" 1494087824 32646 eadc4ca26cdbe7105ac7c593aa8c4f72 ""
   "/usr/local/texlive/2017/texmf-var/web2c/eptex/platex.fmt" 1495593510 4345396 66449f0c79b44a228c2e98794b758885 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
-  "2018.aux" 1516692187 1492 0f97d8d504f69fb673d7128931c77817 ""
-  "2018.tex" 1516692185 18740 2a0bd9ae48fe1218465370d5e86942f8 ""
-  "2018.toc" 1516692187 587 f8a93236a9f9ee489ee1799490a90c0b ""
+  "2018.aux" 1516726786 1650 4803eb53fbe2ce30e81b770b593993c4 ""
+  "2018.tex" 1516728418 19479 d6e7ed46eba709bb351a10f51735e0fc ""
+  "2018.toc" 1516726786 587 790f21eee087a3eec1940dfd80f9b9fd ""
   "ampbt.cls" 1516599986 6174 dda9eb3ba24ecd40179f88d7bf0c31ca ""
   "eps/ft.eps" 1516688956 26127 23c168d87025935cadf661547182d1de ""
   (generated)
-  "2018.toc"
-  "2018.dvi"
   "2018.aux"
   "2018.log"
+  "2018.toc"
+  "2018.dvi"

@@ -117,4 +117,6 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT ./eps/ft.eps
+INPUT ./eps/ft.eps
 INPUT 2018.aux

@@ -212,6 +212,7 @@ u(x,t) = &\sum_j  \dfrac{1}{4\pi|x-y_j^g|} \hat{q}(y_j^g,t-\dfrac{|x-y_j^g|}{c})
 となる.以降この式を用いて,境界内の各時間ステップ毎の音圧を数値計算した.
 
 \subsection{境界値の取得}
+\label{境界値の取得}
 境界積分方程式には境界条件が必要であるが,本論文では以下のように与えた.以下数値の単位はメートル[m]とする.
 まず,壁を中心(0.5,0.5,0.5)で,x,y,z軸に各面が平行であるものを考えた.
 つぎに,壁の内部に音源が存在するものとし,その音源(source)の位置$x^s$と音源の発生させる音圧$f(t)$を以下のようにする.
@@ -238,7 +239,31 @@ f(t) &= 1-cos(\dfrac{2 \pi}{\lambda}t)
     \label{fig:ft}
   \end{center}
 \end{figure}\\
-ここに,x軸は時刻$t=n\Delta t$としたときの$n$を表し,y軸は時刻$f(n\Delta t)$の音圧を表す.
+ここに,x軸は時刻$t=n\Delta t$としたときの$n$を表し,y軸は時刻$f(n\Delta t)$の音圧を表す.\par
+$f(t)$と第\ref{境界値の取得}節で解析的に求めた境界値を用い,領域内点で,受音点が観測する音圧を計算させた.
+その結果と,音源からの距離減衰と距離遅延を加味した,次に解析的に定義される波形$u_{ans}(x,t)$と比較する.
+\begin{align}
+u_{ans}(x,t) &= \dfrac{f(t-\dfrac{|x-x^s|}{c})}{4\pi |x-x^s|}
+\end{align}
+以下は図\ref{fig:u_ans}$u_{ans}(x,t)$,図\ref{fig:naiten}近似手法によるであり,観測点はともに$x^s &= (-0.5,0.5,0.5)$である.
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[clip,width=9.0cm]{./eps/ft.eps}
+    \caption{音源$f(t)$}
+    \label{fig:u_ans}
+  \end{center}
+\end{figure}\\
+
+
+
+
+
+
+
+
+
+
+
 
 %%% 謝辞 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \acknowledgment
