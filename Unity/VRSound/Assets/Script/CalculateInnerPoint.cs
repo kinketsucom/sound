@@ -488,6 +488,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		sw.WriteLine(txt);
 		sw.Flush();
 		sw.Close();
+		print ("hoge"+Static.frame.ToString());
 	}
 		
 }

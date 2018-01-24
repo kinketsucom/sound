@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  25 JAN 2018 01:16
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  24 JAN 2018 19:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -347,18 +347,18 @@ Overfull \hbox (20.40538pt too wide) in paragraph at lines 199--199
 File: ./png/ft.png Graphic file (type bmp)
  <./png/ft.png>
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 246.
+(Font)              scaled to size 8.64899pt on input line 247.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 246.
+(Font)              scaled to size 8.64899pt on input line 247.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 246.
+(Font)              scaled to size 5.76599pt on input line 247.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 246.
+(Font)              scaled to size 8.64899pt on input line 247.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 246.
+(Font)              scaled to size 5.76599pt on input line 247.
  [6]
-./2018.tex:256: Misplaced alignment tab character &.
-l.256 ...わせたものでである.,観測点はともに$x^s &
+./2018.tex:257: Misplaced alignment tab character &.
+l.257 ...わせたものでである.,観測点はともに$x^s &
                                                  = (-0.5,0.5,0.5)$である.
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -370,13 +370,13 @@ might try typing `S' now just to see what is salvageable.
 File: ./png/original_u.png Graphic file (type bmp)
 <./png/original_u.png>
 
-./2018.tex:266: LaTeX Error: There's no line here to end.
+./2018.tex:267: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.266 \begin
+l.267 \begin
             {figure}[H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -385,13 +385,13 @@ or  <return>  to continue without it.
 File: ./eps/original_u.eps Graphic file (type eps)
 <./eps/original_u.eps>
 
-./2018.tex:274: LaTeX Error: There's no line here to end.
+./2018.tex:275: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.274 \begin
+l.275 \begin
             {figure}[H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -400,13 +400,13 @@ or  <return>  to continue without it.
 File: ./png/mix_u.png Graphic file (type bmp)
 <./png/mix_u.png> [7]
 
-./2018.tex:281: LaTeX Error: There's no line here to end.
+./2018.tex:282: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.281 
+l.282 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -414,16 +414,16 @@ or  <return>  to continue without it.
 
 [8] [9]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 331.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 332.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 331.
+(Font)              scaled to size 9.60999pt on input line 332.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 331.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 332.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 331.
+(Font)              scaled to size 9.60999pt on input line 332.
 
 
-LaTeX Warning: Citation `polya1945' on page 10 undefined on input line 331.
+LaTeX Warning: Citation `polya1945' on page 10 undefined on input line 332.
 
 [10
 
@@ -514,10 +514,10 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  2506 strings out of 493653
  31148 string characters out of 6148874
- 114446 words of memory out of 5000000
+ 114448 words of memory out of 5000000
  6045 multiletter control sequences out of 15000+600000
  24948 words of font info for 109 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  32i,15n,29p,255b,429s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2018.dvi (16 pages, 38156 bytes).
+Output written on 2018.dvi (16 pages, 38464 bytes).
