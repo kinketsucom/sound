@@ -149,7 +149,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		/////////////////////音源データの取得////////////////////
 		//音源データを取得したはず
 		//微分のために配列を１つ多くしている
-		Static.f = new float[Static.samplerate*Static.time];
+		Static.f = new float[aud.clip.samples * aud.clip.channels+1];
 		aud.clip.GetData (Static.f, 0);
 		log.GetComponent<Text>().text = "got origin wave";
 		////////////////////音源データの取得ここまで////////////////////
@@ -488,7 +488,5 @@ public class CalculateInnerPoint : MonoBehaviour {
 		sw.WriteLine(txt);
 		sw.Flush();
 		sw.Close();
-		print ("hoge"+Static.frame.ToString());
 	}
-		
 }

@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1516788210 "2018.dvi" "2018.pdf" "2018" 1516799067
+["dvipdf"] 1516788210 "2018.dvi" "2018.pdf" "2018" 1516788211
   "2018.dvi" 1516788210 38464 7ed4f57c00f2c17712ea58a5db46a720 "latex"
   (generated)
   "2018.pdf"
-["latex"] 1516788209 "2018.tex" "2018.dvi" "2018" 1516799067
+["latex"] 1516788209 "2018.tex" "2018.dvi" "2018" 1516788211
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jis.tfm" 1480098698 468 53f854284f6afa6c36aaa2d1090ecc12 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jisg.tfm" 1480098698 468 53f854284f6afa6c36aaa2d1090ecc12 ""
@@ -75,7 +75,7 @@
   "/usr/local/texlive/2017/texmf-var/web2c/eptex/platex.fmt" 1495593510 4345396 66449f0c79b44a228c2e98794b758885 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
   "2018.aux" 1516788210 2522 67d7c4a44c3a64ded9a045ba9d0d0b9c ""
-  "2018.tex" 1516799067 21825 8f7a37f9f9d2c4b77b20cacfeeabc8d6 ""
+  "2018.tex" 1516788208 21825 8f7a37f9f9d2c4b77b20cacfeeabc8d6 ""
   "2018.toc" 1516788210 1042 72855ee18f934428073203543f981752 ""
   "ampbt.cls" 1516599986 6174 dda9eb3ba24ecd40179f88d7bf0c31ca ""
   "eps/original_u.eps" 1516742023 26425 3eee14ed1aa730f83544f8b4064f99f1 ""
@@ -88,5 +88,5 @@
   (generated)
   "2018.dvi"
   "2018.toc"
-  "2018.aux"
   "2018.log"
+  "2018.aux"
