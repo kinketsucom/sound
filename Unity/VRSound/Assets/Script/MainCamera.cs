@@ -36,27 +36,19 @@ public class MainCamera : MonoBehaviour {
 		v = Static.check_position;
 		player_position.GetComponent<Text> ().text = v.ToString ("F3");
 		// Scheduler.MainThreadにメインスレッドでアクセスしておく必要がある(初めてアクセスしたときに内部の変数が初期化されるため)
-		Action<int> hogehoge = (id)=>{
-//			x = x ; //10
-//			print(x);
-			id = System.Threading.Thread.CurrentThread.ManagedThreadId;
-			print("ThreadID : " + id);
-			print("aaa");
-		};
-		hogehoge(5);
+//		Action<int> hogehoge = (id)=>{
+////			x = x ; //10
+////			print(x);
+//			id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+//			print("ThreadID : " + id);
+//			print("aaa");
+//			Func3();
+//		};
+//		hogehoge(5);
 
 	}
 
-	private async Task Func3()
-	{
-		print("---Start---");
-		for (var i = 0; i < 10; ++i)
-		{
-			await Task.Delay(1000);
-			print($"Count:{i}");
-		}
-		print("---End---");
-	}
+
 
 //	private async Task Func3()
 //	{
@@ -111,10 +103,11 @@ public class MainCamera : MonoBehaviour {
 	void FixedUpdate(){
 		if (emmit_sound) {
 			////////////////////波形の描画計算////////////////////
-			 CaluInnnerPointWhenMove (v,Static.frame);
+			Task.Run(()=>RunPara(v,Static.frame));
+//			CaluInnnerPointWhenMove (v,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
 			////////////////////波形の保存////////////////////
-			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "naiten_u");
+//			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "naiten_u");
 			////////////////////波形の保存ここまで////////////////////
 			Static.frame += 1;
 		}
@@ -122,6 +115,56 @@ public class MainCamera : MonoBehaviour {
 
 
 
+	public async Task RunPara(Vector3 position,int start_frame) // asyncじゃないけど、戻り値がTask
+	{
+		var tasks = new List<Task>(); // TaskをまとめるListを作成
+		var task1 = Task.Run(() => Cal1(v,start_frame)); // Methodを開始するというTask
+		var task2 = Task.Run(() => Cal2(v,start_frame));
+		tasks.Add(task1); //Listにまとめる
+		tasks.Add(task2);
+		await Task.WhenAll(tasks); // 全てのTaskが完了した時に完了扱いになるたった一つのTaskを作成
+		CalculateInnerPoint.TextSaveTitle (Static.u_array [start_frame].ToString (), "naiten_u");
+		 // 非同期メソッドではないが、戻り値がTaskなので、このメソッドは一つのタスクを表しているといえる。
+	}
+
+	private void Cal1(Vector3 position,int start_frame){
+		int id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+		print ("ThreadID : " + id);
+		float u_array = 0;
+		// 1秒で終わるべき処理
+		for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+			int delay = (int)delayf;
+			if (delay > 0) {
+				//これが新しいやつ
+				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
+			}
+		}
+
+
+		Static.u_array [start_frame] += u_array;
+	}
+
+	private void Cal2(Vector3 position,int start_frame){
+		int id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+		print ("ThreadID : " + id);
+		float u_array = 0;
+		// 1秒で終わるべき処理
+		for (int j = (int)Static.mesh_point_center_array.Length/2 + 1; j < Static.mesh_point_center_array.Length; j++) {
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+			int delay = (int)delayf;
+			if (delay > 0) {
+				//これが新しいやつ
+				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
+			}
+		}
+
+		Static.u_array [start_frame] += u_array;
+	}
 
 
 	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
@@ -134,7 +177,8 @@ public class MainCamera : MonoBehaviour {
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
+//				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
+				u_array += - SecondLayer(j,delayf,dot,r,start_frame);
 			}
 		}
 		Static.u_array [start_frame] = u_array;
@@ -180,5 +224,8 @@ public class MainCamera : MonoBehaviour {
 	public void BBBBB(){
 		emmit_sound = false;
 		LogObj.GetComponent<Text> ().text = "emmit stoped";
+		for (int j = 0; j < Static.samplerate * Static.time; j++) {
+			CalculateInnerPoint.TextSaveTitle (Static.u_array [j].ToString (), "naiten_u");
+		}
 	}
 }
