@@ -86,6 +86,7 @@ public class MainCamera : MonoBehaviour {
 			int frame = Static.frame;
 			float a = await Task.Run (() => cal1 (v, frame));
 			float b = await Task.Run (() => cal2 (v, frame));
+
 			CalculateInnerPoint.TextSaveTitle ((a+b).ToString (), "naiten_u");
 			////////////////////波形の描画計算////////////////////
 //			CaluInnnerPointWhenMove (v,Static.frame);
@@ -163,8 +164,6 @@ public class MainCamera : MonoBehaviour {
 	}
 		
 	private float SecondLayer(int j,float delayf,float dot, float r,int n){
-		int id = System.Threading.Thread.CurrentThread.ManagedThreadId;
-		print("ThreadID : " + id);
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
 		int m1 = 0;
