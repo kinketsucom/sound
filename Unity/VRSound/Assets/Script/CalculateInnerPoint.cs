@@ -297,15 +297,15 @@ public class CalculateInnerPoint : MonoBehaviour {
 //		}
 ////		//テスト用
 //		float size = 1.0f;
-//		float del_t = 1.0f/Static.samplerate;
-//		float lambda = 10.0f *del_t;
-//		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-////			if (t < Static.samplerate * lambda) {
-//			Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI * t / (lambda*Static.samplerate));
-////			} else {
-////				Static.f [t] = 0;
-////			}
-//		}
+		float del_t = 1.0f/Static.samplerate;
+		float lambda = 10.0f *del_t;
+		for (int t = 0; t < Static.samplerate*Static.time; t++) {
+//			if (t < Static.samplerate * lambda) {
+			Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI * t / (lambda*Static.samplerate));
+//			} else {
+//				Static.f [t] = 0;
+//			}
+		}
 //		float[] f_hat = new float[Static.f.Length];
 //		for (int t = 0; t < Static.samplerate*Static.time; t++) {
 ////			if (t < Static.samplerate * lambda) {
@@ -436,8 +436,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			}
 //		}
 //		for (int i = 0; i < triangle_num; i++) {
-//			string hoge = mesh_size[i].ToString();
-//			TextSaveTitle (hoge,"delete_sqrt");
+//			print (Static.boundary_condition_u [i, 0]);
+////			string hoge = Static.boundary_condition_u[i,0].ToString();
+////			TextSaveTitle (hoge,"delete_sqrt");
 //		}
 
 

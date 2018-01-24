@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using UniRx;
 using System.Threading;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System;
 
 public class MainCamera : MonoBehaviour {
@@ -47,16 +47,16 @@ public class MainCamera : MonoBehaviour {
 
 	}
 
-	private async Task Func3()
-	{
-		print("---Start---");
-		for (var i = 0; i < 10; ++i)
-		{
-			await Task.Delay(1000);
-			print($"Count:{i}");
-		}
-		print("---End---");
-	}
+//	private async Task Func3()
+//	{
+//		print("---Start---");
+//		for (var i = 0; i < 10; ++i)
+//		{
+//			await Task.Delay(1000);
+//			print($"Count:{i}");
+//		}
+//		print("---End---");
+//	}
 
 //	private async Task Func3()
 //	{
@@ -76,17 +76,20 @@ public class MainCamera : MonoBehaviour {
 		if (Input.GetKey (KeyCode.W)) {   // Wキーで前進.
 			//				v.z += 1f;
 			player_position.text = this.transform.localPosition.ToString ();
+			v.z += Time.deltaTime*1.25f;
 		}
 		if (Input.GetKey (KeyCode.Z)) {   // Sキーで後退.
 			player_position.text = this.transform.localPosition.ToString ();
-			v.z += Time.deltaTime*1.25f;
+			v.z -= Time.deltaTime*1.25f;
 		}
 		if (Input.GetKey (KeyCode.A)) {  // Aキーで左移動.
 			//				v.x -= 1f;
 			player_position.text = this.transform.localPosition.ToString ();
+			v.x -= Time.deltaTime*1.25f;
 		}
 		if (Input.GetKey (KeyCode.S)) {  // Dキーで右移動.
 			//			v.x += 1f; 
+			v.x += Time.deltaTime*1.25f;
 		}
 		this.transform.localPosition = v;
 		//
@@ -134,8 +137,13 @@ public class MainCamera : MonoBehaviour {
 			int delay = (int)delayf;
 			if (delay > 0) {
 				//これが新しいやつ
-				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame);
+				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame) ;
 			}
+		}
+		float distance = Vector3.Distance (position, Static.source_origin_point);
+		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+		if (delay_uin > 0) {
+			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
 		}
 		Static.u_array [start_frame] = u_array;
 	}
