@@ -3,15 +3,15 @@ import os
 original = []
 oreno = []
 
-for line in open('AAAu_original.txt', 'r'):
+for line in open('original_u.txt', 'r'):
     original.append(line)
 
-for line in open('u_array_late.txt', 'r'):
+for line in open('naiten_u.txt', 'r'):
     oreno.append(line)
 
 
 gosadekita = open('koregagosa.txt', 'w')
-for i in range(0,min(len(oreno),len(original),300)):
+for i in range(0,8000)):
     if(float(original[i])==0):
         fuga = 0
     else:

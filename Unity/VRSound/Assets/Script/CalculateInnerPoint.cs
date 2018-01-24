@@ -11,13 +11,13 @@ using UnityEngine.UI;
 
 public class CalculateInnerPoint : MonoBehaviour {
 
-	/*境界要素なら必要な変数
-	####################
-	public static int step_num = 0;
+	//境界要素なら必要な変数
+	//####################
+	//public static int step_num = 0;
 	List<string> u_list = new List<string>();//##########ディリクレを読み込む用
-	List<string> q_list = new List<string>();//##########ノイマンを読み込む用
-	####################
-	*/
+	//List<string> q_list = new List<string>();//##########ノイマンを読み込む用
+	//####################
+
 	//パラメータ計算のための変数
 	private string file;
 	private int counter = 0;
@@ -143,7 +143,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 		Static.cube_size = new Vector3 (maxx, maxy, maxz);
 		AudioSource aud = GetComponent<AudioSource>();
-		Static.time = Mathf.CeilToInt(aud.clip.samples / Static.samplerate);//FIXIT:
+//		Static.time = Mathf.CeilToInt(aud.clip.samples / Static.samplerate);//FIXIT:
 
 
 		/////////////////////音源データの取得////////////////////
@@ -170,11 +170,11 @@ public class CalculateInnerPoint : MonoBehaviour {
 		log.GetComponent<Text>().text = "loaded all initial datas";
 		////////////////////パラメータの取得ここまで////////////////////
 
-		/*
-		######################################################
-		########境界要素法を用いる場合はこちらをコメントアウト########
+
+//		######################################################
+//		########境界要素法を用いる場合はこちらをコメントアウト########
 		//ここからディリクレ
-		file = Application.dataPath + "/Resource/fort.100";//現状はディリクレ条件
+		file = Application.dataPath + "/Resource/boundary_sol.d";//現状はディリクレ条件
 		lines = ReadFile (file); 
 		foreach (string item in lines)
 		{
@@ -189,7 +189,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 			foreach (string val in dat) {
 				if (val.Length != 0) {
 					if(counter>=1){
-					Static.boundary_condition_u[step,counter] = float.Parse(val);
+						Static.boundary_condition_u[step,counter] = float.Parse(val);
 					}
 					counter += 1;
 				}
@@ -198,6 +198,7 @@ public class CalculateInnerPoint : MonoBehaviour {
 		}
 		log.GetComponent<Text>().text = "set Dirichlet";
 		//ここからノイマンq
+		/*
 		file = Application.dataPath + "/Resource/cond_bc.d";//現状はノイマン条件
 		lines = ReadFile (file); 
 		foreach (string item in lines)
@@ -287,32 +288,32 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 		////////////////////境界要素の計算////////////////////
 
-//		//テスト用
-		f_dot = new float[Static.samplerate*Static.time];
-		float f = 440;
-		float pi = Mathf.PI;
-		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-			f_dot[t] = 2*pi*f*Mathf.Cos(2*pi*f*t/Static.samplerate);
-		}
-//		//テスト用
-		float size = 1.0f;
-		float del_t = 1.0f/Static.samplerate;
-		float lambda = 10.0f *del_t;
-		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-//			if (t < Static.samplerate * lambda) {
-			Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI * t / (lambda*Static.samplerate));
-//			} else {
-//				Static.f [t] = 0;
-//			}
-		}
-		float[] f_hat = new float[Static.f.Length];
-		for (int t = 0; t < Static.samplerate*Static.time; t++) {
-//			if (t < Static.samplerate * lambda) {
-			f_hat[t] = 2*Mathf.PI/(lambda*Static.wave_speed)* Mathf.Sin(2 * Mathf.PI*t/(lambda*Static.samplerate));
-//			} else {
-//				Static.f [t] = 0;
-//			}
-		}
+////		//テスト用
+//		f_dot = new float[Static.samplerate*Static.time];
+//		float f = 440;
+//		float pi = Mathf.PI;
+//		for (int t = 0; t < Static.samplerate*Static.time; t++) {
+//			f_dot[t] = 2*pi*f*Mathf.Cos(2*pi*f*t/Static.samplerate);
+//		}
+////		//テスト用
+//		float size = 1.0f;
+//		float del_t = 1.0f/Static.samplerate;
+//		float lambda = 10.0f *del_t;
+//		for (int t = 0; t < Static.samplerate*Static.time; t++) {
+////			if (t < Static.samplerate * lambda) {
+//			Static.f [t] = 1 - Mathf.Cos (2 * Mathf.PI * t / (lambda*Static.samplerate));
+////			} else {
+////				Static.f [t] = 0;
+////			}
+//		}
+//		float[] f_hat = new float[Static.f.Length];
+//		for (int t = 0; t < Static.samplerate*Static.time; t++) {
+////			if (t < Static.samplerate * lambda) {
+//			f_hat[t] = 2*Mathf.PI/(lambda*Static.wave_speed)* Mathf.Sin(2 * Mathf.PI*t/(lambda*Static.samplerate));
+////			} else {
+////				Static.f [t] = 0;
+////			}
+//		}
 
 
 
@@ -331,9 +332,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 //					Static.boundary_condition_q [i,j] = -Vector3.Dot(Static.mesh_point_center_array[j]-Static.source_origin_point,Static.mesh_point_center_norm_array[j]) * (Static.wave_speed*Static.f[delay] + Static.samplerate*r*(Static.f[delay+1]-Static.f[delay])) /(4*Mathf.PI*Static.wave_speed*Mathf.Pow(r,3));
 
 					//テスト用
-					Static.boundary_condition_u [i, j] = Static.f[delay]/(4*Mathf.PI*r);
-					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * (Static.f [delay] / r + f_hat [delay]);
-					
+//					Static.boundary_condition_u [i, j] = Static.f[delay]/(4*Mathf.PI*r);
+//					Static.boundary_condition_q [i, j] = -Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 2)) * (Static.f [delay] / r + f_hat [delay]);
+					Static.boundary_condition_q [i, j] = 0;
 					//これは１のときのやつやからけす
 //					Static.boundary_condition_q [i, j] = size*-Vector3.Dot (Static.mesh_point_center_array [j] - Static.source_origin_point, Static.mesh_point_center_norm_array [j]) / (4 * Mathf.PI * Mathf.Pow (r, 3));
 				}
@@ -346,21 +347,22 @@ public class CalculateInnerPoint : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (Write.write_bool) {
-			//		境界uの確認
-			float r = Vector3.Distance (Static.check_position, Static.source_origin_point);
-			for (int i = 0; i < Static.samplerate * Static.time; i++) {
-				int delay = (int)(i - Static.samplerate * r / Static.wave_speed);
-				if (delay > 0) {
-					float fuga = Static.f [delay] / (4.0f * Mathf.PI * r);
-					string hoge = fuga.ToString ();
-					TextSaveTitle (hoge, "original_u");
-				} else {//遅延待ち
-					TextSaveTitle ("0", "original_u");			
-				}
-			}
-			print ("original書き出し終了");
-		}
+//		if (Write.write_bool) {
+//			//		境界uの確認
+//			float r = Vector3.Distance (Static.check_position, Static.source_origin_point);
+//			for (int i = 0; i < Static.samplerate * Static.time; i++) {
+//				int delay = (int)(i - Static.samplerate * r / Static.wave_speed);
+//				print (i);
+//				if (delay > 0) {
+//					float fuga = Static.f [delay] / (4.0f * Mathf.PI * r);
+//					string hoge = fuga.ToString ();
+//					TextSaveTitle (hoge, "original_u");
+//				} else {//遅延待ち
+//					TextSaveTitle ("0", "original_u");			
+//				}
+//			}
+//			print ("original書き出し終了");
+//		}
 
 
 
