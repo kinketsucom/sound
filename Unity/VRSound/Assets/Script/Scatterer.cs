@@ -23,6 +23,7 @@ public class Scatterer : MonoBehaviour {
 //		z =  float.Parse(xyz_scale_array [14]);
 //
 		this.gameObject.transform.localScale = Static.cube_size;
+		this.gameObject.transform.position = Static.cube_size/2;
 
 	}
 	
