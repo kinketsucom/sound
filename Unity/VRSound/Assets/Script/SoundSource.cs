@@ -9,6 +9,7 @@ public class SoundSource : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		this.transform.position = Static.source_origin_point;
 		aud_source = this.GetComponent<AudioSource> ();
 	} 
 

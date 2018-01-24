@@ -10,7 +10,7 @@ public class Static : MonoBehaviour {
 	public static int time=1;//初期の時間.コードで動的に設定する Max2
 	public static float wave_speed = 340.29f;
 	public static float[] f;//音圧
-	public static Vector3 source_origin_point = new Vector3(0.25f,0.25f,0.075f);//音源の位置
+	public static Vector3 source_origin_point = new Vector3(0.25f,0.25f,-2);//音源の位置
 
 	//境界情報
 	public static Vector3[] mesh_point_center_array;//メッシュの重心
