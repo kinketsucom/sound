@@ -26,16 +26,16 @@ public class Static : MonoBehaviour {
 	public static Vector3 cube_size;
 
 	//波形描画用
-	public static int calc_frame = 4000;//波形描画をどの程度するか
+	public static int calc_frame = 8000;//波形描画をどの程度するか
 	public static int frame=0;//現在フレーム
 
 	//デバッグ
 	// 現在の経過時間を取得
 	public static float check_time;
-	public static Vector3 check_position = new Vector3(0.25f,0.25f,-3f);
+	public static Vector3 check_position = new Vector3(0.25f,0.25f,-1f);
 
 	void Awake(){
-		Time.fixedDeltaTime = (float)1/100;
+		Time.fixedDeltaTime = (float)1/8000;
 	}
 		
 }

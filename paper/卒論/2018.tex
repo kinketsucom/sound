@@ -33,6 +33,12 @@
 \usepackage{here}
 \usepackage{bm}
 \newcommand{\rme}{\mathrm{e}}
+\def\bi#1{\mbox{\boldmath$#1$}}
+\def\shiki#1{式{(\ref{#1})}}
+\def\zu#1{{図\ref{#1}}}
+\def\traction#1{{\rm T}#1}
+\newcommand{\abs}[1]{|#1|}
+\def\vector#1{\mbox{\boldmath $#1$}}
 
 %%% 出力の制御 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -62,18 +68,44 @@
 \setcounter{page}{1}            % 本文のページ番号を1から始める
 %%% 本文 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{序論}
-波動方程式は振動,音や光などの波動現象を記述するにあたって基本となる方程式であり,様々な手法を用いることで数値解析に
-用いられてきた.また,波動方程式のような微分方程式に対し,取り扱う領域での境界に境界条件と呼ばれる付帯的な制限が与えられた
-問題のことを境界値問題という.ところで近年,VR（バーチャルリアリティ）の研究が盛んになっており,博物館やアミューズメント施設,ゲームなどホビー要素の強いものから,
-災害時の避難行動シミュレータ\cite{vrsaigai},歩行訓練機器への応用\cite{vrmedical}など実務的なものまでVRはいたるところに普及している.\par
-本研究では波動方程式の解を数値計算し,VR空間上での観測を可能にするための基礎研究を目的とする.領域内に音源と壁が存在する空間での音圧の変化の計算は先行研究\cite{vrsound}では
-道路交通の予測モデルであるASJ RTN-Model 2008を用いて計算していたが,本論文では領域の境界値を用いた波動方程式の解析手法である境界積分方程式を用いて領域内での音圧の計算を行った.
+%波動方程式は振動,音や光などの波動現象を記述するにあたって基本となる方程式であり,様々な手法を用いることで数値解析に
+%用いられてきた.また,波動方程式のような微分方程式に対し,取り扱う領域での境界に境界条件と呼ばれる付帯的な制限が与えられた
+%問題のことを境界値問題という.
+近年、道路交通量の増加や都市開発に伴う建設現場での作業音などにより、環境騒音は深刻な社会問題となっている。
+企業の社会的責任が問われる現代において、周辺に対する環境保全は無視できない重要な課題である。
+法令でも規制に関する騒音の基準が設けられており
+、建設においては事前の企画段階においての騒音レベルの予測が不可欠となる。
+そのため、各企業では低騒音化のための様々な試みがなされており、近年のハードウェアの進歩から数値シミュレーションを用いた様々な評価手法が存在する。
+
+その中でも、視覚や聴覚情報を用いて騒音を再現するVR(バーチャル　リアリティ)技術による評価手法が注目されている。
+%博物館やアミューズメント施設,ゲームなどホビー要素の強いものから,
+%災害時の避難行動シミュレータ\cite{vrsaigai},歩行訓練機器への応用\cite{vrmedical}など実務的なものまでVRはいたるところに普及している.\par
+本研究では、まず最初に支配方程式を非定常波動方程式とし、境界要素法を用いて領域における境界値を求める。そして
+%,VR空間上での観測を可能にするための基礎研究を目的とする.領域内に音源と壁が存在する空間での音圧の変化の計算は先行研究\cite{vrsound}では
+%道路交通の予測モデルであるASJ RTN-Model 2008を用いて計算していたが,
+本論文では領域の境界値を用いた波動方程式の解析手法である境界積分方程式を用いて領域内での音圧の計算を行った.
 なお,ここで取り扱う境界値は点音源が発生する音圧から計算することとした.\par
 
 本論文の構成は次の通りである.
-% まず,第 2 章で Westervelt 方程式について説明し,さらに Westervelt 方程式の差分解法の定式化を示す.
-% 第 3 章では第 2 章で導いた差分式を用いた数値計算結果を示す.
-% 最後に第 4 章で結論を述べる.
+ まず,第 2 章で 対象とする問題の時間域境界積分方程式による音場解析について述べる.
+ 第 3 章では第 2 章で導いた積分表現に適用した近似について述べる.
+第4章では
+ 最後に第 4 章で結論を述べる.
+
+
+ %%クソなやつ
+% 波動方程式は振動,音や光などの波動現象を記述するにあたって基本となる方程式であり,様々な手法を用いることで数値解析に
+% 用いられてきた.また,波動方程式のような微分方程式に対し,取り扱う領域での境界に境界条件と呼ばれる付帯的な制限が与えられた
+% 問題のことを境界値問題という.ところで近年,VR（バーチャルリアリティ）の研究が盛んになっており,博物館やアミューズメント施設,ゲームなどホビー要素の強いものから,
+% 災害時の避難行動シミュレータ\cite{vrsaigai},歩行訓練機器への応用\cite{vrmedical}など実務的なものまでVRはいたるところに普及している.\par
+% 本研究では波動方程式の解を数値計算し,VR空間上での観測を可能にするための基礎研究を目的とする.領域内に音源と壁が存在する空間での音圧の変化の計算は先行研究\cite{vrsound}では
+% 道路交通の予測モデルであるASJ RTN-Model 2008を用いて計算していたが,本論文では領域の境界値を用いた波動方程式の解析手法である境界積分方程式を用いて領域内での音圧の計算を行った.
+% なお,ここで取り扱う境界値は点音源が発生する音圧から計算することとした.\par
+%
+% 本論文の構成は次の通りである.
+% % まず,第 2 章で Westervelt 方程式について説明し,さらに Westervelt 方程式の差分解法の定式化を示す.
+% % 第 3 章では第 2 章で導いた差分式を用いた数値計算結果を示す.
+% % 最後に第 4 章で結論を述べる.
 
 \section{時間域境界積分方程式による音場解析}
 \label{2章}
@@ -85,7 +117,9 @@
 &\ddot{u}(\bm{x},t)-c^2 u_{,ii}(\bm{x},t)=0,\  \bm{x} \in D,\ t>0 \\
 &u(\bm{x},0)=0,\  x \in D \\
 &\dot{u}(\bm{x},0)=0,\  x \in D \\
+\label{eq:u_y}
 &u(\bm{x},t)=\bar{u}(\bm{x},t),\  x\  \mbox{on} \ S_D,\ t>0 \\
+\label{eq:q_y}
 &\frac{\partial{u}}{\partial{n}} (\bm{x},t)=\bar{q}(\bm{x},t),\  \bm{x}\  \mbox{on} \ S_N,\ t>0 \\
 &u(\bm{x},t)=\bar{q}(\bm{x},t),\  \bm{x}\  \mbox{on} \ S_N,\ t>0
 \end{align}
@@ -104,14 +138,67 @@ $c$は波速である.
 を用いて
 \begin{equation}
   \label{eq:境界積分方程式}
-u(\bm{x},t) = \int\!\!\!\int \Gamma(\bm{x}-y,t-s) \frac{\partial u}{\partial n}(y,s) - \int\!\!\!\int \frac{\partial \Gamma}{\partial n}(\bm{x}-y,t-s) \bar{u}(y,s) ds dS
+u(\bm{x},t) = u^{\mbox{in}}(\vector{x},t) + \int_S\!\!\int_0^t \Gamma(\bm{x}-\vector{y},t-s) \frac{\partial u}{\partial n}(y,s) - \int_S\!\!\int_0^t \frac{\partial \Gamma}{\partial n}(\bm{x}-y,t-s) \bar{u}(y,s) ds dS
 \end{equation}
 と表すことができる.
-ここに$\delta(\bm{x})$はDiracのデルタ関数,
-$t$は時刻,
-$x$は領域内部の点,
-$y$は境界上の点である.
+ここに$\delta(\bm{x})$はDiracのデルタ関数である.
 
+境界条件(式(\ref{eq:u_y})、(\ref{eq:q_y}))より、$S_0$上の$u(\vector{x},t)$と$S_N$上の$\frac{\partial u}{\partial n}(\vector{x},t)$は与えられているが、
+$S_N$上の$u(\vector{x},t)$、$S_0$上の$\dfrac{\partial u}{\partial n}(\vector{x},t)$は未知である。
+これらの境界量を求めるために、$\vector{x} \in D$を境界$S$に極限移行し、次の境界積分方程式を得る。
+\begin{eqnarray}
+\frac{1}{2} u(\vector{x},t) &=& u^{\rm{in}}(\vector{x},t) + \int_S \int_0^t \Gamma (\vector{x}-\vector{y},t-s) \frac{\partial u}{\partial n}(\vector{y},s) ds dS \nonumber \\
+                                               &-& \int_S \int_0^t \frac{\partial \Gamma}{\partial n} (\vector{x}-\vector{y},t-s) u(\vector{y},s) ds dS \quad, \vector{x} \in S , t > 0
+\end{eqnarray}
+まず、式(8)を$u(\vector{x},t) , \vector{x} \in S_N$、$\dfrac{\partial u}{\partial n}(\vector{x},t) , \vector{x} \in S_0$について解く。\\
+次に、得られた境界量を用いて式(7)により領域$D$の内点での解$u(\vector{x},t)$を得る。
+
+\subsection{時間域境界積分方程式法}
+この節では選点法による境界要素法の数値解法について述べます。
+境界積分方程式(\ref{eq:BIE})を数値的に解くために, 境界$S$を境界要素$S_j
+, j=1, \cdots ,N$に分割し, さらに境界量$\displaystyle
+u(\bi{x},t),\frac{\partial u}{\partial n}(\bi{x},t)$を空間内挿関数
+${M_S}^j(\bi{x})$と時間内挿関数${M_T}^m(t)$を用いて離散化します。
+%
+\begin{align}
+&  u(\bi{x},t) \simeq \sum_{m=1}^{N_T} \sum_{j=1}^{N} u(\bi{x}^j,
+  m\Delta t ) {M_S}^j(\bi{x}){M_T}^m(t), \\
+&   \frac{\partial u}{\partial n}(\bi{x},t) \simeq \sum_{m=1}^{N_T} \sum_{j=1}^{N} \frac{\partial u}{\partial n}(\bi{x}^j,
+  m\Delta t ) {M_S}^j(\bi{x}){M_T}^m(t),
+\end{align}
+ここに, 点$\bi{x}^j$は境界要素$S_j$の代表点で、 $\Delta t$は時間
+増分、$N_T$は時間ステップ数です。このとき、ある時刻$t=n\Delta t,\ n = 1,
+\cdots,N_T$における離散化された境界積分方程式は次式で得られます。
+\begin{align}
+&  -\bi{u}_n^{\rm{in}} = \sum_{m=1}^n
+  \bi{U}_{n-m+1}{\bi{q}}_m -
+  \sum_{m=1}^n\bi{W}_{n-m+1}\bi{u}_m,   \label{eq:risanBIE}
+\end{align}
+%
+\begin{align}
+ & \{\bi{u}_n^{\rm{in}}\}_i := u^{\rm{in}}(\bi{x}^i, n\Delta
+  t), \\
+ & \{\bi{u}_m\}_i := u(\bi{x}^i, m\Delta t ), \\
+ & \{ {\bi{q}}_m \}_i := \frac{\partial u}{\partial n}(\bi{x}^i,m\Delta t), \\
+ & \{\bi{U}_{n-m+1}\}_{ij}  := \int_{S} \int^{\infty}_{-\infty}
+  \Gamma(\bi{x}^i - \bi{y},n\Delta t
+  - s){M_S}^j(\bi{y}){M_T}^m(s)dsdS, \label{1jyuso}\\
+ & \{\bi{W}_{n-m+1}\}_{ij}  := \int_{S} \int^{\infty}_{-\infty}
+  \frac{\partial \Gamma}{\partial n_y}(\bi{x}^i - \bi{y},n\Delta t
+  - s){M_S}^j(\bi{y}){M_T}^m(s)dsdS. \label{2jyuso}
+\end{align}
+この代数方程式を各時間ステップにおいて逐次的に解いていきます。
+
+式(1.22)を解き、境界量$\vector{u}_m , \vector{q}_m , m=1,\cdots,N_T$が得られたならば、領域$D$内の任意の点$\vector{x}$での時刻$n \Delta t$での値が次式で得られる。
+\begin{eqnarray}
+u(\vector{x},n \Delta t) &=& u^{\rm{in}}(\vector{x},n \Delta t) \nonumber \\
+                                         &+& \sum^{n}_{m=1} \sum^{N}_{j=1} \left\{ \int_{S} \int_{-\infty}^{\infty} \Gamma(\vector{x}-\vector{y},n \Delta t - s)M^{j}_{S}(\vector{y})
+                                         M^{m}_{T}(s) ds dS \right\} \left\{ \vector{q}_{m} \right\}_{j} \nonumber \\
+                                         &-& \sum^{n}_{m=1} \sum^{N}_{j=1} \left\{ \int_{S} \int_{-\infty}^{\infty} \frac{\partial \Gamma}{\partial n}(\vector{x}-\vector{y},n \Delta t - s)
+                                         M^{j}_{S}(\vector{y}) M^{m}_{T}(s) ds dS \right\} \left\{ \vector{u}_{m} \right\}_{j}
+\end{eqnarray}
+
+\section{近似手法について}
 \subsection{境界積分方程式の近似}
 \label{kinji}
 本研究では,受音点の各時刻での数値を境界積分方程式法を用いてリアルタイムに計算するが,%リアルタイムっていうやつの言葉とか
@@ -215,15 +302,20 @@ u(\bm{x},t) = &\sum_j  \dfrac{1}{4\pi|x-y_j^g|} \bar{q}(y_j^g,t-\dfrac{|x-y_j^g|
 となる.以降この式を用いて,境界内の各時間ステップ毎の音圧を数値計算した.
 
 
-
-
-\section{近似手法の評価}
-
 \subsection{境界値の取得}
 \label{境界値の取得}
 境界積分方程式には境界条件が必要であるが,本論文では以下のように与えた.以下数値の単位はメートル[m]とする.
-まず,壁を中心(0.5,0.5,0.5)で,x,y,z軸に各面が平行であるものを考えた.
+図\ref{fig:get_kyoukai}のように,中心(0.25,0.25,0.25),x,y,z軸に各面が平行である仮想的な壁を考えた.
 つぎに,壁の内部に音源が存在するものとし,その音源(source)の位置$x^s$と音源の発生させる音圧$f(t)$を以下のようにする.
+%重ねたやつ
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[clip,width=9.0cm]{./png/get_kyoukai.png}
+    \caption{仮想的な壁と音源$f(t)$}
+    \label{fig:get_kyoukai}
+  \end{center}
+\end{figure}\\
+
 \begin{align}
 x^s &= (0.25,0.25,0.25)\\
 \label{ef:f(t)}
@@ -237,7 +329,7 @@ f(t) &= 1-cos(\dfrac{2 \pi}{\lambda}t)
 \bar{q}(\bm{x}_j,t) &= \dfrac{\partial \bar{u}}{\partial n} \nonumber \\
                &= \dfrac{-1}{4\pi|x^g_j-x^s|^2}((\bm{x}_j)_i-x^s_i)n_i \left\{ \dfrac{1-cos\dfrac{2 \pi}{\lambda}(t-\dfrac{r}{c})}{r} + \dfrac{2\pi}{\lambda c} sin\dfrac{2\pi}{\lambda}(t-\dfrac{r}{c})  \right\}
 \end{align}
-これを境界値の$\bar{u}(\bm{x},t),\bar{q}(\bm{x},t)$とする.
+これを次節の境界値$\bar{u}(\bm{x},t),\bar{q}(\bm{x},t)$とした.
 
 \subsection{解析的手法と近似手法との比較}
 第\ref{2章}章で行った近似を用い,領域内での受音点での数値計算結果をここで述べる.まず,入力として与えた$f(t)$を図\ref{fig:ft}に図示する
@@ -286,27 +378,59 @@ u_{ans}(\bm{x},t) &= \dfrac{f(t-\dfrac{|x-x^s|}{c})}{4\pi |x-x^s|}
 \end{align}
 である.この評価を用いた場合,計算結果は$2.4 \times 10^{-3}$となった.ここに,総ステップ数は$f_s=8000$つまり1秒分のデータである.
 
-\section{リアルタイム可聴化のためのシステム概要}
+\section{リアルタイム可聴化のにむけたシステム概要}
 \subsection{リアルタイム可聴化の定義}
 第\ref{q}節で定式化した問題を第\ref{kinji}節で示した近似を用いて計算するが,ここでリアルタイムの定義について記す.
 実用上のリアルタイムとは実時間的,即時的という言葉である.音の場合,サンプリングレートを$f_s$[Hz]とすれば,1秒間を$f_s$個のデータで構成することになる.
 本論文では,$1/f_s$秒毎に内点計算を行うことで,時刻$t$に対し$tf_s$個の計算を終了させることをリアルタイム計算とし,作成したデータから即時的にデータから音へ変換することで,
 可聴化することをリアルタイム可聴化と定義する.
 
-\subsection{実行環境と開発システムについて}
-リアルタイム可聴化を行う前に,移動する受音点の状況をわかりやすくするため音源,受音点,壁を可視化した.
+
+\subsection{開発環境と本論文におけるシステムについて}
+リアルタイム可聴化に向け,移動する受音点の状況確認の補助のために音源,受音点,壁を可視化した.
 可視化には'Uity Version 2017 .3.0f3 Personal'を用いた.
-\subsection{プログラム}
-がんばったところとか
+三次元空間上の受音点は図\ref{fig:move_naiten}のように三次元空間上を移動できる.
+音源は点音源であり,直接波と壁による反射波が受音点の移動によって変化する様を描画した.
+%重ねたやつ
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[clip,width=10.0cm]{./png/move_naiten.png}
+    \caption{三次元空間を移動する受音点の様子}
+    \label{fig:move_naiten}
+  \end{center}
+\end{figure}\\
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[clip,width=10.0cm]{./png/flow.png}
+    \caption{フローチャート}
+    \label{fig:flow}
+  \end{center}
+\end{figure}\\
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[clip,width=10.0cm]{./png/naisou_f.png}
+    \caption{内挿関数$N$}
+    \label{fig:naisou_f}
+  \end{center}
+\end{figure}\\
 
 
+unityの画像とあわせてを作成フローチャート
+序論この研究をやります。研究背景.
+適用こんなことやりまして、結果を乗せる
+りあるたいむかちょうかにちかづいた
 
+結論リアルタイムにどれだけ近づきました
+
+\subsection{システムの実用例}
+ホワイトボードの移動した奇跡と移動した結果の波形の画像をはっつける
+\subsection{システムの問題点}
 
 \clearpage
 %%% 謝辞 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \acknowledgment
-本研究に取り組むにあたって助言をいただいた吉川仁准教授,計算幾科学コース新田泰大氏に深く感謝
-する．
+本研究に取り組むにあたって助言をいただいた吉川仁准教授,計算幾科学コース新田泰大氏に深く感謝する．
 
 %%% 参考文献 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addcontentsline{toc}{section}{\refname} % 目次に参考文献を追加する．

@@ -27,7 +27,6 @@ public class MainCamera : MonoBehaviour {
 	//ログ表示
 	private GameObject LogObj;
 
-
 	// Use this for initialization
 	void Start () {
 		LogObj = GameObject.Find ("Log");
@@ -82,12 +81,15 @@ public class MainCamera : MonoBehaviour {
 		
 	async void FixedUpdate(){
 		if (emmit_sound) {
+			if(Static.frame<400){
+				v += (0,0,0);
+			}
 			/////ここから並列にしたい/////
-			Static.frame +=1;
-			int frame = Static.frame-1;
-			float a = await Task.Run(()=>cal1 (v, frame));
-			float b = await Task.Run(()=>cal2 (v, frame));
-			CalculateInnerPoint.TextSaveTitle ((a+b).ToString (), "two_naiten_u");
+//			Static.frame +=1;
+//			int frame = Static.frame-1;
+//			float a = await Task.Run(()=>cal1 (v, frame));
+//			float b = await Task.Run(()=>cal2 (v, frame));
+//			CalculateInnerPoint.TextSaveTitle ((a+b).ToString (), "two_naiten_u");
 			////ここから並列にしたい///////
 //			int frame = Static.frame;
 //			Task<float> task1 = cal1 (v, frame);
@@ -95,27 +97,34 @@ public class MainCamera : MonoBehaviour {
 //			IEnumerable<Task<float>> tasks = new[] {task1,task2};
 //			float[] results = await Task.WhenAll(tasks);
 //			CalculateInnerPoint.TextSaveTitle (results[0].ToString (), "two_naiten_u");
-//			Static.frame += (int)results[1]; 
-
+//			Static.frame += (int)results[1];
+			Task.Run(()=>cal1 (v, Static.frame));
 
 			////////////////////波形の描画計算////////////////////
-//			CaluInnnerPointWhenMove (v,Static.frame);
-			////////////////////波形の描画計算ここまで////////////////////
-			////////////////////波形の保存////////////////////
+			CaluInnnerPointWhenMove (v,Static.frame);
 			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "one_naiten_u");
-			////////////////////波形の保存ここまで////////////////////
+//			////////////////////波形の保存ここまで////////////////////
 //			Static.frame += 1;
 		}
+
+		if (Static.frame >= Static.samplerate * Static.time) {
+			MainCamera.emmit_sound = false;
+			Static.frame = 0;//frameの初期化
+			LogObj.GetComponent<Text>().text = "emmit finished";
+
+			//デバッグ
+			// 処理完了後の経過時間から、保存していた経過時間を引く＝処理時間
+			Static.check_time = Time.realtimeSinceStartup - Static.check_time;
+			Debug.Log( "check time : " + Static.check_time.ToString("0.00000") );
+		}
 	}
-
-
 
 
 	private async Task<float> hogehoge(Vector3 position,int start_frame){
 		float u_array = 0;
 		await Task.Run(()=>{
 			// 1秒で終わるべき処理
-			for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
+			for (int j = 0; j < (int)Static.mesh_point_center_array.Length; j++) {
 				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
 				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
 				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
@@ -131,10 +140,8 @@ public class MainCamera : MonoBehaviour {
 			if (delay_uin > 0) {
 				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
 			}
-
 		});
 		Static.frame += 1;
-
 		return u_array;
 	}
 
@@ -162,9 +169,21 @@ public class MainCamera : MonoBehaviour {
 			}
 
 		});
-
+		await TS (Static.u_array [Static.frame].ToString (), "twi_naiten_u");
+		Static.frame += 1;
 		return u_array;
 	}
+
+	public async Task TS(string txt,string title){//保存用関数
+		await Task.Run (() => {
+			StreamWriter sw = new StreamWriter ("./WaveShape/" + title + ".txt", true); //true=追記 false=上書き
+			sw.WriteLine (txt);
+			sw.Flush ();
+			sw.Close ();
+		});
+	}
+
+
 	private async Task<float> cal2(Vector3 position,int start_frame){
 		float u_array = 0;
 		await Task.Run(()=>{
@@ -179,8 +198,6 @@ public class MainCamera : MonoBehaviour {
 			}
 		}
 		});
-
-
 		return u_array;
 	}
 

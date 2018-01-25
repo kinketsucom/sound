@@ -22,16 +22,16 @@ public class GUIManager : MonoBehaviour {
 	void FixedUpdate () {	
 
 //
-		if (Static.frame >= Static.samplerate * Static.time) {
-				MainCamera.emmit_sound = false;
-				Static.frame = 0;//frameの初期化
-				LogObj.GetComponent<Text>().text = "emmit finished";
-
-				//デバッグ
-				// 処理完了後の経過時間から、保存していた経過時間を引く＝処理時間
-				Static.check_time = Time.realtimeSinceStartup - Static.check_time;
-				Debug.Log( "check time : " + Static.check_time.ToString("0.00000") );
-			}
+//		if (Static.frame >= Static.samplerate * Static.time) {
+//				MainCamera.emmit_sound = false;
+//				Static.frame = 0;//frameの初期化
+//				LogObj.GetComponent<Text>().text = "emmit finished";
+//
+//				//デバッグ
+//				// 処理完了後の経過時間から、保存していた経過時間を引く＝処理時間
+//				Static.check_time = Time.realtimeSinceStartup - Static.check_time;
+//				Debug.Log( "check time : " + Static.check_time.ToString("0.00000") );
+//			}
 			frame_counter_text.text = "counter"+Static.frame.ToString();
 	}
 

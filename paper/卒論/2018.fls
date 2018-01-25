@@ -119,8 +119,8 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/standard/tgoth10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jisg.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmss12.tfm
-INPUT ./png/ft.png
-INPUT extractbb -O ./png/ft.png
+INPUT ./png/get_kyoukai.png
+INPUT extractbb -O ./png/get_kyoukai.png
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/standard/tmin10.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jis.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
@@ -144,10 +144,18 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jisg.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/ptex-fonts/jis/jisg.tfm
+INPUT ./png/ft.png
+INPUT extractbb -O ./png/ft.png
 INPUT ./png/original_u.png
 INPUT extractbb -O ./png/original_u.png
 INPUT ./eps/original_u.eps
 INPUT ./eps/original_u.eps
 INPUT ./png/mix_u.png
 INPUT extractbb -O ./png/mix_u.png
+INPUT ./png/move_naiten.png
+INPUT extractbb -O ./png/move_naiten.png
+INPUT ./png/flow.png
+INPUT extractbb -O ./png/flow.png
+INPUT ./png/naisou_f.png
+INPUT extractbb -O ./png/naisou_f.png
 INPUT 2018.aux

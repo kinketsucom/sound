@@ -14,9 +14,9 @@ public class SoundSource : MonoBehaviour {
 	} 
 
 	void FixedUpdate(){
-		if (Static.frame % 8000 == 7999) {
+//		if (Static.frame % 8000 == 7999) {
 //			SetClipData ();
-		}
+//		}
 	}
 
 	public void SetClipData(){
@@ -26,6 +26,15 @@ public class SoundSource : MonoBehaviour {
 		aud_source.clip.SetData (emmit_sound,0);
 		aud_source.Play ();
 		print ("set clip!" + Static.frame.ToString ());
+	}
+
+	public void SetAllClipData(){
+		for (int i =0; i < Static.calc_frame; i++) {
+			emmit_sound [i] = Static.u_array [i];
+		}
+		aud_source.clip.SetData (emmit_sound,0);
+		aud_source.Play ();
+		print ("set all clip!");
 	}
 
 }
