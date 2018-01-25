@@ -82,47 +82,92 @@ public class MainCamera : MonoBehaviour {
 		
 	async void FixedUpdate(){
 		if (emmit_sound) {
-//			await Task.Run(() => RunParal(v,Static.frame));
-			int frame = Static.frame;
-			float a = await Task.Run (() => cal1 (v, frame));
-			float b = await Task.Run (() => cal2 (v, frame));
-			CalculateInnerPoint.TextSaveTitle ((a+b).ToString (), "naiten_u");
+			/////ここから並列にしたい/////
+			Static.frame +=1;
+			int frame = Static.frame-1;
+			float a = await Task.Run(()=>cal1 (v, frame));
+			float b = await Task.Run(()=>cal2 (v, frame));
+			CalculateInnerPoint.TextSaveTitle ((a+b).ToString (), "two_naiten_u");
+			////ここから並列にしたい///////
+//			int frame = Static.frame;
+//			Task<float> task1 = cal1 (v, frame);
+//			Task<float> task2 = cal2 (v, frame);
+//			IEnumerable<Task<float>> tasks = new[] {task1,task2};
+//			float[] results = await Task.WhenAll(tasks);
+//			CalculateInnerPoint.TextSaveTitle (results[0].ToString (), "two_naiten_u");
+//			Static.frame += (int)results[1]; 
+
+
 			////////////////////波形の描画計算////////////////////
 //			CaluInnnerPointWhenMove (v,Static.frame);
 			////////////////////波形の描画計算ここまで////////////////////
 			////////////////////波形の保存////////////////////
-			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "naiten_u");
+			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "one_naiten_u");
 			////////////////////波形の保存ここまで////////////////////
-			Static.frame += 1;
+//			Static.frame += 1;
 		}
 	}
 
-//	public Task RunParal(Vector3 p,int f) // asyncじゃないけど、戻り値がTask
-//	{	
-//		var tasks = new List<Task>(); // TaskをまとめるListを作成
-//		var task1 = Task.Run(() => cal1(p,f));
-//		var task2 = Task.Run(() => cal2(p,f));// HeavyMethodを開始するというTask
-//		tasks.Add(task1);
-//		tasks.Add(task2);// を、Listにまとめる
-//		return Task.WhenAll(tasks); // 全てのTaskが完了した時に完了扱いになるたった一つのTaskを作成
-//	} 
-//
-	private float cal1(Vector3 position,int start_frame){
+
+
+
+	private async Task<float> hogehoge(Vector3 position,int start_frame){
 		float u_array = 0;
-		// 1秒で終わるべき処理
-		for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
-			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
-			int delay = (int)delayf;
-			if (delay > 0) {
-				u_array = - SecondLayer(j,delayf,dot,r,start_frame);
+		await Task.Run(()=>{
+			// 1秒で終わるべき処理
+			for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
+				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+				int delay = (int)delayf;
+				if (delay > 0) {
+					u_array -= SecondLayer (j, delayf, dot, r, start_frame);
+				}
 			}
-		}
+
+			//uinを加える
+			float distance = Vector3.Distance (v, Static.source_origin_point);
+			int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+			if (delay_uin > 0) {
+				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+			}
+
+		});
+		Static.frame += 1;
+
 		return u_array;
 	}
-	private float cal2(Vector3 position,int start_frame){
+
+
+
+	private async Task<float> cal1(Vector3 position,int start_frame){
 		float u_array = 0;
+		await Task.Run(()=>{
+			// 1秒で終わるべき処理
+			for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
+				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+				int delay = (int)delayf;
+				if (delay > 0) {
+					u_array -= SecondLayer (j, delayf, dot, r, start_frame);
+				}
+			}
+
+			//uinを加える
+			float distance = Vector3.Distance (v, Static.source_origin_point);
+			int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+			if (delay_uin > 0) {
+				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+			}
+
+		});
+
+		return u_array;
+	}
+	private async Task<float> cal2(Vector3 position,int start_frame){
+		float u_array = 0;
+		await Task.Run(()=>{
 		// 1秒で終わるべき処理
 		for (int j = (int)Static.mesh_point_center_array.Length/2 + 1; j<Static.mesh_point_center_array.Length  ; j++) {
 			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
@@ -130,9 +175,12 @@ public class MainCamera : MonoBehaviour {
 			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
 			int delay = (int)delayf;
 			if (delay > 0) {
-				u_array = - SecondLayer(j,delayf,dot,r,start_frame);
+				u_array -= SecondLayer(j,delayf,dot,r,start_frame);
 			}
 		}
+		});
+
+
 		return u_array;
 	}
 
@@ -149,7 +197,7 @@ public class MainCamera : MonoBehaviour {
 			if (delay > 0) {
 				//これが新しいやつ
 //				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame) ;
-				u_array = - SecondLayer(j,delayf,dot,r,start_frame);
+				u_array -=  SecondLayer(j,delayf,dot,r,start_frame);
 			}
 		}
 
@@ -163,8 +211,8 @@ public class MainCamera : MonoBehaviour {
 	}
 		
 	private float SecondLayer(int j,float delayf,float dot, float r,int n){
-		int id = System.Threading.Thread.CurrentThread.ManagedThreadId;
-		print("ThreadID : " + id);
+//		int id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+//		print("ThreadID : " + id);
 		float result = 0.0f;
 		float del_t = 1.0f / Static.samplerate;
 		int m1 = 0;

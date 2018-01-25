@@ -22,7 +22,7 @@ public class Scatterer : MonoBehaviour {
 //		y = float.Parse(xyz_scale_array [8]);
 //		z =  float.Parse(xyz_scale_array [14]);
 //
-		this.gameObject.transform.localScale = Static.cube_size;
+		this.gameObject.transform.localScale = Static.cube_size/10;
 		this.gameObject.transform.position = Static.cube_size/2;
 
 	}
