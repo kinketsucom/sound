@@ -33,7 +33,7 @@ public class MainCamera : MonoBehaviour {
 		player_position = GameObject.Find ("Position").GetComponent<Text> ();
 
 		v = Static.check_position;
-		player_position.GetComponent<Text> ().text = v.ToString ("F3");
+		player_position.GetComponent<Text> ().text = v.ToString ("F4");
 	}
 		
 
@@ -59,7 +59,7 @@ public class MainCamera : MonoBehaviour {
 			//			v.x += 1f; 
 			v.x += Time.deltaTime*1.25f;
 		}
-		this.transform.localPosition = v;
+//		this.transform.localPosition = v;
 		//
 		if (Input.GetKey (KeyCode.UpArrow)) {  // 上矢印キーで上をむく移動.
 			l.x += -1f;
@@ -75,15 +75,45 @@ public class MainCamera : MonoBehaviour {
 		}
 		this.transform.localEulerAngles = l;
 		////////////////////移動制御ここまで////////////////////
-		v = this.transform.localPosition;
-		l = this.transform.localEulerAngles; 
+//		v = this.transform.localPosition;
+//		l = this.transform.localEulerAngles; 
 	}
 		
 	async void FixedUpdate(){
 		if (emmit_sound) {
-			if(Static.frame<400){
-				v += (0,0,0);
+			///////移動描画
+//			if (Static.frame < 4000) {
+//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+//			} else if (Static.frame < 6800) {
+//				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
+//			} else if (Static.frame < 13200) {
+//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+//			} else if (Static.frame < 16000) {
+//				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
+//			}
+
+			//ギリギリのラインを攻める
+			if (Static.frame < 7120) {
+				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+			} else if (Static.frame < 10320) {
+				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
+			} else if (Static.frame < 11680) {
+				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+			} else if (Static.frame < 14880) {
+				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
+			}else if(Static.frame < 16000) {
+				v += new Vector3 (0,0,1.0f / Static.samplerate);
 			}
+
+			//直線的な移動
+//			v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+
+
+			this.transform.localPosition = v;
+			player_position.text = this.transform.localPosition.ToString ("F3");
+
+			//////これは移動描画////////
+
 			/////ここから並列にしたい/////
 //			Static.frame +=1;
 //			int frame = Static.frame-1;
@@ -98,13 +128,13 @@ public class MainCamera : MonoBehaviour {
 //			float[] results = await Task.WhenAll(tasks);
 //			CalculateInnerPoint.TextSaveTitle (results[0].ToString (), "two_naiten_u");
 //			Static.frame += (int)results[1];
-			Task.Run(()=>cal1 (v, Static.frame));
+//			Task.Run(()=>cal1 (v, Static.frame));
 
 			////////////////////波形の描画計算////////////////////
 			CaluInnnerPointWhenMove (v,Static.frame);
 			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "one_naiten_u");
 //			////////////////////波形の保存ここまで////////////////////
-//			Static.frame += 1;
+			Static.frame += 1;
 		}
 
 		if (Static.frame >= Static.samplerate * Static.time) {
@@ -116,90 +146,92 @@ public class MainCamera : MonoBehaviour {
 			// 処理完了後の経過時間から、保存していた経過時間を引く＝処理時間
 			Static.check_time = Time.realtimeSinceStartup - Static.check_time;
 			Debug.Log( "check time : " + Static.check_time.ToString("0.00000") );
+			player_position.text = this.transform.localPosition.ToString ("F4");
+
 		}
 	}
 
 
-	private async Task<float> hogehoge(Vector3 position,int start_frame){
-		float u_array = 0;
-		await Task.Run(()=>{
-			// 1秒で終わるべき処理
-			for (int j = 0; j < (int)Static.mesh_point_center_array.Length; j++) {
-				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
-				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
-				int delay = (int)delayf;
-				if (delay > 0) {
-					u_array -= SecondLayer (j, delayf, dot, r, start_frame);
-				}
-			}
-
-			//uinを加える
-			float distance = Vector3.Distance (v, Static.source_origin_point);
-			int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
-			if (delay_uin > 0) {
-				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
-			}
-		});
-		Static.frame += 1;
-		return u_array;
-	}
-
-
-
-	private async Task<float> cal1(Vector3 position,int start_frame){
-		float u_array = 0;
-		await Task.Run(()=>{
-			// 1秒で終わるべき処理
-			for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
-				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
-				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
-				int delay = (int)delayf;
-				if (delay > 0) {
-					u_array -= SecondLayer (j, delayf, dot, r, start_frame);
-				}
-			}
-
-			//uinを加える
-			float distance = Vector3.Distance (v, Static.source_origin_point);
-			int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
-			if (delay_uin > 0) {
-				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
-			}
-
-		});
-		await TS (Static.u_array [Static.frame].ToString (), "twi_naiten_u");
-		Static.frame += 1;
-		return u_array;
-	}
-
-	public async Task TS(string txt,string title){//保存用関数
-		await Task.Run (() => {
-			StreamWriter sw = new StreamWriter ("./WaveShape/" + title + ".txt", true); //true=追記 false=上書き
-			sw.WriteLine (txt);
-			sw.Flush ();
-			sw.Close ();
-		});
-	}
-
-
-	private async Task<float> cal2(Vector3 position,int start_frame){
-		float u_array = 0;
-		await Task.Run(()=>{
-		// 1秒で終わるべき処理
-		for (int j = (int)Static.mesh_point_center_array.Length/2 + 1; j<Static.mesh_point_center_array.Length  ; j++) {
-			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
-			int delay = (int)delayf;
-			if (delay > 0) {
-				u_array -= SecondLayer(j,delayf,dot,r,start_frame);
-			}
-		}
-		});
-		return u_array;
-	}
+//	private async Task<float> hogehoge(Vector3 position,int start_frame){
+//		float u_array = 0;
+//		await Task.Run(()=>{
+//			// 1秒で終わるべき処理
+//			for (int j = 0; j < (int)Static.mesh_point_center_array.Length; j++) {
+//				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+//				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+//				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+//				int delay = (int)delayf;
+//				if (delay > 0) {
+//					u_array -= SecondLayer (j, delayf, dot, r, start_frame);
+//				}
+//			}
+//
+//			//uinを加える
+//			float distance = Vector3.Distance (v, Static.source_origin_point);
+//			int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+//			if (delay_uin > 0) {
+//				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+//			}
+//		});
+//		Static.frame += 1;
+//		return u_array;
+//	}
+//
+//
+//
+//	private async Task<float> cal1(Vector3 position,int start_frame){
+//		float u_array = 0;
+//		await Task.Run(()=>{
+//			// 1秒で終わるべき処理
+//			for (int j = 0; j < (int)Static.mesh_point_center_array.Length/2; j++) {
+//				float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+//				float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+//				float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+//				int delay = (int)delayf;
+//				if (delay > 0) {
+//					u_array -= SecondLayer (j, delayf, dot, r, start_frame);
+//				}
+//			}
+//
+//			//uinを加える
+//			float distance = Vector3.Distance (v, Static.source_origin_point);
+//			int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+//			if (delay_uin > 0) {
+//				u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+//			}
+//
+//		});
+//		await TS (Static.u_array [Static.frame].ToString (), "twi_naiten_u");
+//		Static.frame += 1;
+//		return u_array;
+//	}
+//
+//	public async Task TS(string txt,string title){//保存用関数
+//		await Task.Run (() => {
+//			StreamWriter sw = new StreamWriter ("./WaveShape/" + title + ".txt", true); //true=追記 false=上書き
+//			sw.WriteLine (txt);
+//			sw.Flush ();
+//			sw.Close ();
+//		});
+//	}
+//
+//
+//	private async Task<float> cal2(Vector3 position,int start_frame){
+//		float u_array = 0;
+//		await Task.Run(()=>{
+//		// 1秒で終わるべき処理
+//		for (int j = (int)Static.mesh_point_center_array.Length/2 + 1; j<Static.mesh_point_center_array.Length  ; j++) {
+//			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+//			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+//			float delayf = start_frame - Static.samplerate * r / Static.wave_speed;
+//			int delay = (int)delayf;
+//			if (delay > 0) {
+//				u_array -= SecondLayer(j,delayf,dot,r,start_frame);
+//			}
+//		}
+//		});
+//		return u_array;
+//	}
 
 
 
@@ -218,12 +250,12 @@ public class MainCamera : MonoBehaviour {
 			}
 		}
 
-		//uinを加える
-		float distance = Vector3.Distance (position, Static.source_origin_point);
-		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
-		if (delay_uin > 0) {
-			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
-		}
+//		//uinを加える
+//		float distance = Vector3.Distance (position, Static.source_origin_point);
+//		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+//		if (delay_uin > 0) {
+//			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+//		}
 		Static.u_array [start_frame] = u_array;
 	}
 		
@@ -244,6 +276,7 @@ public class MainCamera : MonoBehaviour {
 		float del_t = 1.0f/Static.samplerate;
 		float result = 0.0f;
 		result = dot * Static.mesh_size [j] * T / (4.0f * Mathf.PI * Mathf.Pow (r, 3));
+
 		return result;
 	}
 
@@ -263,11 +296,23 @@ public class MainCamera : MonoBehaviour {
 		emmit_sound = true;
 		LogObj.GetComponent<Text>().text = "emmit started";
 		Static.check_time = Time.realtimeSinceStartup;
+		v = this.transform.localPosition ;
+		player_position.text = this.transform.localPosition.ToString ("F3");
+
+
 	}
 		
 
 	public void BBBBB(){
 		emmit_sound = false;
 		LogObj.GetComponent<Text> ().text = "emmit stoped";
+		this.transform.localPosition = Static.check_position ;//初期値に戻してるだけ
+		v = this.transform.localPosition ;
+		player_position.text = this.transform.localPosition.ToString ("F3");
+
+
+		for(int t=0;t<8000;t++){
+			print(Static.boundary_condition_u [t, 0]);
+		}
 	}
 }

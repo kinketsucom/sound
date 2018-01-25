@@ -184,20 +184,32 @@ public class CalculateInnerPoint : MonoBehaviour {
 		int step = 0;
 		//初期条件の読み込み まずはディリクレu
 		foreach (string item in u_list) {
-			dat = item.Split(' ');
-			counter=-1;
-			foreach (string val in dat) {
-				if (val.Length != 0) {
-					if(counter>=1){
-						Static.boundary_condition_u[step,counter] = float.Parse(val);
-					}
-					counter += 1;
-				}
-			}
+			float val = float.Parse(item.Trim());
+			Static.boundary_condition_u[step/640,step%640] = val;
 			step += 1;
 		}
 		log.GetComponent<Text>().text = "set Dirichlet";
 		//ここからノイマンq
+
+
+//		int step = 0;
+//		//初期条件の読み込み まずはディリクレu
+//		foreach (string item in u_list) {
+//			dat = item.Split(' ');
+//			counter=-1;
+//			foreach (string val in dat) {
+//				if (val.Length != 0) {
+//					if(counter>=1){
+//						print (val);
+//						Static.boundary_condition_u[step,counter] = float.Parse(val);
+//					}
+//					counter += 1;
+//				}
+//			}
+//			step += 1;
+//		}
+//		log.GetComponent<Text>().text = "set Dirichlet";
+//		//ここからノイマンq
 		/*
 		file = Application.dataPath + "/Resource/cond_bc.d";//現状はノイマン条件
 		lines = ReadFile (file); 
