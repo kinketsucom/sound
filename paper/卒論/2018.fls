@@ -154,8 +154,7 @@ INPUT ./png/mix_u.png
 INPUT extractbb -O ./png/mix_u.png
 INPUT ./png/move_naiten.png
 INPUT extractbb -O ./png/move_naiten.png
+INPUT ./png/move_naiten.png
 INPUT ./png/flow.png
 INPUT extractbb -O ./png/flow.png
-INPUT ./png/naisou_f.png
-INPUT extractbb -O ./png/naisou_f.png
 INPUT 2018.aux

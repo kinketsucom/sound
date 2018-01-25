@@ -59,7 +59,7 @@ public class MainCamera : MonoBehaviour {
 			//			v.x += 1f; 
 			v.x += Time.deltaTime*1.25f;
 		}
-//		this.transform.localPosition = v;
+		this.transform.localPosition = v;
 		//
 		if (Input.GetKey (KeyCode.UpArrow)) {  // 上矢印キーで上をむく移動.
 			l.x += -1f;
@@ -82,28 +82,28 @@ public class MainCamera : MonoBehaviour {
 	async void FixedUpdate(){
 		if (emmit_sound) {
 			///////移動描画
-//			if (Static.frame < 4000) {
-//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
-//			} else if (Static.frame < 6800) {
-//				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
-//			} else if (Static.frame < 13200) {
-//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
-//			} else if (Static.frame < 16000) {
-//				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
-//			}
-
-			//ギリギリのラインを攻める
-			if (Static.frame < 7120) {
+			if (Static.frame < 4000) {
 				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
-			} else if (Static.frame < 10320) {
+			} else if (Static.frame < 6800) {
 				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
-			} else if (Static.frame < 11680) {
+			} else if (Static.frame < 13200) {
 				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
-			} else if (Static.frame < 14880) {
+			} else if (Static.frame < 16000) {
 				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
-			}else if(Static.frame < 16000) {
-				v += new Vector3 (0,0,1.0f / Static.samplerate);
 			}
+//
+			//ギリギリのラインを攻める
+//			if (Static.frame < 7120) {
+//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+//			} else if (Static.frame < 10320) {
+//				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
+//			} else if (Static.frame < 11680) {
+//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+//			} else if (Static.frame < 14880) {
+//				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
+//			}else if(Static.frame < 16000) {
+//				v += new Vector3 (0,0,1.0f / Static.samplerate);
+//			}
 
 			//直線的な移動
 //			v += new Vector3 (0, 0, 1.0f / Static.samplerate);
@@ -132,7 +132,7 @@ public class MainCamera : MonoBehaviour {
 
 			////////////////////波形の描画計算////////////////////
 			CaluInnnerPointWhenMove (v,Static.frame);
-			CalculateInnerPoint.TextSaveTitle (Static.u_array [Static.frame].ToString (), "one_naiten_u");
+			CalculateInnerPoint.TextSaveTitle ( Static.frame.ToString() +" "+Static.u_array [Static.frame].ToString (), "u");
 //			////////////////////波形の保存ここまで////////////////////
 			Static.frame += 1;
 		}
@@ -251,11 +251,11 @@ public class MainCamera : MonoBehaviour {
 		}
 
 //		//uinを加える
-//		float distance = Vector3.Distance (position, Static.source_origin_point);
-//		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
-//		if (delay_uin > 0) {
-//			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
-//		}
+		float distance = Vector3.Distance (position, Static.source_origin_point);
+		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+		if (delay_uin > 0) {
+			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+		}
 		Static.u_array [start_frame] = u_array;
 	}
 		
@@ -309,10 +309,5 @@ public class MainCamera : MonoBehaviour {
 		this.transform.localPosition = Static.check_position ;//初期値に戻してるだけ
 		v = this.transform.localPosition ;
 		player_position.text = this.transform.localPosition.ToString ("F3");
-
-
-		for(int t=0;t<8000;t++){
-			print(Static.boundary_condition_u [t, 0]);
-		}
 	}
 }

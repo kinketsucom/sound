@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  25 JAN 2018 17:36
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  26 JAN 2018 04:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -173,7 +173,11 @@ Package: bm 2017/01/16 v1.2c Bold Symbol Support (DPC/FMi)
 \symboldmincho=\mathgroup10
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 207.
-) (./2018.aux)
+) (./2018.aux
+
+LaTeX Warning: Label `fig:move_naiten' multiply defined.
+
+)
 \openout1 = `2018.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 62.
@@ -314,45 +318,45 @@ LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 112.
+(Font)              scaled to size 11.53198pt on input line 111.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 112.
+(Font)              scaled to size 11.53198pt on input line 111.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 112.
+(Font)              scaled to size 11.53198pt on input line 111.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 112.
+(Font)              scaled to size 11.53198pt on input line 111.
  [1
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 158.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 157.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 158.
+(Font)              scaled to size 9.60999pt on input line 157.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 158.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 157.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 158.
+(Font)              scaled to size 9.60999pt on input line 157.
 
 
-LaTeX Warning: Reference `eq:BIE' on page 2 undefined on input line 158.
+LaTeX Warning: Reference `eq:BIE' on page 2 undefined on input line 157.
 
 [2] [3]
-Overfull \hbox (15.58589pt too wide) in paragraph at lines 226--226
+Overfull \hbox (15.58589pt too wide) in paragraph at lines 225--225
 [] 
  []
 
 [4]
-Overfull \hbox (19.1218pt too wide) in paragraph at lines 268--268
+Overfull \hbox (19.1218pt too wide) in paragraph at lines 267--267
 [] 
  []
 
 
-Overfull \hbox (23.25441pt too wide) in paragraph at lines 276--276
+Overfull \hbox (23.25441pt too wide) in paragraph at lines 275--275
 [] 
  []
 
 [5]
-Overfull \hbox (20.40538pt too wide) in paragraph at lines 286--286
+Overfull \hbox (20.40538pt too wide) in paragraph at lines 285--285
 [] 
  []
 
@@ -360,24 +364,24 @@ Overfull \hbox (20.40538pt too wide) in paragraph at lines 286--286
 File: ./png/get_kyoukai.png Graphic file (type bmp)
  <./png/get_kyoukai.png>
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 314.
+(Font)              scaled to size 8.64899pt on input line 313.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 314.
+(Font)              scaled to size 8.64899pt on input line 313.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 314.
+(Font)              scaled to size 5.76599pt on input line 313.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 314.
+(Font)              scaled to size 8.64899pt on input line 313.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 5.76599pt on input line 314.
+(Font)              scaled to size 5.76599pt on input line 313.
 
 
-./2018.tex:318: LaTeX Error: There's no line here to end.
+./2018.tex:317: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.318 
+l.317 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -386,8 +390,8 @@ or  <return>  to continue without it.
 [7]
 File: ./png/ft.png Graphic file (type bmp)
  <./png/ft.png>
-./2018.tex:349: Misplaced alignment tab character &.
-l.349 ...わせたものでである.,観測点はともに$x^s &
+./2018.tex:348: Misplaced alignment tab character &.
+l.348 ...わせたものでである.,観測点はともに$x^s &
                                                  = (-0.5,0.5,0.5)$である.
 I can't figure out why you would want to use a tab mark
 here. If you just want an ampersand, the remedy is
@@ -399,13 +403,13 @@ might try typing `S' now just to see what is salvageable.
 File: ./png/original_u.png Graphic file (type bmp)
 <./png/original_u.png>
 
-./2018.tex:359: LaTeX Error: There's no line here to end.
+./2018.tex:358: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.359 \begin
+l.358 \begin
             {figure}[H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -414,13 +418,13 @@ or  <return>  to continue without it.
 File: ./eps/original_u.eps Graphic file (type eps)
 <./eps/original_u.eps> [8]
 
-./2018.tex:367: LaTeX Error: There's no line here to end.
+./2018.tex:366: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.367 \begin
+l.366 \begin
             {figure}[H]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -429,13 +433,13 @@ or  <return>  to continue without it.
 File: ./png/mix_u.png Graphic file (type bmp)
 <./png/mix_u.png> [9]
 
-./2018.tex:374: LaTeX Error: There's no line here to end.
+./2018.tex:373: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.374 
+l.373 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -445,21 +449,21 @@ or  <return>  to continue without it.
 File: ./png/move_naiten.png Graphic file (type bmp)
  <./png/move_naiten.png>
 
-./2018.tex:402: LaTeX Error: There's no line here to end.
+./2018.tex:401: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.402 
+l.401 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [11]
-File: ./png/flow.png Graphic file (type bmp)
- <./png/flow.png>
+File: ./png/move_naiten.png Graphic file (type bmp)
+ <./png/move_naiten.png>
 
 ./2018.tex:410: LaTeX Error: There's no line here to end.
 
@@ -467,32 +471,32 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.410 \begin
-            {figure}[H]
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-File: ./png/naisou_f.png Graphic file (type bmp)
-<./png/naisou_f.png> [12]
-
-./2018.tex:417: LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.417 
+l.410 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[13] [14]
+File: ./png/flow.png Graphic file (type bmp)
+<./png/flow.png>
 
-LaTeX Warning: Citation `polya1945' on page 15 undefined on input line 456.
+./2018.tex:421: LaTeX Error: There's no line here to end.
 
-[15
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.421 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[12] [13]
+
+LaTeX Warning: Citation `polya1945' on page 14 undefined on input line 461.
+
+[14
 
 ]
 *geometry* verbose mode - [ newgeometry ] result:
@@ -527,7 +531,7 @@ LaTeX Warning: Citation `polya1945' on page 15 undefined on input line 456.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [16
+ [15
 
 
 
@@ -564,12 +568,12 @@ LaTeX Warning: Citation `polya1945' on page 15 undefined on input line 456.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [17
+ [16
 
 
 
 
-] [18
+] [17
 
 
 
@@ -577,14 +581,17 @@ LaTeX Warning: Citation `polya1945' on page 15 undefined on input line 456.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 2533 strings out of 493653
- 31549 string characters out of 6148874
- 112527 words of memory out of 5000000
- 6068 multiletter control sequences out of 15000+600000
+ 2529 strings out of 493653
+ 31469 string characters out of 6148874
+ 112557 words of memory out of 5000000
+ 6065 multiletter control sequences out of 15000+600000
  24948 words of font info for 109 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  32i,15n,29p,255b,429s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2018.dvi (21 pages, 47360 bytes).
+Output written on 2018.dvi (20 pages, 47028 bytes).

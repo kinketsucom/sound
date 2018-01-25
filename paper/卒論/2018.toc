@@ -7,10 +7,9 @@
 \contentsline {subsection}{\numberline {3.1}境界積分方程式の近似}{3}
 \contentsline {subsection}{\numberline {3.2}境界値の取得}{7}
 \contentsline {subsection}{\numberline {3.3}解析的手法と近似手法との比較}{8}
-\contentsline {section}{\numberline {4}リアルタイム可聴化のにむけたシステム概要}{11}
+\contentsline {section}{\numberline {4}リアルタイム可聴化へのシステム概要}{11}
 \contentsline {subsection}{\numberline {4.1}リアルタイム可聴化の定義}{11}
-\contentsline {subsection}{\numberline {4.2}開発環境と本論文におけるシステムについて}{11}
-\contentsline {subsection}{\numberline {4.3}システムの実用例}{14}
-\contentsline {subsection}{\numberline {4.4}システムの問題点}{14}
-\contentsline {section}{参考文献}{15}
-\contentsline {section}{\numberline {付録A}意味のない付録}{15}
+\contentsline {subsection}{\numberline {4.2}開発環境と本論文のシステム}{11}
+\contentsline {subsection}{\numberline {4.3}システムの問題点}{13}
+\contentsline {section}{参考文献}{14}
+\contentsline {section}{\numberline {付録A}意味のない付録}{14}
