@@ -1,0 +1,10 @@
+set terminal postscript eps enhanced color
+set xlabel 'step'
+set ylabel 'p[Pa]'
+set xrange [0:16000]
+set yrange [-0.1:0.2]
+set output "./ForPaper/eps/kyoukai_all.eps"
+ plot 'kyoukai_all.txt' every ::1::4000 title 'A to B' w l, 'kyoukai_all.txt' every ::4001::6800 title 'B to C' w l, 'kyoukai_all.txt' every ::6801::13200 title 'C to D' w l, 'kyoukai_all.txt' every ::13201::16000 title 'D to E' w l
+set terminal png
+set out "./ForPaper/png/kyoukai_all.png"
+ plot 'kyoukai_all.txt' every ::1::4000 title 'A to B' w l, 'kyoukai_all.txt' every ::4001::6800 title 'B to C' w l, 'kyoukai_all.txt' every ::6801::13200 title 'C to D' w l, 'kyoukai_all.txt' every ::13201::16000 title 'D to E' w l
