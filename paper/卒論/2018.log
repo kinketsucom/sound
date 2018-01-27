@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  26 JAN 2018 12:55
+This is e-pTeX, Version 3.14159265-p3.7.1-161114-2.6 (utf8.euc) (TeX Live 2017) (preloaded format=platex 2017.5.23)  26 JAN 2018 16:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -313,43 +313,40 @@ LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
 
 
 ]
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 121.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 121.
-LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 9.60999pt on input line 121.
-
-
-LaTeX Warning: Reference `fig:move_naiten' on page 1 undefined on input line 121.
-
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 149.
+(Font)              scaled to size 11.53198pt on input line 99.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 149.
+(Font)              scaled to size 11.53198pt on input line 99.
 LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 149.
+(Font)              scaled to size 11.53198pt on input line 99.
 LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
-(Font)              scaled to size 11.53198pt on input line 149.
-[1
+(Font)              scaled to size 11.53198pt on input line 99.
+ [1
 
-] [2] [3]
+] [2]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 196.
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 196.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 196.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 9.60999pt on input line 196.
 
-LaTeX Warning: Reference `eq:18' on page 4 undefined on input line 246.
 
+LaTeX Warning: Reference `eq:18' on page 3 undefined on input line 196.
 
-Overfull \hbox (14.2002pt too wide) in alignment at lines 264--275
+[3]
+Overfull \hbox (14.2002pt too wide) in alignment at lines 214--225
  [][][] []
  []
 
 [4] [5]
 
-LaTeX Warning: Reference `eq:f(t)' on page 6 undefined on input line 360.
+LaTeX Warning: Reference `eq:f(t)' on page 6 undefined on input line 310.
 
-[6]
-Overfull \hbox (3.72975pt too wide) in paragraph at lines 365--369
+
+Overfull \hbox (3.72975pt too wide) in paragraph at lines 315--319
 \OT1/cmr/m/n/10 A$(0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 9)$,B$(0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 4)$,C$(0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 6\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 ^^@\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 4)$,D$(0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 6\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 4)$,E$(0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 25\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 
 4)$
  []
@@ -357,90 +354,83 @@ Overfull \hbox (3.72975pt too wide) in paragraph at lines 365--369
 File: ./png/route.png Graphic file (type bmp)
 <./png/route.png>
 LaTeX Font Info:    Font shape `JT1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 373.
+(Font)              scaled to size 8.64899pt on input line 323.
 LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
-(Font)              scaled to size 8.64899pt on input line 373.
-
-
-./2018.tex:377: LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.377 
-      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
+(Font)              scaled to size 8.64899pt on input line 323.
+ [6]
 File: ./png/route_ue.png Graphic file (type bmp)
-<./png/route_ue.png>
+ <./png/route_ue.png>
+File: ./png/kyoukai_chokusetsu.png Graphic file (type bmp)
+ <./png/kyoukai_chokusetsu.png>
 
-./2018.tex:385: LaTeX Error: There's no line here to end.
+./2018.tex:343: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.385 
+l.343 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 [7]
-File: ./png/kyoukai_chokusetsu.png Graphic file (type bmp)
- <./png/kyoukai_chokusetsu.png>
-
-./2018.tex:393: LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.393 
-      
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
 File: ./png/kyoukai_hansya.png Graphic file (type bmp)
-<./png/kyoukai_hansya.png>
+ <./png/kyoukai_hansya.png>
 
-./2018.tex:401: LaTeX Error: There's no line here to end.
+./2018.tex:351: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.401 
+l.351 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[8]
 File: ./png/kyoukai_all.png Graphic file (type bmp)
- <./png/kyoukai_all.png>
+<./png/kyoukai_all.png>
 
-./2018.tex:409: LaTeX Error: There's no line here to end.
+./2018.tex:359: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.409 
+l.359 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[9] [10]
+[8] [9]
+./2018.tex:392: Misplaced alignment tab character &.
+l.392 Unityの教科書 Unity 2017完全対応版 2D&
+                                            3Dスマートフォンゲーム入門講座 (...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-LaTeX Warning: Citation `polya1945' on page 11 undefined on input line 456.
+./2018.tex:392: Misplaced alignment tab character &.
+l.392 ...ートフォンゲーム入門講座 (Entertainment&
+                                                 IDEA)
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
 
-[11
+
+LaTeX Warning: Citation `polya1945' on page 10 undefined on input line 406.
+
+[10
 
 ]
 *geometry* verbose mode - [ newgeometry ] result:
@@ -475,7 +465,7 @@ LaTeX Warning: Citation `polya1945' on page 11 undefined on input line 456.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [12
+ [11
 
 
 
@@ -512,12 +502,12 @@ LaTeX Warning: Citation `polya1945' on page 11 undefined on input line 456.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
- [13
+ [12
 
 
 
 
-] [14
+] [13
 
 
 
@@ -527,12 +517,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2487 strings out of 493653
- 31047 string characters out of 6148874
- 110462 words of memory out of 5000000
- 6038 multiletter control sequences out of 15000+600000
+ 2485 strings out of 493653
+ 31016 string characters out of 6148874
+ 109406 words of memory out of 5000000
+ 6036 multiletter control sequences out of 15000+600000
  20023 words of font info for 89 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
  32i,16n,29p,262b,391s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 2018.dvi (17 pages, 37668 bytes).
+Output written on 2018.dvi (16 pages, 36460 bytes).
