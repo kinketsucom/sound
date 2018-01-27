@@ -7,7 +7,7 @@ public class Static : MonoBehaviour {
 
 	//波形の基本情報
 	public static int samplerate = 8000;//wavのサンプルレートにあわせる
-	public static int time=1;//初期の時間.コードで動的に設定する Max2
+	public static int time=2;//初期の時間.コードで動的に設定する Max2
 	public static float wave_speed = 340.29f;
 	public static float[] f;//音圧
 	public static Vector3 source_origin_point = new Vector3(0.25f,0.25f,-2f);//音源の位置

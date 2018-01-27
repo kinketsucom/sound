@@ -376,7 +376,9 @@ public class CalculateInnerPoint : MonoBehaviour {
 //			print ("original書き出し終了");
 //		}
 
-
+//		for (int i = 0; i < 8000; i++) {
+//			CalculateInnerPoint.TextSaveTitle (i.ToString () + " " + Static.f [i].ToString (), "kyoukai_original");
+//		}
 
 ////		//境界qの確認テスト
 //		for (int i = 0; i < Static.samplerate * Static.time; i++) {

@@ -46,12 +46,12 @@ public class MainCamera : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
-			r_array[j] = Vector3.Distance (v, Static.mesh_point_center_array [j]);
-			dot_array[j] = Vector3.Dot (v - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-			delayf_array[j] = Static.frame - Static.samplerate * r_array[j] / Static.wave_speed;
-			delay_array[j] = (int)delayf_array[j];
-		}
+//		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
+//			r_array[j] = Vector3.Distance (v, Static.mesh_point_center_array [j]);
+//			dot_array[j] = Vector3.Dot (v - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+//			delayf_array[j] = Static.frame - Static.samplerate * r_array[j] / Static.wave_speed;
+//			delay_array[j] = (int)delayf_array[j];
+//		}
 
 
 		////////////////////移動制御////////////////////
@@ -97,15 +97,15 @@ public class MainCamera : MonoBehaviour {
 	void FixedUpdate(){
 		if (emmit_sound) {
 			///////移動描画
-//			if (Static.frame < 4000) {
-//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
-//			} else if (Static.frame < 6800) {
-//				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
-//			} else if (Static.frame < 13200) {
-//				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
-//			} else if (Static.frame < 16000) {
-//				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
-//			}
+			if (Static.frame < 4000) {
+				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+			} else if (Static.frame < 6800) {
+				v += new Vector3 (1.0f / Static.samplerate, 0, 0);
+			} else if (Static.frame < 13200) {
+				v += new Vector3 (0, 0, 1.0f / Static.samplerate);
+			} else if (Static.frame < 16000) {
+				v += new Vector3 (-1.0f / Static.samplerate,0, 0);
+			}
 ////
 			//ギリギリのラインを攻める
 //			if (Static.frame < 7120) {
@@ -168,13 +168,17 @@ public class MainCamera : MonoBehaviour {
 	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
 		// 1秒で終わるべき処理
-//		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
-//			if (delay_array[j] > 0) {
-//				//これが新しいやつ
-//				//				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame) ;
-////				u_array -=  SecondLayer(j,delayf_array[j],dot_array[j],r_array[j],start_frame);
-//			}
-//		}
+		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
+			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+			float delayf = Static.frame - Static.samplerate * r / Static.wave_speed;
+			float delay = (int)delayf;
+			if (delay > 0) {
+				//これが新しいやつ
+				//				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame) ;
+				u_array -=  SecondLayer(j,delay,dot,r,start_frame);
+			}
+		}
 		//uinを加える
 		float distance = Vector3.Distance (position, Static.source_origin_point);
 		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
@@ -318,5 +322,10 @@ public class MainCamera : MonoBehaviour {
 		this.transform.localPosition = Static.check_position ;//初期値に戻してるだけ
 		v = this.transform.localPosition ;
 		player_position.text = this.transform.localPosition.ToString ("F4");
+
+		for (int i = 0; i < 8000; i++) {
+			CalculateInnerPoint.TextSaveTitle (i.ToString () + " " + Static.f [i].ToString (), "kyoukai_test");
+		}
+	
 	}
 }
