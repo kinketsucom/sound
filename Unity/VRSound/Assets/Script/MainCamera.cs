@@ -210,6 +210,8 @@ public class MainCamera : MonoBehaviour {
 			}
 		});
 
+
+
 		u_array = u_part.AsParallel().Sum((x)=>x);
 
 //		print ("終了" + Static.frame.ToString ());
