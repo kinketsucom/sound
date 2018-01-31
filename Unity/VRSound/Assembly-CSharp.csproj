@@ -57,6 +57,7 @@
      <Compile Include="Assets\CielaSpike\Thread Ninja\TaskState.cs" />
      <Compile Include="Assets\CielaSpike\Thread Ninja\ThreadNinjaMonoBehaviourExtensions.cs" />
      <Compile Include="Assets\Script\CalculateInnerPoint.cs" />
+     <Compile Include="Assets\Script\ForTest.cs" />
      <Compile Include="Assets\Script\GUIManager.cs" />
      <Compile Include="Assets\Script\MainCamera.cs" />
      <Compile Include="Assets\Script\Scatterer.cs" />

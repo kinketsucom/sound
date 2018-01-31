@@ -1,0 +1,10 @@
+set terminal postscript eps enhanced color
+set xlabel 'step'
+set ylabel 'p[Pa]'
+set xrange [0:300]
+set yrange [-0.05:0.2]
+set output "./ForPaper/eps/300_kyoukai_chokutatsu.eps"
+plot './ForPaper/300_kyoukai_chokutatsu.txt' title '' w l
+set terminal png
+set out "./ForPaper/png/300_kyoukai_chokutatsu.png"
+plot './ForPaper/300_kyoukai_chokutatsu.txt' title '' w l

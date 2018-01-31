@@ -7,6 +7,7 @@ using UniRx;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 
 
@@ -25,14 +26,24 @@ public class MainCamera : MonoBehaviour {
 	Vector3 v;
 	Vector3 l;
 
+	private float[] u_part = new float[640];
+
 	private bool calc_r= false;
 	private float[] r_array = new float[640];
 	private float[] dot_array = new float[640];
 	private float[] delayf_array = new float[640];
 	private int[] delay_array = new int[640];
 
+
+	private float[] bef_r_array = new float[640];
+	private float[] bef_dot_array = new float[640];
+	private float[] bef_delayf_array = new float[640];
+	private int[] bef_delay_array = new int[640];
+
 	//ログ表示
 	private GameObject LogObj;
+
+	int a = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -46,12 +57,18 @@ public class MainCamera : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-//		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
-//			r_array[j] = Vector3.Distance (v, Static.mesh_point_center_array [j]);
-//			dot_array[j] = Vector3.Dot (v - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-//			delayf_array[j] = Static.frame - Static.samplerate * r_array[j] / Static.wave_speed;
-//			delay_array[j] = (int)delayf_array[j];
-//		}
+		Parallel.For (0, Static.mesh_point_center_array.Length, j => {
+//			r_array [j] = Vector3.Distance (v, Static.mesh_point_center_array [j]);
+//			dot_array [j] = Vector3.Dot (v - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+//			delayf_array [j] = Static.frame - Static.samplerate * r_array [j] / Static.wave_speed;
+//			delay_array [j] = (int)delayf_array [j];
+//
+////			bef_r_array[j] = r_array[j];
+////			bef_dot_array[j] = dot_array[j];
+////			bef_delayf_array [j]= delayf_array[j];
+////			bef_delay_array [j]= delay_array[j];
+//
+		});
 
 
 		////////////////////移動制御////////////////////
@@ -147,7 +164,7 @@ public class MainCamera : MonoBehaviour {
 
 			////////////////////波形の描画計算////////////////////
 			CaluInnnerPointWhenMove (v,Static.frame);
-			CalculateInnerPoint.TextSaveTitle ( Static.frame.ToString()+" "+Static.u_array [Static.frame].ToString (), "kyoukai_all");
+//			CalculateInnerPoint.TextSaveTitle ( Static.frame.ToString()+" "+Static.u_array [Static.frame].ToString (), "kyoukai_all");
 //			////////////////////波形の保存ここまで////////////////////
 			Static.frame += 1;
 		}
@@ -168,24 +185,42 @@ public class MainCamera : MonoBehaviour {
 	private void CaluInnnerPointWhenMove(Vector3 position, int start_frame){
 		float u_array = 0;
 		// 1秒で終わるべき処理
-		for (int j = 0; j < Static.mesh_point_center_array.Length; j++) {
-			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
-			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
-			float delayf = Static.frame - Static.samplerate * r / Static.wave_speed;
-			float delay = (int)delayf;
-			if (delay > 0) {
-				//これが新しいやつ
-				//				u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame) ;
-				u_array -=  SecondLayer(j,delay,dot,r,start_frame);
+
+
+
+		Parallel.For (0, Static.mesh_point_center_array.Length, j => {
+//			float r = Vector3.Distance (position, Static.mesh_point_center_array [j]);
+//			float dot = Vector3.Dot (position - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+//			float delayf = Static.frame - Static.samplerate * r / Static.wave_speed;
+//			float delay = (int)delayf;
+
+			r_array [j] = Vector3.Distance (v, Static.mesh_point_center_array [j]);
+			dot_array [j] = Vector3.Dot (v - Static.mesh_point_center_array [j], Static.mesh_point_center_norm_array [j]);
+			delayf_array [j] = Static.frame - Static.samplerate * r_array [j] / Static.wave_speed;
+			delay_array [j] = (int)delayf_array [j];
+
+//			int id = System.Threading.Thread.CurrentThread.ManagedThreadId;
+//			Debug.Log("ThreadID : " + id);
+			if (delay_array [j] > 0) {
+//				//これが新しいやつ
+//				//	u_array += FirstLayer(j,delayf,r) - SecondLayer(j,delayf,dot,r,start_frame) ;
+////				u_array -= SecondLayer (j, delay_array [j], dot_array [j], r_array [j], start_frame);
+				u_part[j] = - SecondLayer (j, delay_array [j], dot_array [j], r_array [j], start_frame);
+
 			}
-		}
+		});
+
+		u_array = u_part.AsParallel().Sum((x)=>x);
+
+//		print ("終了" + Static.frame.ToString ());
 		//uinを加える
-		float distance = Vector3.Distance (position, Static.source_origin_point);
-		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
-		if (delay_uin > 0) {
-			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
-		}
+//		float distance = Vector3.Distance (position, Static.source_origin_point);
+//		int delay_uin = (int)(start_frame - Static.samplerate * distance / Static.wave_speed);
+//		if (delay_uin > 0) {
+//			u_array += Static.f [delay_uin] / (4 * Mathf.PI * distance);
+//		}
 		Static.u_array [start_frame] = u_array;
+		CalculateInnerPoint.TextSaveTitle ( Static.frame.ToString()+" "+Static.u_array [Static.frame].ToString (), "kyoukai_all");
 	}
 
 //	private async Task<float> hogehoge(Vector3 position,int start_frame){
@@ -282,7 +317,7 @@ public class MainCamera : MonoBehaviour {
 		int m2 = 0;
 		m1 = (int)delayf;
 		m2 = (int)delayf-1;
-		result = F_j_T (j, dot, r, (n - m1 + 1)) * Static.boundary_condition_u [m1, j] + F_j_T (j, dot, r, (m2 - n + 1))*Static.boundary_condition_u[m2,j];
+		result = F_j_T (j, dot, r, (n - m1 + 1)) * Static.boundary_condition_u [m1, j] + F_j_T (j, dot, r, (m2 - n + 1)) * Static.boundary_condition_u[m2,j];
 		return result;
 	}
 
@@ -322,10 +357,10 @@ public class MainCamera : MonoBehaviour {
 		this.transform.localPosition = Static.check_position ;//初期値に戻してるだけ
 		v = this.transform.localPosition ;
 		player_position.text = this.transform.localPosition.ToString ("F4");
-
-		for (int i = 0; i < 8000; i++) {
-			CalculateInnerPoint.TextSaveTitle (i.ToString () + " " + Static.f [i].ToString (), "kyoukai_test");
-		}
+		Static.frame = 0;
+//		for (int i = 0; i < 8000; i++) {
+//			CalculateInnerPoint.TextSaveTitle (i.ToString () + " " + Static.f [i].ToString (), "kyoukai_test");
+//		}
 	
 	}
 }

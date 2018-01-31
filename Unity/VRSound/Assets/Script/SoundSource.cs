@@ -29,11 +29,15 @@ public class SoundSource : MonoBehaviour {
 	}
 
 	public void SetAllClipData(){
-		for (int i =0; i < Static.calc_frame; i++) {
-			emmit_sound [i] = Static.u_array [i];
+//		for (int i =0; i < Static.calc_frame; i++) {
+//			emmit_sound [i] = Static.u_array [i];
+//		}
+//		aud_source.clip.SetData (emmit_sound,0);
+//		aud_source.Play ();
+
+		for (int j = 0; j < Static.samplerate*Static.time; j++) {
+			CalculateInnerPoint.TextSaveTitle (Static.u_array [j].ToString(), "sample");
 		}
-		aud_source.clip.SetData (emmit_sound,0);
-		aud_source.Play ();
 		print ("set all clip!");
 	}
 

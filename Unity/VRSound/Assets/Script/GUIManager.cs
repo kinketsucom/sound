@@ -32,6 +32,7 @@ public class GUIManager : MonoBehaviour {
 //				Static.check_time = Time.realtimeSinceStartup - Static.check_time;
 //				Debug.Log( "check time : " + Static.check_time.ToString("0.00000") );
 //			}
+
 			frame_counter_text.text = "counter"+Static.frame.ToString();
 	}
 

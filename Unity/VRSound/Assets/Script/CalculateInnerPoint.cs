@@ -46,6 +46,8 @@ public class CalculateInnerPoint : MonoBehaviour {
 	private Vector3[] vec_check;
 	private float[] f_dot;
 
+
+
 	void Awake(){
 		 //TIPS:波形描画が見れるのは実際1/1000くらいまで
 		//////////////////パラメータの読み込み////////////////////
