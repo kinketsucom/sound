@@ -13,18 +13,18 @@ public class SoundSource : MonoBehaviour {
 	} 
 
 	void FixedUpdate(){
-		if (Static.frame % 4000 == 3999) {
-//			SetClipData ();
-		}
+		//if (Static.frame % 4000 == 3999) {
+			//SetClipData ();
+		//}
 	}
 
-	public void SetClipData(){
+    public void SetClipData(){//1フレームで音を作成しているノリ
 		for (int i = Static.frame - Static.calc_frame+1; i < Static.frame; i++) {
 			emmit_sound [i - Static.frame+Static.calc_frame] = Static.u_array [i];
 		}
 		aud_source.clip.SetData (emmit_sound,0);
 		aud_source.Play ();
-		print ("set clip!" + Static.frame.ToString ());
+		//print ("set clip!" + Static.frame.ToString ());
 	}
 
 }

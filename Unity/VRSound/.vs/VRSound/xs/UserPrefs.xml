@@ -1,0 +1,22 @@
+﻿<Properties StartupConfiguration="{DD6A1F1F-FE69-1C29-3A88-E75BE14C1E72}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/SoundSource.cs">
+    <Files>
+      <File FileName="Assets/Script/CalculateInnerPoint.cs" Line="505" Column="1" />
+      <File FileName="Assets/Script/MainCamera.cs" Line="39" Column="5" />
+      <File FileName="Assets/Script/Static.cs" Line="13" Column="57" />
+      <File FileName="Assets/Script/GUIManager.cs" Line="35" Column="4" />
+      <File FileName="Assets/Script/SoundSource.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Assets/Script/CalculateInnerPoint.cs" line="104" offsetX="758" offsetY="1507" expression="all_point_vec" liveUpdate="False" />
+    <Watch file="Assets/Script/CalculateInnerPoint.cs" line="104" offsetX="607" offsetY="1571" expression="num_counter" liveUpdate="False" />
+    <Watch file="Assets/Script/CalculateInnerPoint.cs" line="102" offsetX="621" offsetY="1504" expression="counter" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <MultiItemStartupConfigurations />
+</Properties>
