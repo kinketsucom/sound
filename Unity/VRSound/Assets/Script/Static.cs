@@ -26,7 +26,7 @@ public class Static : MonoBehaviour {
 	public static Vector3 cube_size;
 
 	//波形描画用
-	public static int calc_frame = 4000;//波形描画をどの程度するか
+	public static int calc_frame = 60;//波形描画をどの程度するか
 	public static int frame=0;//現在フレーム
 
 	//デバッグ

@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundSource : MonoBehaviour {
 	private AudioSource aud_source;
 
-	private float[] emmit_sound = new float[Static.calc_frame];
+	private float[] emmit_sound = new float[80000];//適当に幅をとっている
 
 	// Use this for initialization
 	void Start () {
@@ -13,18 +13,17 @@ public class SoundSource : MonoBehaviour {
 	} 
 
 	void FixedUpdate(){
-		//if (Static.frame % 4000 == 3999) {
-			//SetClipData ();
-		//}
-	}
+        if (Static.frame % Static.calc_frame == (Static.calc_frame - 1)) {
+            SetClipData();
+        }
+    }
 
     public void SetClipData(){//1フレームで音を作成しているノリ
-		for (int i = Static.frame - Static.calc_frame+1; i < Static.frame; i++) {
-			emmit_sound [i - Static.frame+Static.calc_frame] = Static.u_array [i];
+		for (int i = Static.frame - Static.calc_frame+1; i <= Static.frame; i++) {
+			emmit_sound [i - Static.frame+Static.calc_frame-1] = Static.u_array [i];
 		}
 		aud_source.clip.SetData (emmit_sound,0);
 		aud_source.Play ();
-		//print ("set clip!" + Static.frame.ToString ());
 	}
 
 }
